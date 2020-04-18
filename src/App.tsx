@@ -1,14 +1,13 @@
-import React from "react";
-import "./App.css";
+import React, { FunctionComponent } from 'react';
 
-function App() {
+import SiteHeader from './components/SiteHeader';
+
+const App: FunctionComponent = () => {
   return (
-    <div className="App">
-      <header>
-        <h1>Tortoise and Hare</h1>
-      </header>
+    <div>
+      <SiteHeader />
     </div>
   );
-}
+};
 
 export default App;
