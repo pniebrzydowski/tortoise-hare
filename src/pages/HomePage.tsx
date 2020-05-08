@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 
-const Home: FunctionComponent = () => {
+const HomePage: FunctionComponent = () => {
   return (
     <>
       <h2>What is it?</h2>
@@ -8,4 +8,4 @@ const Home: FunctionComponent = () => {
   );
 };
 
-export default Home;
+export default HomePage;

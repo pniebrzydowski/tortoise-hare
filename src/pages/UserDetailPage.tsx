@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 
 import { useParams } from 'react-router-dom';
 
-const UserDetail: FunctionComponent = () => {
+const UserDetailPage: FunctionComponent = () => {
   const { userId } = useParams();
 
   return (
@@ -12,4 +12,4 @@ const UserDetail: FunctionComponent = () => {
   );
 };
 
-export default UserDetail;
+export default UserDetailPage;

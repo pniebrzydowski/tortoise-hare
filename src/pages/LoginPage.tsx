@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 
-const Login: FunctionComponent = () => {
+const LoginPage: FunctionComponent = () => {
   return (
     <>
       <h2>Login</h2>
@@ -8,4 +8,4 @@ const Login: FunctionComponent = () => {
   );
 };
 
-export default Login;
+export default LoginPage;

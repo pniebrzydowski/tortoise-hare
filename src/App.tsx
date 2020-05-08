@@ -2,14 +2,14 @@ import React, { FunctionComponent } from 'react';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import Home from './components/pages/Home';
-import Login from './components/pages/Login';
-import RaceDetail from './components/pages/RaceDetail';
-import SeriesDetail from './components/pages/SeriesDetail';
-import SeriesList from './components/pages/SeriesList';
-import UserDetail from './components/pages/UserDetail';
 import SiteHeader from './components/SiteHeader';
 import GlobalStyles from './design/globalStyle';
+import Home from './pages/HomePage';
+import Login from './pages/LoginPage';
+import RaceDetail from './pages/RaceDetailPage';
+import SeriesDetail from './pages/SeriesDetailPage';
+import SeriesList from './pages/SeriesListPage';
+import UserDetail from './pages/UserDetailPage';
 import routes from './routing/routes';
 
 const App: FunctionComponent = () => {

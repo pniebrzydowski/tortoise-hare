@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 
 import { useParams } from 'react-router-dom';
 
-const RaceDetail: FunctionComponent = () => {
+const RaceDetailPage: FunctionComponent = () => {
   const { raceId } = useParams();
 
   return (
@@ -12,4 +12,4 @@ const RaceDetail: FunctionComponent = () => {
   );
 };
 
-export default RaceDetail;
+export default RaceDetailPage;
