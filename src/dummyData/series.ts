@@ -23,4 +23,7 @@ const allSeries: Series[] = [
   },
 ];
 
+export const getSeriesById = (id: string): Series | undefined =>
+  allSeries.find((element) => element.id === id);
+
 export default allSeries;
