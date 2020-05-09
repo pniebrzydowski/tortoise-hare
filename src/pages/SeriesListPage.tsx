@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 
-import SeriesList from '../components/SeriesList';
+import SeriesList from '../components/series/SeriesList';
 
 const SeriesListPage: FunctionComponent = () => {
   return (
