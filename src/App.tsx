@@ -16,8 +16,8 @@ const App: FunctionComponent = () => {
   return (
     <>
       <GlobalStyles />
-      <SiteHeader />
       <Router>
+        <SiteHeader />
         <Switch>
           <Route path={routes.HOME} exact>
             <Home />

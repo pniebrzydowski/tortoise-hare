@@ -1,4 +1,4 @@
-interface Series {
+export interface Series {
   id: string;
   name: string;
   startDate: number;

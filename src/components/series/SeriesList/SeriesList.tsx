@@ -3,6 +3,7 @@ import React, { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
 
 import allSeries from '../../../dummyData/series';
+import { formatDate } from '../../../utils/date';
 
 const SeriesList: FunctionComponent = () => {
   return (
@@ -22,8 +23,8 @@ const SeriesList: FunctionComponent = () => {
             {allSeries.map((series) => (
               <tr key={series.id}>
                 <td>{series.name}</td>
-                <td>{series.startDate}</td>
-                <td>{series.endDate}</td>
+                <td>{formatDate(series.startDate)}</td>
+                <td>{formatDate(series.endDate)}</td>
                 <td>
                   <Link to={`/series/${series.id}`}>Details</Link>
                 </td>
