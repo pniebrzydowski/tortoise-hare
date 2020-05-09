@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 const StyledHeader = styled("header")`
   background-color: ${(props) => props.theme.colors.dark};
-  padding: ${(props) => props.theme.padding.medium};
+  padding: ${(props) => props.theme.spacing.medium};
 `;
 
 const StyledLink = styled(Link)`

@@ -18,7 +18,7 @@ const GlobalStyle = createGlobalStyle<{ theme: Theme }>`
     min-height: 100vh;
   }
 
-  h1, h2, h3, h4, h5, h6, p {
+  h1, h2, h3, h4, h5, h6, p, ul, li {
     padding: 0;
     margin: 0;
   }
@@ -30,10 +30,10 @@ const GlobalStyle = createGlobalStyle<{ theme: Theme }>`
     font-size: 1.6rem;
   }
   h3 {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
   }
   h4 {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
   h5 {
     font-size: 1rem;
@@ -49,7 +49,15 @@ const GlobalStyle = createGlobalStyle<{ theme: Theme }>`
   }
 
   a {
+    color: inherit
+  }
+
+  p a {
     color: ${(props) => props.theme.colors.secondary}
+  }
+
+  ul {
+    list-style: none;
   }
 `;
 

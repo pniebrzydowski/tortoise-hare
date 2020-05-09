@@ -13,7 +13,7 @@ export interface Theme {
     radius: string;
     style: string;
   };
-  padding: {
+  spacing: {
     xSmall: string;
     small: string;
     medium: string;
@@ -36,11 +36,11 @@ const colors = {
 };
 
 const borders = {
-  radius: "4px",
+  radius: "5px",
   style: `1px solid`,
 };
 
-const padding = {
+const spacing = {
   xSmall: "4px",
   small: "8px",
   medium: "16px",
@@ -51,7 +51,7 @@ const padding = {
 const theme: Theme = {
   colors,
   borders,
-  padding,
+  spacing,
 };
 
 export default theme;

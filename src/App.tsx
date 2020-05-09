@@ -15,7 +15,7 @@ import UserDetail from './pages/UserDetailPage';
 import routes from './routing/routes';
 
 const StyledMain = styled("main")`
-  padding: ${(props) => props.theme.padding.medium};
+  padding: ${(props) => props.theme.spacing.medium};
 `;
 
 const App: FunctionComponent = () => {
