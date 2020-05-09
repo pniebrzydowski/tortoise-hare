@@ -9,21 +9,37 @@ const GlobalStyle = createGlobalStyle<{ theme: Theme }>`
 
   html {
     font-size: 16px;
+    line-height: 1.4;
   }
 
   html, body {
     background-color: ${(props) => props.theme.colors.xLight};
-    color: ${(props) => props.theme.colors.dark};
+    color: ${(props) => props.theme.colors.xDark};
     min-height: 100vh;
-  }
-
-  h1 {
-    font-size: 2rem;
   }
 
   h1, h2, h3, h4, h5, h6, p {
     padding: 0;
     margin: 0;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+  h2 {
+    font-size: 1.6rem;
+  }
+  h3 {
+    font-size: 1.4rem;
+  }
+  h4 {
+    font-size: 1.2rem;
+  }
+  h5 {
+    font-size: 1rem;
+  }
+  h6 {
+    font-size: 0.8rem;
   }
 
   td, th {
