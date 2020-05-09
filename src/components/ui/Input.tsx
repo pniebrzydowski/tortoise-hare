@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 
 export const inputCss = css`
   border-radius: ${(props) => props.theme.borders.radius};
-  padding: ${(props) => props.theme.spacing.small};
+  padding: ${(props) => props.theme.spacing.medium};
   border: ${(props) =>
     `${props.theme.borders.style} ${props.theme.colors.light}`};
   font-size: 1rem;

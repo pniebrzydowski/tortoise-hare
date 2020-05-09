@@ -9,13 +9,15 @@ interface Props {
 }
 
 const StyledContainer = styled("div")`
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
 `;
 
 const StyledLabel = styled("label")`
   font-size: 0.8rem;
   font-weight: bold;
+  padding: ${(props) =>
+    `${props.theme.spacing.xSmall} ${props.theme.spacing.medium}`};
 `;
 
 const StyledError = styled(StyledLabel)`
