@@ -1,15 +1,10 @@
 import React, { FunctionComponent, useState } from 'react';
 
-import DatePicker from 'react-datepicker';
-import { Controller, useForm } from 'react-hook-form';
+import { FormContext, useForm } from 'react-hook-form';
 
 import { Series } from '../../../dummyData/series';
-import {
-  DEFAULT_DATEPICKER_FORMAT,
-  getDateValue,
-  getFutureDate,
-  getToday
-} from '../../../utils/date';
+import { getFutureDate, getToday } from '../../../utils/date';
+import Datepicker from '../../form/fields/Datepicker/Datepicker';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -17,7 +12,7 @@ type FormData = Partial<Omit<Series, "id">>;
 
 const NewSeries: FunctionComponent = () => {
   const [visible, setVisible] = useState(false);
-  const { register, handleSubmit, control, errors } = useForm();
+  const form = useForm();
 
   if (!visible) {
     return <button onClick={() => setVisible(true)}>Add new series</button>;
@@ -28,60 +23,46 @@ const NewSeries: FunctionComponent = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <label htmlFor="newSeries_name">Series Name</label>
-      <input
-        type="text"
-        id="newSeries_name"
-        name="name"
-        ref={register({ required: true })}
-      />
-      {errors.name && <span>Please enter a name</span>}
+    <FormContext {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <label htmlFor="newSeries_name">Series Name</label>
+        <input
+          type="text"
+          id="newSeries_name"
+          name="name"
+          ref={form.register({ required: true })}
+        />
+        {form.errors.name && <span>Please enter a name</span>}
 
-      <label htmlFor="newSeries_startDate">Start Date</label>
-      <Controller
-        as={DatePicker}
-        name="startDate"
-        id="newSeries_startDate"
-        control={control}
-        defaultValue={getToday()}
-        valueName="selected"
-        rules={{ required: true }}
-        onChange={([selected]) => {
-          console.log(selected);
-          return getDateValue(selected);
-        }}
-        dateFormat={DEFAULT_DATEPICKER_FORMAT}
-      />
-      {errors.startDate && <span>Please enter a start date</span>}
+        <Datepicker
+          formName="newSeries"
+          fieldName="startDate"
+          label="Start Date"
+          defaultValue={getToday()}
+          required
+          error={form.errors.startDate}
+        />
 
-      <label htmlFor="newSeries_endDate">End Date</label>
-      <Controller
-        as={DatePicker}
-        name="endDate"
-        id="newSeries_endDate"
-        control={control}
-        defaultValue={getFutureDate(3, "month")}
-        valueName="selected"
-        rules={{ required: true }}
-        onChange={([selected]) => {
-          console.log(selected);
-          return getDateValue(selected);
-        }}
-        dateFormat={DEFAULT_DATEPICKER_FORMAT}
-      />
-      {errors.endDate && <span>Please enter an end date</span>}
+        <Datepicker
+          formName="newSeries"
+          fieldName="endDate"
+          label="End Date"
+          defaultValue={getFutureDate(3, "month")}
+          required
+          error={form.errors.endDate}
+        />
 
-      <label htmlFor="newSeries_description">Description</label>
-      <textarea
-        name="description"
-        id="newSeries_description"
-        ref={register}
-      ></textarea>
+        <label htmlFor="newSeries_description">Description</label>
+        <textarea
+          name="description"
+          id="newSeries_description"
+          ref={form.register}
+        ></textarea>
 
-      <button type="submit">Save</button>
-      <button onClick={() => setVisible(false)}>Cancel</button>
-    </form>
+        <button type="submit">Save</button>
+        <button onClick={() => setVisible(false)}>Cancel</button>
+      </form>
+    </FormContext>
   );
 };
 
