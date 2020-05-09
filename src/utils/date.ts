@@ -1,6 +1,7 @@
 import dayjs, { OpUnitType } from 'dayjs';
 
-export const DEFAULT_DATE_FORMAT = "MM/dd/yyyy";
+export const DEFAULT_DATE_FORMAT = "MM/DD/YYYY";
+export const DEFAULT_DATEPICKER_FORMAT = "MM/dd/yyyy";
 
 export const getDateValue = (date: Date): number =>
   dayjs(date).startOf("day").valueOf();

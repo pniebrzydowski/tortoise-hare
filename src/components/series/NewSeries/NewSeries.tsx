@@ -5,7 +5,7 @@ import { Controller, useForm } from 'react-hook-form';
 
 import { Series } from '../../../dummyData/series';
 import {
-  DEFAULT_DATE_FORMAT,
+  DEFAULT_DATEPICKER_FORMAT,
   getDateValue,
   getFutureDate,
   getToday
@@ -51,7 +51,7 @@ const NewSeries: FunctionComponent = () => {
           console.log(selected);
           return getDateValue(selected);
         }}
-        dateFormat={DEFAULT_DATE_FORMAT}
+        dateFormat={DEFAULT_DATEPICKER_FORMAT}
       />
       {errors.startDate && <span>Required</span>}
 
@@ -68,7 +68,7 @@ const NewSeries: FunctionComponent = () => {
           console.log(selected);
           return getDateValue(selected);
         }}
-        dateFormat={DEFAULT_DATE_FORMAT}
+        dateFormat={DEFAULT_DATEPICKER_FORMAT}
       />
       {errors.endDate && <span>Required</span>}
 
