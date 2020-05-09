@@ -8,6 +8,7 @@ import { getFutureDate, getToday } from '../../../utils/date';
 import Datepicker from '../../form/fields/Datepicker';
 import Text from '../../form/fields/Text';
 import Textarea from '../../form/fields/Textarea';
+import { OutlineButton, PrimaryButton } from '../../ui/Button';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -30,6 +31,16 @@ const FlexSmall = styled("div")`
   width: calc(50% - ${(props) => props.theme.spacing.small});
 
   & + & {
+    margin-left: ${(props) => props.theme.spacing.medium};
+  }
+`;
+
+const StyledButtonContainer = styled("div")`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: ${(props) => props.theme.spacing.medium};
+
+  button + button {
     margin-left: ${(props) => props.theme.spacing.medium};
   }
 `;
@@ -91,10 +102,12 @@ const NewSeries: FunctionComponent = () => {
           </FlexLarge>
         </FlexBox>
 
-        <div>
-          <button type="submit">Save</button>
-          <button onClick={() => setVisible(false)}>Cancel</button>
-        </div>
+        <StyledButtonContainer>
+          <PrimaryButton type="submit">Save</PrimaryButton>
+          <OutlineButton onClick={() => setVisible(false)}>
+            Cancel
+          </OutlineButton>
+        </StyledButtonContainer>
       </form>
     </FormContext>
   );
