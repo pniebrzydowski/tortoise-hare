@@ -4,7 +4,9 @@ import { FormContext, useForm } from 'react-hook-form';
 
 import { Series } from '../../../dummyData/series';
 import { getFutureDate, getToday } from '../../../utils/date';
-import Datepicker from '../../form/fields/Datepicker/Datepicker';
+import Datepicker from '../../form/fields/Datepicker';
+import Text from '../../form/fields/Text';
+import Textarea from '../../form/fields/Textarea';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -25,14 +27,13 @@ const NewSeries: FunctionComponent = () => {
   return (
     <FormContext {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <label htmlFor="newSeries_name">Series Name</label>
-        <input
-          type="text"
-          id="newSeries_name"
-          name="name"
-          ref={form.register({ required: true })}
+        <Text
+          formName="newSeries"
+          fieldName="name"
+          label="Series Name"
+          required
+          error={form.errors.name && "Please enter a name"}
         />
-        {form.errors.name && <span>Please enter a name</span>}
 
         <Datepicker
           formName="newSeries"
@@ -40,7 +41,7 @@ const NewSeries: FunctionComponent = () => {
           label="Start Date"
           defaultValue={getToday()}
           required
-          error={form.errors.startDate}
+          error={form.errors.startDate && "Please enter a start date"}
         />
 
         <Datepicker
@@ -49,15 +50,14 @@ const NewSeries: FunctionComponent = () => {
           label="End Date"
           defaultValue={getFutureDate(3, "month")}
           required
-          error={form.errors.endDate}
+          error={form.errors.endDate && "Please enter a start date"}
         />
 
-        <label htmlFor="newSeries_description">Description</label>
-        <textarea
-          name="description"
-          id="newSeries_description"
-          ref={form.register}
-        ></textarea>
+        <Textarea
+          formName="newSeries"
+          fieldName="description"
+          label="Description"
+        />
 
         <button type="submit">Save</button>
         <button onClick={() => setVisible(false)}>Cancel</button>

@@ -3,10 +3,7 @@ import React, { FunctionComponent } from 'react';
 import DatePicker from 'react-datepicker';
 import { Controller, useFormContext } from 'react-hook-form';
 
-import {
-  DEFAULT_DATEPICKER_FORMAT,
-  getDateValue
-} from '../../../../utils/date';
+import { DEFAULT_DATEPICKER_FORMAT, getDateValue } from '../../../utils/date';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
