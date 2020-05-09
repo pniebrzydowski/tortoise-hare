@@ -4,6 +4,8 @@ import DatePicker from 'react-datepicker';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import { DEFAULT_DATEPICKER_FORMAT, getDateValue } from '../../../utils/date';
+import { StyledInput } from '../../ui/Input';
+import FieldWrapper from '../FieldWrapper';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -25,10 +27,10 @@ const Datepicker: FunctionComponent<Props> = ({
   required,
 }) => {
   const { control } = useFormContext();
+  const fieldId = `${formName}_${fieldName}`;
 
   return (
-    <>
-      {label && <label htmlFor={`${formName}_${fieldName}`}>{label}</label>}
+    <FieldWrapper fieldId={fieldId} label={label} error={error}>
       <Controller
         as={DatePicker}
         name={fieldName}
@@ -39,9 +41,9 @@ const Datepicker: FunctionComponent<Props> = ({
         rules={{ required }}
         onChange={([selected]) => getDateValue(selected)}
         dateFormat={DEFAULT_DATEPICKER_FORMAT}
+        customInput={<StyledInput />}
       />
-      {error && <span>{error}</span>}
-    </>
+    </FieldWrapper>
   );
 };
 

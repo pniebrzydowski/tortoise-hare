@@ -13,7 +13,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 type FormData = Partial<Omit<Series, "id">>;
 
 const NewSeries: FunctionComponent = () => {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
   const form = useForm();
 
   if (!visible) {
@@ -59,8 +59,10 @@ const NewSeries: FunctionComponent = () => {
           label="Description"
         />
 
-        <button type="submit">Save</button>
-        <button onClick={() => setVisible(false)}>Cancel</button>
+        <div>
+          <button type="submit">Save</button>
+          <button onClick={() => setVisible(false)}>Cancel</button>
+        </div>
       </form>
     </FormContext>
   );

@@ -2,7 +2,8 @@ import React, { FunctionComponent } from 'react';
 
 import { useFormContext } from 'react-hook-form';
 
-import 'react-datepicker/dist/react-datepicker.css';
+import { StyledInput } from '../../ui/Input';
+import FieldWrapper from '../FieldWrapper';
 
 interface Props {
   formName: string;
@@ -22,19 +23,18 @@ const Text: FunctionComponent<Props> = ({
   required,
 }) => {
   const { register } = useFormContext();
+  const fieldId = `${formName}_${fieldName}`;
 
   return (
-    <>
-      {label && <label htmlFor={`${formName}_${fieldName}`}>{label}</label>}
-      <input
+    <FieldWrapper fieldId={fieldId} label={label} error={error}>
+      <StyledInput
         type="text"
-        id={`${formName}_${fieldName}`}
+        id={fieldId}
         name={fieldName}
         defaultValue={defaultValue}
         ref={register({ required })}
-      />{" "}
-      {error && <span>{error}</span>}
-    </>
+      />
+    </FieldWrapper>
   );
 };
 

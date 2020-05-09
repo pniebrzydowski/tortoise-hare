@@ -1,8 +1,10 @@
 import React, { FunctionComponent } from 'react';
 
 import { useFormContext } from 'react-hook-form';
+import styled from 'styled-components';
 
-import 'react-datepicker/dist/react-datepicker.css';
+import { inputCss } from '../../ui/Input';
+import FieldWrapper from '../FieldWrapper';
 
 interface Props {
   formName: string;
@@ -13,6 +15,10 @@ interface Props {
   required?: boolean;
 }
 
+const StyledTextarea = styled("textarea")`
+  ${inputCss}
+`;
+
 const Textarea: FunctionComponent<Props> = ({
   formName,
   fieldName,
@@ -22,18 +28,17 @@ const Textarea: FunctionComponent<Props> = ({
   required,
 }) => {
   const { register } = useFormContext();
+  const fieldId = `${formName}_${fieldName}`;
 
   return (
-    <>
-      {label && <label htmlFor={`${formName}_${fieldName}`}>{label}</label>}
-      <textarea
-        id={`${formName}_${fieldName}`}
+    <FieldWrapper fieldId={fieldId} label={label} error={error}>
+      <StyledTextarea
+        id={fieldId}
         name={fieldName}
         defaultValue={defaultValue}
         ref={register({ required })}
       />
-      {error && <span>{error}</span>}
-    </>
+    </FieldWrapper>
   );
 };
 
