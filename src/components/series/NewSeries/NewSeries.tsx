@@ -36,7 +36,7 @@ const NewSeries: FunctionComponent = () => {
         name="name"
         ref={register({ required: true })}
       />
-      {errors.name && <span>Required</span>}
+      {errors.name && <span>Please enter a name</span>}
 
       <label htmlFor="newSeries_startDate">Start Date</label>
       <Controller
@@ -53,7 +53,7 @@ const NewSeries: FunctionComponent = () => {
         }}
         dateFormat={DEFAULT_DATEPICKER_FORMAT}
       />
-      {errors.startDate && <span>Required</span>}
+      {errors.startDate && <span>Please enter a start date</span>}
 
       <label htmlFor="newSeries_endDate">End Date</label>
       <Controller
@@ -70,7 +70,7 @@ const NewSeries: FunctionComponent = () => {
         }}
         dateFormat={DEFAULT_DATEPICKER_FORMAT}
       />
-      {errors.endDate && <span>Required</span>}
+      {errors.endDate && <span>Please enter an end date</span>}
 
       <label htmlFor="newSeries_description">Description</label>
       <textarea
