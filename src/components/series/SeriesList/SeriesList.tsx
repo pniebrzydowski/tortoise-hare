@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 
 import { Link } from 'react-router-dom';
 
-import allSeries from '../../dummyData/series';
+import allSeries from '../../../dummyData/series';
 
 const SeriesList: FunctionComponent = () => {
   return (

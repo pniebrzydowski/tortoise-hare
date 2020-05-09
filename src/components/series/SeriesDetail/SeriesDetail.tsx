@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 
-import { getSeriesById } from '../../dummyData/series';
+import { getSeriesById } from '../../../dummyData/series';
 
 interface Props {
   id: string;
