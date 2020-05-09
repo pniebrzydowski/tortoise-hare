@@ -11,14 +11,16 @@ const SeriesList: FunctionComponent = () => {
         <h2>All Series</h2>
         <table>
           <thead>
-            <th>Name</th>
-            <th>Start</th>
-            <th>End</th>
-            <th></th>
+            <tr>
+              <th>Name</th>
+              <th>Start</th>
+              <th>End</th>
+              <th></th>
+            </tr>
           </thead>
           <tbody>
             {allSeries.map((series) => (
-              <tr>
+              <tr key={series.id}>
                 <td>{series.name}</td>
                 <td>{series.startDate}</td>
                 <td>{series.endDate}</td>
