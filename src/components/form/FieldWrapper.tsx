@@ -19,7 +19,7 @@ const StyledLabel = styled("label")`
 `;
 
 const StyledError = styled(StyledLabel)`
-  color: #c00;
+  color: ${(props) => props.theme.colors.error};
 `;
 
 const FieldWrapper: FunctionComponent<Props> = ({

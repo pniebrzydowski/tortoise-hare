@@ -1,9 +1,11 @@
 import React, { FunctionComponent } from 'react';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
 
 import SiteHeader from './components/SiteHeader';
 import GlobalStyles from './design/globalStyle';
+import theme from './design/theme';
 import Home from './pages/HomePage';
 import Login from './pages/LoginPage';
 import RaceDetail from './pages/RaceDetailPage';
@@ -14,7 +16,7 @@ import routes from './routing/routes';
 
 const App: FunctionComponent = () => {
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <GlobalStyles />
       <Router>
         <SiteHeader />
@@ -40,7 +42,7 @@ const App: FunctionComponent = () => {
           </Route>
         </Switch>
       </Router>
-    </>
+    </ThemeProvider>
   );
 };
 

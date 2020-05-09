@@ -1,6 +1,8 @@
 import { createGlobalStyle } from 'styled-components';
 
-const GlobalStyle = createGlobalStyle`
+import { Theme } from './theme';
+
+const GlobalStyle = createGlobalStyle<{ theme: Theme }>`
   * {
     box-sizing: border-box;
   }
@@ -10,8 +12,8 @@ const GlobalStyle = createGlobalStyle`
   }
 
   html, body {
-    background-color: #eee9ee;
-    color: #282c34;
+    background-color: ${(props) => props.theme.colors.xLight};
+    color: ${(props) => props.theme.colors.dark};
     min-height: 100vh;
   }
 
@@ -28,6 +30,10 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     text-align: left;
     font-weight: normal;
+  }
+
+  a {
+    color: ${(props) => props.theme.colors.secondary}
   }
 `;
 
