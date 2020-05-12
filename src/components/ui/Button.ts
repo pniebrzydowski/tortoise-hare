@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 const StyledButton = styled("button")`
+  cursor: pointer;
   appearance: none;
   background: none;
   border: none;

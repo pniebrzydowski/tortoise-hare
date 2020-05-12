@@ -1,8 +1,8 @@
 import { race1results, RaceResult } from './results';
 
-enum DistanceUnit {
-  "km" = "kilometers",
-  "mi" = "miles",
+export enum DistanceUnit {
+  "km" = "km",
+  "mi" = "mi",
 }
 
 export interface Race {

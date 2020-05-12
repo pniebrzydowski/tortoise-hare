@@ -16,8 +16,7 @@ export const StyledListingLink = styled(Link)`
 `;
 
 export const StyledListing = styled("ul")`
-  margin: ${(props) =>
-    `${props.theme.spacing.medium} 0 ${props.theme.spacing.large}`};
+  margin-top: ${(props) => props.theme.spacing.medium};
   width: 100%;
 `;
 

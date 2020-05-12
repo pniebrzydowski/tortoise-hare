@@ -2,7 +2,8 @@ import dayjs, { OpUnitType } from 'dayjs';
 
 export const DEFAULT_DATE_FORMAT = "MM/DD/YYYY";
 export const DEFAULT_DATEPICKER_FORMAT = "MM/dd/yyyy";
-export const DEFAULT_DATETIME_FORMAT = `${DEFAULT_DATE_FORMAT} hh:mma`;
+export const DEFAULT_DATETIME_FORMAT = `${DEFAULT_DATE_FORMAT} h:mma`;
+export const DEFAULT_DATETIMEPICKER_FORMAT = `${DEFAULT_DATEPICKER_FORMAT} h:mma`;
 
 export const getDateValue = (date: Date): number =>
   dayjs(date).startOf("day").valueOf();
@@ -13,6 +14,9 @@ export const getFutureDate = (
   value: number = 1,
   unit: OpUnitType = "month"
 ): number => dayjs().startOf("day").add(value, unit).valueOf();
+
+export const getFutureDateWithTime = (days: number, hours: number): number =>
+  dayjs().startOf("day").add(days, "day").add(hours, "hour").valueOf();
 
 export const formatDate = (
   date: number,

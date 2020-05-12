@@ -3,6 +3,7 @@ import React, { FunctionComponent } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
+import NewRace from '../components/races/NewRace';
 import RaceList from '../components/races/RaceList';
 import SeriesDetail from '../components/series/SeriesDetail';
 
@@ -29,6 +30,7 @@ const SeriesDetailPage: FunctionComponent = () => {
 
       <SeriesDetail id={seriesId} />
       <RaceList seriesId={seriesId} />
+      <NewRace seriesId={seriesId} />
     </>
   );
 };

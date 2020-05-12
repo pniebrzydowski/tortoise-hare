@@ -1,9 +1,13 @@
 import React, { FunctionComponent } from 'react';
 
 import DatePicker from 'react-datepicker';
-import { Controller, useFormContext } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
 
-import { DEFAULT_DATEPICKER_FORMAT, getDateValue } from '../../../utils/date';
+import {
+  DEFAULT_DATEPICKER_FORMAT,
+  DEFAULT_DATETIMEPICKER_FORMAT,
+  getDateValue
+} from '../../../utils/date';
 import { StyledInput } from '../../ui/Input';
 import FieldWrapper from '../FieldWrapper';
 
@@ -16,6 +20,7 @@ interface Props {
   defaultValue?: number;
   error?: string;
   required?: boolean;
+  includeTime?: boolean;
 }
 
 const Datepicker: FunctionComponent<Props> = ({
@@ -25,8 +30,8 @@ const Datepicker: FunctionComponent<Props> = ({
   defaultValue,
   error,
   required,
+  includeTime,
 }) => {
-  const { control } = useFormContext();
   const fieldId = `${formName}_${fieldName}`;
 
   return (
@@ -35,13 +40,20 @@ const Datepicker: FunctionComponent<Props> = ({
         as={DatePicker}
         name={fieldName}
         id={`${formName}_${fieldName}`}
-        control={control}
         defaultValue={defaultValue}
         valueName="selected"
         rules={{ required }}
         onChange={([selected]) => getDateValue(selected)}
-        dateFormat={DEFAULT_DATEPICKER_FORMAT}
         customInput={<StyledInput />}
+        dateFormat={
+          includeTime
+            ? DEFAULT_DATETIMEPICKER_FORMAT
+            : DEFAULT_DATEPICKER_FORMAT
+        }
+        showTimeSelect={includeTime}
+        timeFormat="HH:mm"
+        timeIntervals={15}
+        timeCaption="time"
       />
     </FieldWrapper>
   );
