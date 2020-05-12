@@ -24,13 +24,9 @@ const StyledGridContainer = styled("div")`
   }
 `;
 
-const FlexLarge = styled("div")`
+const GridAreaLarge = styled("div")`
   grid-column-start: 1;
   grid-column-end: 3;
-`;
-
-const FlexSmall = styled("div")`
-  grid-column-end: auto;
 `;
 
 const StyledButtonContainer = styled("div")`
@@ -63,7 +59,7 @@ const NewSeries: FunctionComponent = () => {
     <FormContext {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <StyledGridContainer>
-          <FlexLarge>
+          <GridAreaLarge>
             <Text
               formName="newSeries"
               fieldName="name"
@@ -71,37 +67,33 @@ const NewSeries: FunctionComponent = () => {
               required
               error={form.errors.name && "Please enter a name"}
             />
-          </FlexLarge>
+          </GridAreaLarge>
 
-          <FlexSmall>
-            <Datepicker
-              formName="newSeries"
-              fieldName="startDate"
-              label="Start Date"
-              defaultValue={getToday()}
-              required
-              error={form.errors.startDate && "Please enter a start date"}
-            />
-          </FlexSmall>
+          <Datepicker
+            formName="newSeries"
+            fieldName="startDate"
+            label="Start Date"
+            defaultValue={getToday()}
+            required
+            error={form.errors.startDate && "Please enter a start date"}
+          />
 
-          <FlexSmall>
-            <Datepicker
-              formName="newSeries"
-              fieldName="endDate"
-              label="End Date"
-              defaultValue={getFutureDate(3, "month")}
-              required
-              error={form.errors.endDate && "Please enter a start date"}
-            />
-          </FlexSmall>
+          <Datepicker
+            formName="newSeries"
+            fieldName="endDate"
+            label="End Date"
+            defaultValue={getFutureDate(3, "month")}
+            required
+            error={form.errors.endDate && "Please enter a start date"}
+          />
 
-          <FlexLarge>
+          <GridAreaLarge>
             <Textarea
               formName="newSeries"
               fieldName="description"
               label="Description"
             />
-          </FlexLarge>
+          </GridAreaLarge>
         </StyledGridContainer>
 
         <StyledButtonContainer>
