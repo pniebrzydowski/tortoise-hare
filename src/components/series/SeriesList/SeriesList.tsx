@@ -1,40 +1,13 @@
 import React, { FunctionComponent } from 'react';
 
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-
 import allSeries from '../../../dummyData/series';
 import { formatDate } from '../../../utils/date';
-
-const StyledList = styled("ul")`
-  margin: ${(props) =>
-    `${props.theme.spacing.medium} 0 ${props.theme.spacing.large}`};
-  width: 100%;
-`;
-
-const StyledListItem = styled("li")`
-  & + & {
-    margin-top: ${(props) => props.theme.spacing.small};
-  }
-`;
-
-const StyledLink = styled(Link)`
-  display: flex;
-  text-decoration: none;
-  border: ${(props) =>
-    `${props.theme.borders.style} ${props.theme.colors.light}`};
-  border-radius: ${(props) => props.theme.borders.radius};
-  background: #fff;
-  padding: ${(props) => props.theme.spacing.medium};
-
-  div:first-of-type {
-    margin-right: auto;
-  }
-`;
-
-const StyledDates = styled("span")`
-  color: ${(props) => props.theme.colors.secondary};
-`;
+import {
+  StyledListing,
+  StyledListingInfo,
+  StyledListingItem,
+  StyledListingLink
+} from '../../ui/ListingItem';
 
 const SeriesList: FunctionComponent = () => {
   return (
@@ -42,21 +15,24 @@ const SeriesList: FunctionComponent = () => {
       <header>
         <h2>All Series</h2>
       </header>
-      <StyledList>
+      <StyledListing>
         {allSeries.map((series) => (
-          <StyledListItem key={series.id}>
-            <StyledLink to={`/series/${series.id}`}>
+          <StyledListingItem key={series.id}>
+            <StyledListingLink to={`/series/${series.id}`}>
               <div>
                 <h3>{series.name}</h3>
-                <StyledDates>
-                  {formatDate(series.startDate)} - {formatDate(series.endDate)}
-                </StyledDates>
+                <StyledListingInfo>
+                  <li>
+                    {formatDate(series.startDate)} -{" "}
+                    {formatDate(series.endDate)}
+                  </li>
+                </StyledListingInfo>
               </div>
               <span>Details &gt;</span>
-            </StyledLink>
-          </StyledListItem>
+            </StyledListingLink>
+          </StyledListingItem>
         ))}
-      </StyledList>
+      </StyledListing>
     </section>
   );
 };
