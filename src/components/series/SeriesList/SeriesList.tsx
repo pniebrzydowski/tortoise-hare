@@ -19,13 +19,17 @@ const StyledListItem = styled("li")`
 `;
 
 const StyledLink = styled(Link)`
-  display: block;
+  display: flex;
   text-decoration: none;
   border: ${(props) =>
     `${props.theme.borders.style} ${props.theme.colors.light}`};
   border-radius: ${(props) => props.theme.borders.radius};
   background: #fff;
   padding: ${(props) => props.theme.spacing.medium};
+
+  div:first-of-type {
+    margin-right: auto;
+  }
 `;
 
 const StyledDates = styled("span")`
@@ -42,10 +46,13 @@ const SeriesList: FunctionComponent = () => {
         {allSeries.map((series) => (
           <StyledListItem key={series.id}>
             <StyledLink to={`/series/${series.id}`}>
-              <h3>{series.name}</h3>
-              <StyledDates>
-                {formatDate(series.startDate)} - {formatDate(series.endDate)}
-              </StyledDates>
+              <div>
+                <h3>{series.name}</h3>
+                <StyledDates>
+                  {formatDate(series.startDate)} - {formatDate(series.endDate)}
+                </StyledDates>
+              </div>
+              <span>Details &gt;</span>
             </StyledLink>
           </StyledListItem>
         ))}

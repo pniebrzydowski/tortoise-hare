@@ -1,14 +1,8 @@
-enum DistanceUnit {
-  "km",
-  "mi",
-}
+import { race1results, RaceResult } from './results';
 
-interface RaceResult {
-  id: string;
-  raceId: string;
-  predictedTime?: number;
-  time?: number;
-  points?: number;
+enum DistanceUnit {
+  "km" = "kilometers",
+  "mi" = "miles",
 }
 
 export interface Race {
@@ -18,9 +12,8 @@ export interface Race {
   startTime: number;
   distance: number;
   unit: DistanceUnit;
-  hasResults?: boolean;
   description?: string;
-  results?: RaceResult;
+  results?: RaceResult[];
 }
 
 const series1Races: Race[] = [
@@ -28,16 +21,17 @@ const series1Races: Race[] = [
     id: "1",
     seriesId: "1",
     name: "Stoney Creek 5k",
-    startTime: 1604239200000, // 2020-11-01 14:00
+    startTime: 1604235600000, // 2020-11-01 13:00 GMT
     distance: 5,
     unit: DistanceUnit.km,
     description: "This is going to be a fun race!",
+    results: race1results,
   },
   {
     id: "2",
     seriesId: "1",
     name: "Stoney Creek 10k",
-    startTime: 1604239200000, // 2020-11-08 14:00
+    startTime: 1604235600000, // 2020-11-08 13:00 GMT
     distance: 10,
     unit: DistanceUnit.km,
     description: "Good luck :-)",
@@ -49,7 +43,7 @@ const series2Races: Race[] = [
     id: "3",
     seriesId: "2",
     name: "Utica 5k",
-    startTime: 1604239200000, // 2020-11-01 14:00
+    startTime: 1604235600000, // 2020-11-01 13:00 GMT
     distance: 5,
     unit: DistanceUnit.km,
   },
@@ -57,7 +51,7 @@ const series2Races: Race[] = [
     id: "4",
     seriesId: "2",
     name: "Utica 10 mile",
-    startTime: 1604239200000, // 2020-11-08 14:00
+    startTime: 1604235600000, // 2020-11-01 13:00 GMT
     distance: 10,
     unit: DistanceUnit.mi,
     description: "Long one!",
