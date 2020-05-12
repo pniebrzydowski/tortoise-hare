@@ -1,8 +1,17 @@
 import React, { FunctionComponent } from 'react';
 
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import styled from 'styled-components';
 
 import SeriesDetail from '../components/series/SeriesDetail';
+
+const StyledLink = styled(Link)`
+  padding-top: ${(props) => props.theme.spacing.small};
+  padding-bottom: ${(props) => props.theme.spacing.small};
+  text-decoration: none;
+  display: block;
+  margin-bottom: ${(props) => props.theme.spacing.small};
+`;
 
 const SeriesDetailPage: FunctionComponent = () => {
   const { seriesId } = useParams();
@@ -13,6 +22,10 @@ const SeriesDetailPage: FunctionComponent = () => {
 
   return (
     <>
+      <nav>
+        <StyledLink to="/series">&lt; Back to All Series</StyledLink>
+      </nav>
+
       <SeriesDetail id={seriesId} />
     </>
   );
