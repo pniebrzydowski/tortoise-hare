@@ -1,12 +1,15 @@
 import React, { FunctionComponent } from 'react';
 
 import { RaceResult } from '../../../dummyData/results';
+import { getRunnerById } from '../../../dummyData/runners';
 import { formatTime } from '../../../utils/date';
 import { StyledTable } from '../../ui/Table';
 
 interface Props {
   results: RaceResult[];
 }
+
+const getRunnerName = (runnerId: string) => getRunnerById(runnerId)?.name;
 
 const RaceResults: FunctionComponent<Props> = ({ results }) => {
   const sortedResults = results.sort((a: RaceResult, b: RaceResult) => {
@@ -27,7 +30,7 @@ const RaceResults: FunctionComponent<Props> = ({ results }) => {
         <tbody>
           {sortedResults.map((result) => (
             <tr key={result.id}>
-              <td></td>
+              <td>{getRunnerName(result.runnerId)}</td>
               <td>{result.actualTime && formatTime(result.actualTime)}</td>
               <td>{result.points}</td>
             </tr>
