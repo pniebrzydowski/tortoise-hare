@@ -3,6 +3,7 @@ import React, { FunctionComponent } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
+import RaceList from '../components/races/RaceList';
 import SeriesDetail from '../components/series/SeriesDetail';
 
 const StyledLink = styled(Link)`
@@ -27,6 +28,7 @@ const SeriesDetailPage: FunctionComponent = () => {
       </nav>
 
       <SeriesDetail id={seriesId} />
+      <RaceList seriesId={seriesId} />
     </>
   );
 };
