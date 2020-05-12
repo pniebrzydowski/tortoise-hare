@@ -3,7 +3,7 @@ import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
 import { getRaceById, Race } from '../../../dummyData/races';
-import { DEFAULT_TIME_FORMAT, formatDate } from '../../../utils/date';
+import { DEFAULT_DATETIME_FORMAT, formatDate } from '../../../utils/date';
 
 interface Props {
   id: string;
@@ -40,7 +40,7 @@ const RaceDetail: FunctionComponent<Props> = ({ id }) => {
         <tbody>
           <tr>
             <StyledDatesHeader>Start:</StyledDatesHeader>
-            <td>{formatDate(race.startTime, DEFAULT_TIME_FORMAT)}</td>
+            <td>{formatDate(race.startTime, DEFAULT_DATETIME_FORMAT)}</td>
           </tr>
           <tr>
             <StyledDatesHeader>Distance:</StyledDatesHeader>

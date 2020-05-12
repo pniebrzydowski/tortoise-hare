@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 
 import { getRacesForSeries, Race } from '../../../dummyData/races';
-import { DEFAULT_TIME_FORMAT, formatDate } from '../../../utils/date';
+import { DEFAULT_DATETIME_FORMAT, formatDate } from '../../../utils/date';
 import {
   StyledListing,
   StyledListingInfo,
@@ -32,7 +32,7 @@ const RaceList: FunctionComponent<Props> = ({ seriesId }) => {
               <div>
                 <h3>{race.name}</h3>
                 <StyledListingInfo>
-                  <li>{formatDate(race.startTime, DEFAULT_TIME_FORMAT)}</li>
+                  <li>{formatDate(race.startTime, DEFAULT_DATETIME_FORMAT)}</li>
                   <li>
                     {race.distance} {race.unit}
                   </li>

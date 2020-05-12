@@ -4,7 +4,7 @@ export interface RaceResult {
   userId: string;
   predictedTime?: number;
   actualTime?: number;
-  points?: number;
+  points: number;
 }
 
 export const race1results: RaceResult[] = [
