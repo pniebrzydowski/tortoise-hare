@@ -40,8 +40,8 @@ const SeriesList: FunctionComponent = () => {
       </header>
       <StyledList>
         {allSeries.map((series) => (
-          <StyledListItem>
-            <StyledLink to={`/series/${series.id}`} key={series.id}>
+          <StyledListItem key={series.id}>
+            <StyledLink to={`/series/${series.id}`}>
               <h3>{series.name}</h3>
               <StyledDates>
                 {formatDate(series.startDate)} - {formatDate(series.endDate)}

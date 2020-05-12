@@ -14,25 +14,23 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 type FormData = Partial<Omit<Series, "id">>;
 
-const FlexBox = styled("div")`
-  display: flex;
-  flex-wrap: wrap;
+const StyledGridContainer = styled("div")`
+  display: grid;
+  grid-gap: ${(props) => props.theme.spacing.medium};
+  grid-template-columns: 1fr 1fr;
 
-  > div + div {
-    margin-top: ${(props) => props.theme.spacing.small};
+  @media screen and (min-width: 800px) {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
   }
 `;
 
 const FlexLarge = styled("div")`
-  width: 100%;
+  grid-column-start: 1;
+  grid-column-end: 3;
 `;
 
 const FlexSmall = styled("div")`
-  width: calc(50% - ${(props) => props.theme.spacing.small});
-
-  & + & {
-    margin-left: ${(props) => props.theme.spacing.medium};
-  }
+  grid-column-end: auto;
 `;
 
 const StyledButtonContainer = styled("div")`
@@ -46,11 +44,15 @@ const StyledButtonContainer = styled("div")`
 `;
 
 const NewSeries: FunctionComponent = () => {
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
   const form = useForm();
 
   if (!visible) {
-    return <button onClick={() => setVisible(true)}>Add new series</button>;
+    return (
+      <PrimaryButton onClick={() => setVisible(true)}>
+        Add new series
+      </PrimaryButton>
+    );
   }
 
   const onSubmit = (data: FormData) => {
@@ -60,7 +62,7 @@ const NewSeries: FunctionComponent = () => {
   return (
     <FormContext {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <FlexBox>
+        <StyledGridContainer>
           <FlexLarge>
             <Text
               formName="newSeries"
@@ -100,7 +102,7 @@ const NewSeries: FunctionComponent = () => {
               label="Description"
             />
           </FlexLarge>
-        </FlexBox>
+        </StyledGridContainer>
 
         <StyledButtonContainer>
           <PrimaryButton type="submit">Save</PrimaryButton>

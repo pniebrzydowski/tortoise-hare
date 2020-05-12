@@ -1,13 +1,14 @@
 import React from 'react';
 
-import { render, screen, wait } from '@testing-library/react';
+import { screen, wait } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { getFutureDate, getToday } from '../../../utils/date';
+import { renderWithTheme } from '../../../utils/tests';
 import NewSeries from './NewSeries';
 
 test("opens and closes the new series form", async () => {
-  render(<NewSeries />);
+  renderWithTheme(<NewSeries />);
   const newButton = screen.getByRole("button", { name: "Add new series" });
   expect(newButton).toBeInTheDocument();
   await userEvent.click(newButton);
@@ -28,7 +29,7 @@ test("opens and closes the new series form", async () => {
 test("opens and submits the form with error", async () => {
   jest.spyOn(console, "log").mockImplementation();
 
-  render(<NewSeries />);
+  renderWithTheme(<NewSeries />);
   const newButton = screen.getByRole("button", { name: "Add new series" });
   await userEvent.click(newButton);
 
@@ -44,7 +45,7 @@ test("opens and submits the form with error", async () => {
 test("opens and submits the form successfully", async () => {
   jest.spyOn(console, "log").mockImplementation();
 
-  render(<NewSeries />);
+  renderWithTheme(<NewSeries />);
   const newButton = screen.getByRole("button", { name: "Add new series" });
   await userEvent.click(newButton);
 
