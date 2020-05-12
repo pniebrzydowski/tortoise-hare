@@ -30,7 +30,7 @@ const StyledGridContainer = styled("div")`
     "desc desc";
   grid-template-columns: 1fr 1fr;
 
-  @media screen and (min-width: 400px) {
+  @media screen and (min-width: 480px) {
     grid-template-areas:
       "name name name name"
       "start start distance unit"
