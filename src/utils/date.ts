@@ -1,25 +1,41 @@
 import dayjs, { OpUnitType } from 'dayjs';
 
+const DATABASE_DATE_FORMAT = "YYYY-MM-DD";
+const DATABASE_TIME_FORMAT = "HH:mm:ss";
+const DATABASE_DATETIME_FORMAT = `${DATABASE_DATE_FORMAT} ${DATABASE_TIME_FORMAT}`;
+
 export const DEFAULT_DATE_FORMAT = "MM/DD/YYYY";
 export const DEFAULT_DATEPICKER_FORMAT = "MM/dd/yyyy";
 export const DEFAULT_DATETIME_FORMAT = `${DEFAULT_DATE_FORMAT} h:mma`;
 export const DEFAULT_DATETIMEPICKER_FORMAT = `${DEFAULT_DATEPICKER_FORMAT} h:mma`;
 
-export const getDateValue = (date: Date): number =>
-  dayjs(date).startOf("day").valueOf();
+export const getDateObject = (date: string): Date =>
+  new Date(dayjs(date).valueOf());
 
-export const getToday = (): number => dayjs().startOf("day").valueOf();
+export const getDateString = (date: Date): string =>
+  dayjs(date).startOf("day").format(DATABASE_DATE_FORMAT);
+
+export const getDateTimeString = (date: Date): string =>
+  dayjs(date).startOf("day").format(DATABASE_DATETIME_FORMAT);
+
+export const getToday = (): string =>
+  dayjs().startOf("day").format(DATABASE_DATE_FORMAT);
 
 export const getFutureDate = (
   value: number = 1,
   unit: OpUnitType = "month"
-): number => dayjs().startOf("day").add(value, unit).valueOf();
+): string =>
+  dayjs().startOf("day").add(value, unit).format(DATABASE_DATE_FORMAT);
 
-export const getFutureDateWithTime = (days: number, hours: number): number =>
-  dayjs().startOf("day").add(days, "day").add(hours, "hour").valueOf();
+export const getFutureDateWithTime = (days: number, hours: number): string =>
+  dayjs()
+    .startOf("day")
+    .add(days, "day")
+    .add(hours, "hour")
+    .format(DATABASE_DATETIME_FORMAT);
 
 export const formatDate = (
-  date: number,
+  date: string,
   format: string = DEFAULT_DATE_FORMAT
 ): string => dayjs(date).format(format);
 

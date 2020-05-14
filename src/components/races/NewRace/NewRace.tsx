@@ -116,7 +116,7 @@ const NewRace: FunctionComponent<Props> = ({ seriesId }) => {
               label="Start Time"
               defaultValue={getFutureDateWithTime(7, 8)}
               required
-              error={form.errors.startDate && "Please enter a start time"}
+              error={form.errors.startTime && "Please enter a start time"}
               includeTime
             />
           </GridAreaStart>

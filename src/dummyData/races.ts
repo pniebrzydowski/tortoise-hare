@@ -9,7 +9,7 @@ export interface Race {
   id: string;
   seriesId: string;
   name: string;
-  startTime: number;
+  startTime: string;
   distance: number;
   unit: DistanceUnit;
   description?: string;
@@ -21,7 +21,7 @@ const series1Races: Race[] = [
     id: "1",
     seriesId: "1",
     name: "Stoney Creek 5k",
-    startTime: 1604235600000, // 2020-11-01 13:00 GMT
+    startTime: "2020-11-01 08:00",
     distance: 5,
     unit: DistanceUnit.km,
     description: "This is going to be a fun race!",
@@ -31,7 +31,7 @@ const series1Races: Race[] = [
     id: "2",
     seriesId: "1",
     name: "Stoney Creek 10k",
-    startTime: 1604235600000, // 2020-11-08 13:00 GMT
+    startTime: "2020-11-08 13:00",
     distance: 10,
     unit: DistanceUnit.km,
     description: "Good luck :-)",
@@ -43,7 +43,7 @@ const series2Races: Race[] = [
     id: "3",
     seriesId: "2",
     name: "Utica 5k",
-    startTime: 1604235600000, // 2020-11-01 13:00 GMT
+    startTime: "2020-11-01 08:00",
     distance: 5,
     unit: DistanceUnit.km,
   },
@@ -51,7 +51,7 @@ const series2Races: Race[] = [
     id: "4",
     seriesId: "2",
     name: "Utica 10 mile",
-    startTime: 1604235600000, // 2020-11-01 13:00 GMT
+    startTime: "2020-11-01 13:00",
     distance: 10,
     unit: DistanceUnit.mi,
     description: "Long one!",

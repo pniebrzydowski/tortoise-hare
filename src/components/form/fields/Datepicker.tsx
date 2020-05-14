@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 
 import DatePicker from 'react-datepicker';
 import { Controller } from 'react-hook-form';
@@ -6,7 +6,9 @@ import { Controller } from 'react-hook-form';
 import {
   DEFAULT_DATEPICKER_FORMAT,
   DEFAULT_DATETIMEPICKER_FORMAT,
-  getDateValue
+  getDateObject,
+  getDateString,
+  getDateTimeString
 } from '../../../utils/date';
 import { StyledInput } from '../../ui/Input';
 import FieldWrapper from '../FieldWrapper';
@@ -17,7 +19,7 @@ interface Props {
   formName: string;
   fieldName: string;
   label?: string;
-  defaultValue?: number;
+  defaultValue?: string;
   error?: string;
   required?: boolean;
   includeTime?: boolean;
@@ -32,28 +34,42 @@ const Datepicker: FunctionComponent<Props> = ({
   required,
   includeTime,
 }) => {
+  const initialSelected = defaultValue ? getDateObject(defaultValue) : null;
+  const [selectedDate, setSelectedDate] = useState(initialSelected);
   const fieldId = `${formName}_${fieldName}`;
 
   return (
     <FieldWrapper fieldId={fieldId} label={label} error={error}>
       <Controller
-        as={DatePicker}
+        as={(controllerProps) => {
+          const { value, defaultValue, ...rest } = controllerProps;
+          return (
+            <DatePicker
+              selected={selectedDate}
+              dateFormat={
+                includeTime
+                  ? DEFAULT_DATETIMEPICKER_FORMAT
+                  : DEFAULT_DATEPICKER_FORMAT
+              }
+              customInput={<StyledInput />}
+              showTimeSelect={includeTime}
+              timeFormat="HH:mm"
+              timeIntervals={15}
+              timeCaption="time"
+              {...rest}
+            />
+          );
+        }}
         name={fieldName}
         id={`${formName}_${fieldName}`}
         defaultValue={defaultValue}
-        valueName="selected"
         rules={{ required }}
-        onChange={([selected]) => getDateValue(selected)}
-        customInput={<StyledInput />}
-        dateFormat={
-          includeTime
-            ? DEFAULT_DATETIMEPICKER_FORMAT
-            : DEFAULT_DATEPICKER_FORMAT
-        }
-        showTimeSelect={includeTime}
-        timeFormat="HH:mm"
-        timeIntervals={15}
-        timeCaption="time"
+        onChange={([selected]) => {
+          setSelectedDate(selected);
+          return includeTime
+            ? getDateTimeString(selected)
+            : getDateString(selected);
+        }}
       />
     </FieldWrapper>
   );
