@@ -53,9 +53,6 @@ const Datepicker: FunctionComponent<Props> = ({
               }
               customInput={<StyledInput />}
               showTimeSelect={includeTime}
-              timeFormat="HH:mm"
-              timeIntervals={15}
-              timeCaption="time"
               {...rest}
             />
           );
