@@ -1,9 +1,8 @@
 import React, { FunctionComponent } from 'react';
 
 import { useFormContext } from 'react-hook-form';
-import styled from 'styled-components';
 
-import { inputCss } from '../../ui/Input';
+import { StyledTextarea } from '../../ui/Input';
 import FieldWrapper from '../FieldWrapper';
 
 interface Props {
@@ -14,10 +13,6 @@ interface Props {
   error?: string;
   required?: boolean;
 }
-
-const StyledTextarea = styled("textarea")`
-  ${inputCss}
-`;
 
 const Textarea: FunctionComponent<Props> = ({
   formName,

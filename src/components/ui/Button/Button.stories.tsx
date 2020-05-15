@@ -5,7 +5,7 @@ import { action } from '@storybook/addon-actions';
 import { OutlineButton, PrimaryButton } from './Button';
 
 export default {
-  title: "UI Components/Buttons",
+  title: "Styled Components/Buttons",
 };
 
 export const Primary = () => (

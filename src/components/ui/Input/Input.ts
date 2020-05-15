@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-export const inputCss = css`
+const inputCss = css`
   appearance: none;
   background: #fff;
   border-radius: ${(props) => props.theme.borders.radius};
@@ -20,5 +20,9 @@ export const StyledSelect = styled("select")`
 `;
 
 export const StyledInput = styled("input")`
+  ${inputCss}
+`;
+
+export const StyledTextarea = styled("textarea")`
   ${inputCss}
 `;

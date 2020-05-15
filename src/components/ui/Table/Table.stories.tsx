@@ -5,7 +5,7 @@ import { number } from '@storybook/addon-knobs';
 import { StyledTable } from './Table';
 
 export default {
-  title: "UI Components",
+  title: "Styled Components",
 };
 
 export const Table = () => {
