@@ -3,8 +3,7 @@ import React, { ReactNode } from 'react';
 import { boolean, text } from '@storybook/addon-knobs';
 import { FormContext, useForm } from 'react-hook-form';
 
-import { getToday } from '../../../../utils/date';
-import Datepicker from './Datepicker';
+import Number from './Number';
 
 export default {
   title: "UI Components/Form Fields",
@@ -16,21 +15,19 @@ export default {
   ],
 };
 
-export const DateField = () => {
-  const label = text("Label", "Date");
+export const NumberField = () => {
+  const label = text("Label", "Number");
   const error = text("Error", "Error Message");
   const required = boolean("Required", true);
-  const includeTime = boolean("Include Time", false);
 
   return (
-    <Datepicker
+    <Number
       formName="storybook"
-      fieldName="date"
+      fieldName="number"
       label={label}
-      defaultValue={getToday()}
+      defaultValue={5}
       error={error}
       required={required}
-      includeTime={includeTime}
     />
   );
 };

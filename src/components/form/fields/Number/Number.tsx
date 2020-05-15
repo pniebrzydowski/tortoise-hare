@@ -2,8 +2,8 @@ import React, { FunctionComponent } from 'react';
 
 import { Controller } from 'react-hook-form';
 
-import { StyledInput } from '../../ui/Input';
-import FieldWrapper from '../FieldWrapper';
+import { StyledInput } from '../../../ui/Input';
+import FieldWrapper from '../../FieldWrapper';
 
 interface Props {
   formName: string;
