@@ -2,8 +2,8 @@ import React, { FunctionComponent } from 'react';
 
 import { useFormContext } from 'react-hook-form';
 
-import { StyledTextarea } from '../../ui/Input';
-import FieldWrapper from '../FieldWrapper';
+import { StyledTextarea } from '../../../ui/Input';
+import FieldWrapper from '../../FieldWrapper';
 
 interface Props {
   formName: string;
