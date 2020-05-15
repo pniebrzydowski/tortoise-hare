@@ -1,19 +1,14 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 
 import { boolean, text } from '@storybook/addon-knobs';
-import { FormContext, useForm } from 'react-hook-form';
 
+import { FormWrapper } from '../../../../../.storybook/decorators';
 import { getToday } from '../../../../utils/date';
 import Datepicker from './Datepicker';
 
 export default {
   title: "UI Components/Form Fields",
-  decorators: [
-    (storyFn: () => ReactNode) => {
-      const form = useForm();
-      return <FormContext {...form}>{storyFn()}</FormContext>;
-    },
-  ],
+  decorators: [FormWrapper],
 };
 
 export const DateField = () => {
