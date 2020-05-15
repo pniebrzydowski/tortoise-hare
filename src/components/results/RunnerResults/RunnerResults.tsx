@@ -20,11 +20,11 @@ const RunnerResults: FunctionComponent<Props> = ({ results }) => {
 
   return (
     <section>
-      <h2>Results</h2>
+      <h2>Previous Results</h2>
       <StyledTable>
         <thead>
           <tr>
-            <th>Name</th>
+            <th>Race</th>
             <th>Time</th>
             <th>Points</th>
           </tr>
