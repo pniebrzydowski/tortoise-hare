@@ -8,7 +8,8 @@ export const StyledTable = styled("table")`
 
   th,
   td {
-    padding: ${(props) => props.theme.spacing.xSmall};
+    padding: ${(props) =>
+      `${props.theme.spacing.xSmall} ${props.theme.spacing.small}`};
     border-top: ${(props) =>
       `${props.theme.borders.style} ${props.theme.colors.light}`};
     border-right: ${(props) =>

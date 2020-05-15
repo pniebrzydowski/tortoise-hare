@@ -2,12 +2,7 @@ import React, { FunctionComponent } from 'react';
 
 import { getRacesForSeries, Race } from '../../../dummyData/races';
 import { DEFAULT_DATETIME_FORMAT, formatDate } from '../../../utils/date';
-import {
-  StyledListing,
-  StyledListingInfo,
-  StyledListingItem,
-  StyledListingLink
-} from '../../ui/ListingItem';
+import ListingItem from '../../ui/ListingItem';
 
 interface Props {
   seriesId: string;
@@ -25,24 +20,20 @@ const RaceList: FunctionComponent<Props> = ({ seriesId }) => {
       <header>
         <h2>Races</h2>
       </header>
-      <StyledListing>
+      <ul>
         {races.map((race) => (
-          <StyledListingItem key={race.id}>
-            <StyledListingLink to={`/race/${race.id}`}>
-              <div>
-                <h3>{race.name}</h3>
-                <StyledListingInfo>
-                  <li>{formatDate(race.startTime, DEFAULT_DATETIME_FORMAT)}</li>
-                  <li>
-                    {race.distance} {race.unit}
-                  </li>
-                </StyledListingInfo>
-              </div>
-              <span>{race.results ? "Results" : "Details"} ></span>
-            </StyledListingLink>
-          </StyledListingItem>
+          <ListingItem
+            key={race.id}
+            linkUrl={`/race/${race.id}`}
+            linkText={race.results && "Results"}
+            title={race.name}
+            info={[
+              formatDate(race.startTime, DEFAULT_DATETIME_FORMAT),
+              `${race.distance} ${race.unit}`,
+            ]}
+          />
         ))}
-      </StyledListing>
+      </ul>
     </section>
   );
 };

@@ -2,12 +2,7 @@ import React, { FunctionComponent } from 'react';
 
 import allSeries from '../../../dummyData/series';
 import { formatDate } from '../../../utils/date';
-import {
-  StyledListing,
-  StyledListingInfo,
-  StyledListingItem,
-  StyledListingLink
-} from '../../ui/ListingItem';
+import ListingItem from '../../ui/ListingItem';
 
 const SeriesList: FunctionComponent = () => {
   return (
@@ -15,24 +10,18 @@ const SeriesList: FunctionComponent = () => {
       <header>
         <h2>All Series</h2>
       </header>
-      <StyledListing>
+      <ul>
         {allSeries.map((series) => (
-          <StyledListingItem key={series.id}>
-            <StyledListingLink to={`/series/${series.id}`}>
-              <div>
-                <h3>{series.name}</h3>
-                <StyledListingInfo>
-                  <li>
-                    {formatDate(series.startDate)} -{" "}
-                    {formatDate(series.endDate)}
-                  </li>
-                </StyledListingInfo>
-              </div>
-              <span>Details &gt;</span>
-            </StyledListingLink>
-          </StyledListingItem>
+          <ListingItem
+            key={series.id}
+            linkUrl={`/series/${series.id}`}
+            title={series.name}
+            info={[
+              `${formatDate(series.startDate)} - ${formatDate(series.endDate)}`,
+            ]}
+          />
         ))}
-      </StyledListing>
+      </ul>
     </section>
   );
 };
