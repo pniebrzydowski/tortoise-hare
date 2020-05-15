@@ -38,3 +38,8 @@ const allResults = [...race1results];
 
 export const getResultsForRace = (raceId: string): RaceResult[] | undefined =>
   allResults.filter((element) => element.raceId === raceId);
+
+export const getResultsForRunner = (
+  runnerId: string
+): RaceResult[] | undefined =>
+  allResults.filter((element) => element.runnerId === runnerId);

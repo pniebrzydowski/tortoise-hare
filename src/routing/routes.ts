@@ -4,7 +4,7 @@ interface Routes {
   SERIES_LIST: string;
   SERIES_DETAIL: string;
   RACE_DETAIL: string;
-  USER_DETAIL: string;
+  RUNNER_DETAIL: string;
 }
 
 const routes: Routes = {
@@ -13,7 +13,7 @@ const routes: Routes = {
   SERIES_LIST: "/series",
   SERIES_DETAIL: "/series/:seriesId",
   RACE_DETAIL: "/race/:raceId",
-  USER_DETAIL: "/user/:userId",
+  RUNNER_DETAIL: "/runner/:runnerId",
 };
 
 export default routes;

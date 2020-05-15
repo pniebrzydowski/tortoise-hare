@@ -9,9 +9,9 @@ import theme from './design/theme';
 import Home from './pages/HomePage';
 import Login from './pages/LoginPage';
 import RaceDetail from './pages/RaceDetailPage';
+import RunnerDetail from './pages/RunnerDetailPage';
 import SeriesDetail from './pages/SeriesDetailPage';
 import SeriesList from './pages/SeriesListPage';
-import UserDetail from './pages/UserDetailPage';
 import routes from './routing/routes';
 
 const StyledMain = styled("main")`
@@ -42,8 +42,8 @@ const App: FunctionComponent = () => {
             <Route path={routes.RACE_DETAIL} exact>
               <RaceDetail />
             </Route>
-            <Route path={routes.USER_DETAIL} exact>
-              <UserDetail />
+            <Route path={routes.RUNNER_DETAIL} exact>
+              <RunnerDetail />
             </Route>
 
             <Route path={routes.LOGIN} exact>

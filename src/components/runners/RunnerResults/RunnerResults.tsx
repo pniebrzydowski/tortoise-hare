@@ -2,8 +2,8 @@ import React, { FunctionComponent } from 'react';
 
 import { Link } from 'react-router-dom';
 
+import { getRaceById } from '../../../dummyData/races';
 import { RaceResult } from '../../../dummyData/results';
-import { getRunnerById } from '../../../dummyData/runners';
 import { formatTime } from '../../../utils/date';
 import { StyledTable } from '../../ui/Table';
 
@@ -11,9 +11,9 @@ interface Props {
   results: RaceResult[];
 }
 
-const getRunnerName = (runnerId: string) => getRunnerById(runnerId)?.name;
+const getRaceName = (raceId: string) => getRaceById(raceId)?.name;
 
-const RaceResults: FunctionComponent<Props> = ({ results }) => {
+const RunnerResults: FunctionComponent<Props> = ({ results }) => {
   const sortedResults = results.sort((a: RaceResult, b: RaceResult) => {
     return b.points - a.points;
   });
@@ -33,8 +33,8 @@ const RaceResults: FunctionComponent<Props> = ({ results }) => {
           {sortedResults.map((result) => (
             <tr key={result.id}>
               <td>
-                <Link to={`/runner/${result.runnerId}`}>
-                  {getRunnerName(result.runnerId)}
+                <Link to={`/race/${result.raceId}`}>
+                  {getRaceName(result.raceId)}
                 </Link>
               </td>
               <td>{result.actualTime && formatTime(result.actualTime)}</td>
@@ -47,4 +47,4 @@ const RaceResults: FunctionComponent<Props> = ({ results }) => {
   );
 };
 
-export default RaceResults;
+export default RunnerResults;
