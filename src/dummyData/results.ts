@@ -34,7 +34,24 @@ export const race1results: RaceResult[] = [
   },
 ];
 
-const allResults = [...race1results];
+export const race2results: RaceResult[] = [
+  {
+    id: "4",
+    raceId: "2",
+    runnerId: "1",
+    predictedTime: 1080,
+    points: 0,
+  },
+  {
+    id: "5",
+    raceId: "2",
+    runnerId: "3",
+    predictedTime: 1200,
+    points: 0,
+  },
+];
+
+const allResults = [...race1results, ...race2results];
 
 export const getResultsForRace = (raceId: string): RaceResult[] | undefined =>
   allResults.filter((element) => element.raceId === raceId);

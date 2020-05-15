@@ -4,7 +4,8 @@ import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import RaceDetail from '../components/races/RaceDetail';
-import RaceResults from '../components/races/RaceResults';
+import RaceResults from '../components/results/RaceResults';
+import UpcomingRunners from '../components/results/UpcomingRunners';
 import { getRaceById, Race } from '../dummyData/races';
 
 const StyledLink = styled(Link)`
@@ -35,7 +36,12 @@ const RaceDetailPage: FunctionComponent = () => {
       </nav>
 
       <RaceDetail id={raceId} />
-      {race.results && <RaceResults results={race.results} />}
+      {race.results &&
+        (race.isFinished ? (
+          <RaceResults results={race.results} />
+        ) : (
+          <UpcomingRunners results={race.results} />
+        ))}
     </>
   );
 };

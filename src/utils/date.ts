@@ -27,6 +27,9 @@ export const getFutureDate = (
 ): string =>
   dayjs().startOf("day").add(value, unit).format(DATABASE_DATE_FORMAT);
 
+export const sortByDate = (a: string, b: string): number =>
+  dayjs(b).valueOf() - dayjs(a).valueOf();
+
 export const getFutureDateWithTime = (days: number, hours: number): string =>
   dayjs()
     .startOf("day")

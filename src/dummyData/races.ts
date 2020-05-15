@@ -1,4 +1,4 @@
-import { race1results, RaceResult } from './results';
+import { race1results, race2results, RaceResult } from './results';
 
 export enum DistanceUnit {
   "km" = "km",
@@ -13,6 +13,7 @@ export interface Race {
   distance: number;
   unit: DistanceUnit;
   description?: string;
+  isFinished?: boolean;
   results?: RaceResult[];
 }
 
@@ -35,6 +36,7 @@ const series1Races: Race[] = [
     distance: 10,
     unit: DistanceUnit.km,
     description: "Good luck :-)",
+    results: race2results,
   },
 ];
 
