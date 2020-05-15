@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { RaceResult } from '../../../dummyData/results';
 import { getRunnerById } from '../../../dummyData/runners';
 import { formatTime } from '../../../utils/date';
-import { StyledTable } from '../../ui/Table';
+import Results from '../../Results';
 
 interface Props {
   results: RaceResult[];
@@ -19,31 +19,19 @@ const RaceResults: FunctionComponent<Props> = ({ results }) => {
   });
 
   return (
-    <section>
-      <h2>Results</h2>
-      <StyledTable>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Time</th>
-            <th>Points</th>
-          </tr>
-        </thead>
-        <tbody>
-          {sortedResults.map((result) => (
-            <tr key={result.id}>
-              <td>
-                <Link to={`/runner/${result.runnerId}`}>
-                  {getRunnerName(result.runnerId)}
-                </Link>
-              </td>
-              <td>{result.actualTime && formatTime(result.actualTime)}</td>
-              <td>{result.points}</td>
-            </tr>
-          ))}
-        </tbody>
-      </StyledTable>
-    </section>
+    <Results title="Results" columns={["Name", "Time", "Points"]}>
+      {sortedResults.map((result) => (
+        <tr key={result.id}>
+          <td>
+            <Link to={`/runner/${result.runnerId}`}>
+              {getRunnerName(result.runnerId)}
+            </Link>
+          </td>
+          <td>{result.actualTime && formatTime(result.actualTime)}</td>
+          <td>{result.points}</td>
+        </tr>
+      ))}
+    </Results>
   );
 };
 
