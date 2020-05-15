@@ -2,12 +2,12 @@ import React, { FunctionComponent } from 'react';
 
 import { useFormContext } from 'react-hook-form';
 
-import { StyledSelect } from '../../ui/Input';
-import FieldWrapper from '../FieldWrapper';
+import { StyledSelect } from '../../../ui/Input';
+import FieldWrapper from '../../FieldWrapper';
 
 export interface SelectOption {
   label?: string;
-  value: any;
+  value: string;
 }
 
 interface Props {
