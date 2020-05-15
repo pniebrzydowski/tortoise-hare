@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent } from 'react';
 
 import DatePicker from 'react-datepicker';
 import { Controller } from 'react-hook-form';
@@ -34,8 +34,6 @@ const Datepicker: FunctionComponent<Props> = ({
   required,
   includeTime,
 }) => {
-  const initialSelected = defaultValue ? getDateObject(defaultValue) : null;
-  const [selectedDate, setSelectedDate] = useState(initialSelected);
   const fieldId = `${formName}_${fieldName}`;
 
   return (
@@ -45,7 +43,7 @@ const Datepicker: FunctionComponent<Props> = ({
           const { value, defaultValue, ...rest } = controllerProps;
           return (
             <DatePicker
-              selected={selectedDate}
+              selected={getDateObject(value)}
               dateFormat={
                 includeTime
                   ? DEFAULT_DATETIMEPICKER_FORMAT
@@ -61,12 +59,9 @@ const Datepicker: FunctionComponent<Props> = ({
         id={`${formName}_${fieldName}`}
         defaultValue={defaultValue}
         rules={{ required }}
-        onChange={([selected]) => {
-          setSelectedDate(selected);
-          return includeTime
-            ? getDateTimeString(selected)
-            : getDateString(selected);
-        }}
+        onChange={([selected]) =>
+          includeTime ? getDateTimeString(selected) : getDateString(selected)
+        }
       />
     </FieldWrapper>
   );

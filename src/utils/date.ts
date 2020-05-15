@@ -16,7 +16,7 @@ export const getDateString = (date: Date): string =>
   dayjs(date).startOf("day").format(DATABASE_DATE_FORMAT);
 
 export const getDateTimeString = (date: Date): string =>
-  dayjs(date).startOf("day").format(DATABASE_DATETIME_FORMAT);
+  dayjs(date).format(DATABASE_DATETIME_FORMAT);
 
 export const getToday = (): string =>
   dayjs().startOf("day").format(DATABASE_DATE_FORMAT);
