@@ -2,9 +2,9 @@ import React, { FunctionComponent } from 'react';
 
 import { useParams } from 'react-router-dom';
 
-import RunnerResults from '../components/results/RunnerResults';
-import UpcomingRaces from '../components/results/UpcomingRaces';
 import RunnerDetail from '../components/runners/RunnerDetail';
+import RunnerResults from '../components/runners/RunnerResults';
+import UpcomingRaces from '../components/runners/UpcomingRaces';
 import { getResultsForRunner, RaceResult } from '../dummyData/results';
 
 const RunnerDetailPage: FunctionComponent = () => {
@@ -21,8 +21,8 @@ const RunnerDetailPage: FunctionComponent = () => {
   return (
     <>
       <RunnerDetail id={runnerId} />
-      <UpcomingRaces results={upcoming} />
-      <RunnerResults results={finished} />
+      {upcoming.length > 0 && <UpcomingRaces results={upcoming} />}
+      {finished.length > 0 && <RunnerResults results={finished} />}
     </>
   );
 };

@@ -26,6 +26,7 @@ const series1Races: Race[] = [
     distance: 5,
     unit: DistanceUnit.km,
     description: "This is going to be a fun race!",
+    isFinished: true,
     results: race1results,
   },
   {
