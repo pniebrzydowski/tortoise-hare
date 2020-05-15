@@ -23,7 +23,7 @@ const UpcomingRunners: FunctionComponent<Props> = ({ results }) => {
 
   return (
     <section>
-      <h2>Upcoming Races</h2>
+      <h2>Runners</h2>
       <StyledTable>
         <thead>
           <tr>
