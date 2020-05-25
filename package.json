@@ -1,5 +1,6 @@
 {
   "name": "tortoise-hare",
+  "homepage": "https://pniebrzydowski.github.io/tortoise-hare",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -27,7 +28,9 @@
     "test": "react-scripts test --env=jest-environment-jsdom-sixteen",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9009 -s public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "predeploy": "react-scripts build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -53,6 +56,7 @@
     "@storybook/react": "^5.3.18",
     "@testing-library/user-event": "^10.1.2",
     "@types/styled-components": "^5.1.0",
+    "gh-pages": "^2.2.0",
     "jest-environment-jsdom-sixteen": "^1.0.3"
   }
 }

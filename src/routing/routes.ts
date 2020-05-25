@@ -7,6 +7,8 @@ interface Routes {
   RUNNER_DETAIL: string;
 }
 
+export const ROUTER_BASE = "/tortoise-hare/";
+
 const routes: Routes = {
   HOME: "/",
   LOGIN: "/login",
