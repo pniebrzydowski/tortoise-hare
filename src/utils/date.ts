@@ -6,8 +6,9 @@ const DATABASE_DATETIME_FORMAT = `${DATABASE_DATE_FORMAT} ${DATABASE_TIME_FORMAT
 
 export const DEFAULT_DATE_FORMAT = "MM/DD/YYYY";
 export const DEFAULT_DATEPICKER_FORMAT = "MM/dd/yyyy";
-export const DEFAULT_DATETIME_FORMAT = `${DEFAULT_DATE_FORMAT} h:mma`;
-export const DEFAULT_DATETIMEPICKER_FORMAT = `${DEFAULT_DATEPICKER_FORMAT} h:mma`;
+export const DEFAULT_TIME_FORMAT = "h:mma";
+export const DEFAULT_DATETIME_FORMAT = `${DEFAULT_DATE_FORMAT} ${DEFAULT_TIME_FORMAT}`;
+export const DEFAULT_DATETIMEPICKER_FORMAT = `${DEFAULT_DATEPICKER_FORMAT} ${DEFAULT_TIME_FORMAT}`;
 
 export const getDateObject = (date: string): Date =>
   new Date(dayjs(date).valueOf());

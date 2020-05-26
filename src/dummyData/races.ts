@@ -1,4 +1,3 @@
-import { getDateValue, getToday, sortByDate } from '../utils/date';
 import { race1results, race2results, RaceResult } from './results';
 import { allVolunteers, Runner } from './runners';
 
@@ -73,20 +72,5 @@ export const getRaceById = (raceId: string): Race | undefined =>
 
 export const getRacesForSeries = (seriesId: string): Race[] | undefined =>
   allRaces.filter((element) => element.seriesId === seriesId);
-
-export const getNextRace = (): Race | undefined => {
-  const upcomingRaces = allRaces.filter(
-    (race: Race) =>
-      !race.isFinished &&
-      getDateValue(race.startTime) > getDateValue(getToday())
-  );
-  const sortedRaces = upcomingRaces.sort((a: Race, b: Race): number =>
-    sortByDate(a.startTime, b.startTime)
-  );
-  if (!sortedRaces) {
-    return undefined;
-  }
-  return sortedRaces[0];
-};
 
 export default allRaces;

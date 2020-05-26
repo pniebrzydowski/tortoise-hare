@@ -2,8 +2,8 @@ export interface RaceResult {
   id: string;
   raceId: string;
   runnerId: string;
-  predictedTime?: number;
-  actualTime?: number;
+  predictedTime: number;
+  actualTime: number;
   points: number;
 }
 
@@ -40,6 +40,7 @@ export const race2results: RaceResult[] = [
     raceId: "2",
     runnerId: "1",
     predictedTime: 1080,
+    actualTime: 1105,
     points: 0,
   },
   {
@@ -47,6 +48,15 @@ export const race2results: RaceResult[] = [
     raceId: "2",
     runnerId: "3",
     predictedTime: 1200,
+    actualTime: 0,
+    points: 0,
+  },
+  {
+    id: "6",
+    raceId: "2",
+    runnerId: "4",
+    predictedTime: 0,
+    actualTime: 0,
     points: 0,
   },
 ];
@@ -56,7 +66,5 @@ const allResults = [...race1results, ...race2results];
 export const getResultsForRace = (raceId: string): RaceResult[] | undefined =>
   allResults.filter((element) => element.raceId === raceId);
 
-export const getResultsForRunner = (
-  runnerId: string
-): RaceResult[] | undefined =>
+export const getResultsForRunner = (runnerId: string): RaceResult[] =>
   allResults.filter((element) => element.runnerId === runnerId);

@@ -4,10 +4,10 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import NextRace from '../components/races/NextRace';
+import { getNextRace } from '../components/races/utils';
 import RunnerDetail from '../components/runners/RunnerDetail';
 import RunnerResults from '../components/runners/RunnerResults';
 import UpcomingRaces from '../components/runners/UpcomingRaces';
-import { getNextRace } from '../dummyData/races';
 import { getResultsForRunner, RaceResult } from '../dummyData/results';
 
 const StyledFlexBox = styled("div")`
@@ -62,7 +62,13 @@ const RunnerDetailPage: FunctionComponent = () => {
     <>
       <StyledFlexBox>
         <RunnerDetail id={runnerId} />
-        {nextRace && <NextRace raceId={nextRace.id} raceName={nextRace.name} />}
+        {nextRace && (
+          <NextRace
+            raceId={nextRace.id}
+            raceName={nextRace.name}
+            runnerId={runnerId}
+          />
+        )}
       </StyledFlexBox>
       <StyledTableWrapper>
         {upcoming.length > 0 && <UpcomingRaces results={upcoming} />}
