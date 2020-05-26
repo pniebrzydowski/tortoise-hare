@@ -7,6 +7,8 @@ import NewRace from '../components/races/NewRace';
 import RaceList from '../components/races/RaceList';
 import SeriesDetail from '../components/series/SeriesDetail';
 import SeriesStandings from '../components/series/SeriesStandings';
+import { getRacesForSeries, Race } from '../dummyData/races';
+import { isDateInFuture } from '../utils/date';
 
 const StyledLink = styled(Link)`
   padding-top: ${(props) => props.theme.spacing.small};
@@ -47,6 +49,14 @@ const SeriesDetailPage: FunctionComponent = () => {
     return null;
   }
 
+  const seriesRaces: Race[] = getRacesForSeries(seriesId);
+  const upcomingRaces: Race[] = seriesRaces.filter(
+    (race) => isDateInFuture(race.startTime) && !race.isFinished
+  );
+  const pastRaces: Race[] = seriesRaces.filter(
+    (race) => race.isFinished || !isDateInFuture(race.startTime)
+  );
+
   return (
     <>
       <nav>
@@ -57,8 +67,23 @@ const SeriesDetailPage: FunctionComponent = () => {
 
       <StyledFlexBox>
         <StyledFlexContainer>
-          <RaceList seriesId={seriesId} />
-          <NewRace seriesId={seriesId} />
+          {upcomingRaces.length > 0 && (
+            <StyledFlexContainer>
+              <header>
+                <h3 style={{ display: "inline" }}>Upcoming Races</h3>
+                <NewRace seriesId={seriesId} />
+              </header>
+              <RaceList races={upcomingRaces} />
+            </StyledFlexContainer>
+          )}
+          {pastRaces.length > 0 && (
+            <StyledFlexContainer>
+              <header>
+                <h3>Past Races</h3>
+              </header>
+              <RaceList races={pastRaces} />
+            </StyledFlexContainer>
+          )}
         </StyledFlexContainer>
         <SeriesStandings seriesId={seriesId} />
       </StyledFlexBox>

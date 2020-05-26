@@ -78,7 +78,10 @@ const NewRace: FunctionComponent<Props> = ({ seriesId }) => {
 
   if (!visible) {
     return (
-      <PrimaryButton onClick={() => setVisible(true)}>
+      <PrimaryButton
+        style={{ float: "right" }}
+        onClick={() => setVisible(true)}
+      >
         Add new race
       </PrimaryButton>
     );

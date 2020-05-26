@@ -70,7 +70,7 @@ const allRaces: Race[] = [...series1Races, ...series2Races];
 export const getRaceById = (raceId: string): Race | undefined =>
   allRaces.find((element) => element.id === raceId);
 
-export const getRacesForSeries = (seriesId: string): Race[] | undefined =>
+export const getRacesForSeries = (seriesId: string): Race[] =>
   allRaces.filter((element) => element.seriesId === seriesId);
 
 export default allRaces;

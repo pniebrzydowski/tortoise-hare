@@ -18,7 +18,7 @@ const StyledMain = styled("main")`
   padding: ${(props) => props.theme.spacing.medium};
 
   & > *:not(nav) + * {
-    margin-top: ${(props) => props.theme.spacing.large};
+    margin-top: ${(props) => props.theme.spacing.xLarge};
   }
 `;
 
