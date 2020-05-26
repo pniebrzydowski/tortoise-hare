@@ -5,8 +5,8 @@ import styled from 'styled-components';
 
 import routes from '../../../routing/routes';
 import { PrimaryButton } from '../../ui/Button';
-import StartTime from '../StartTime';
 import { getRunnerResultForRace } from '../utils';
+import StartTime from './StartTime';
 
 interface Props {
   raceId: string;
