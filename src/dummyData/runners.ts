@@ -34,5 +34,8 @@ export const allRunners: Runner[] = [
   ...allVolunteers,
 ];
 
+export const getRunnerName = (runnerId: string) =>
+  getRunnerById(runnerId)?.name;
+
 export const getRunnerById = (runnerId: string): Runner | undefined =>
   allRunners.find((element) => element.id === runnerId);

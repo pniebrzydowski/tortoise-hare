@@ -3,15 +3,13 @@ import React, { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
 
 import { RaceResult } from '../../../dummyData/results';
-import { getRunnerById } from '../../../dummyData/runners';
+import { getRunnerName } from '../../../dummyData/runners';
 import { formatTime } from '../../../utils/date';
 import Results from '../../Results';
 
 interface Props {
   results: RaceResult[];
 }
-
-const getRunnerName = (runnerId: string) => getRunnerById(runnerId)?.name;
 
 const UpcomingRunners: FunctionComponent<Props> = ({ results }) => {
   const sortedResults = results.sort((a: RaceResult, b: RaceResult) => {

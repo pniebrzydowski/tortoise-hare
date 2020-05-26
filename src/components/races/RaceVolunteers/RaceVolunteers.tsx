@@ -2,14 +2,12 @@ import React, { FunctionComponent } from 'react';
 
 import { Link } from 'react-router-dom';
 
-import { getRunnerById, Runner } from '../../../dummyData/runners';
+import { getRunnerName, Runner } from '../../../dummyData/runners';
 import Results from '../../Results';
 
 interface Props {
   volunteers: Runner[];
 }
-
-const getRunnerName = (runnerId: string) => getRunnerById(runnerId)?.name;
 
 const RaceVolunteers: FunctionComponent<Props> = ({ volunteers }) => {
   return (
