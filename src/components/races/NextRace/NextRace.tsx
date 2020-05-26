@@ -3,11 +3,10 @@ import React, { FunctionComponent, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { getRaceById } from '../../../dummyData/races';
 import routes from '../../../routing/routes';
-import { DEFAULT_TIME_FORMAT, formatDate } from '../../../utils/date';
 import { PrimaryButton } from '../../ui/Button';
-import { getPredictedTime, getRunnerResultForRace } from '../utils';
+import StartTime from '../StartTime';
+import { getRunnerResultForRace } from '../utils';
 
 interface Props {
   raceId: string;
@@ -36,8 +35,6 @@ const NextRace: FunctionComponent<Props> = ({ raceId, raceName, runnerId }) => {
     <Link to={routes.RACE_DETAIL.replace(":raceId", raceId)}>{raceName}</Link>
   ) : null;
 
-  const startTime = isRegistered ? getRaceById(raceId)?.startTime : null;
-
   return (
     <StyledSection>
       <header>
@@ -46,17 +43,7 @@ const NextRace: FunctionComponent<Props> = ({ raceId, raceName, runnerId }) => {
       {isRegistered ? (
         <>
           <p>You are registered for {raceName ? raceLink : "this race"}!</p>
-          {runnerId &&
-            (getPredictedTime(runnerId, raceId) > 0 ? (
-              <p>
-                <strong>Your start time: </strong>
-                {startTime && formatDate(startTime, DEFAULT_TIME_FORMAT)}
-              </p>
-            ) : (
-              <p>
-                You don't have any results yet, please enter your estimated time
-              </p>
-            ))}
+          {runnerId && <StartTime raceId={raceId} runnerId={runnerId} />}
         </>
       ) : (
         <>
