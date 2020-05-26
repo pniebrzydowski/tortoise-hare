@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import RaceDetail from '../components/races/RaceDetail';
 import RaceResults from '../components/races/RaceResults';
+import RaceVolunteers from '../components/races/RaceVolunteers';
 import UpcomingRunners from '../components/races/UpcomingRunners';
 import { getRaceById, Race } from '../dummyData/races';
 
@@ -40,7 +41,10 @@ const RaceDetailPage: FunctionComponent = () => {
         (race.isFinished ? (
           <RaceResults results={race.results} />
         ) : (
-          <UpcomingRunners results={race.results} />
+          <>
+            <UpcomingRunners results={race.results} />
+            {race.volunteers && <RaceVolunteers volunteers={race.volunteers} />}
+          </>
         ))}
     </>
   );

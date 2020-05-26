@@ -1,4 +1,5 @@
 import { race1results, race2results, RaceResult } from './results';
+import { allVolunteers, Runner } from './runners';
 
 export enum DistanceUnit {
   "km" = "km",
@@ -15,6 +16,7 @@ export interface Race {
   description?: string;
   isFinished?: boolean;
   results?: RaceResult[];
+  volunteers?: Runner[];
 }
 
 const series1Races: Race[] = [
@@ -28,6 +30,7 @@ const series1Races: Race[] = [
     description: "This is going to be a fun race!",
     isFinished: true,
     results: race1results,
+    volunteers: allVolunteers,
   },
   {
     id: "2",
@@ -38,6 +41,7 @@ const series1Races: Race[] = [
     unit: DistanceUnit.km,
     description: "Good luck :-)",
     results: race2results,
+    volunteers: [allVolunteers[0], allVolunteers[1]],
   },
 ];
 
