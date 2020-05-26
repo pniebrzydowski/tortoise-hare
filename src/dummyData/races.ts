@@ -1,3 +1,4 @@
+import { getDateValue, getToday, sortByDate } from '../utils/date';
 import { race1results, race2results, RaceResult } from './results';
 import { allVolunteers, Runner } from './runners';
 
@@ -50,7 +51,7 @@ const series2Races: Race[] = [
     id: "3",
     seriesId: "2",
     name: "Utica 5k",
-    startTime: "2020-11-01 08:00",
+    startTime: "2021-03-23 08:00",
     distance: 5,
     unit: DistanceUnit.km,
   },
@@ -58,7 +59,7 @@ const series2Races: Race[] = [
     id: "4",
     seriesId: "2",
     name: "Utica 10 mile",
-    startTime: "2020-11-01 13:00",
+    startTime: "2021-04-01 13:00",
     distance: 10,
     unit: DistanceUnit.mi,
     description: "Long one!",
@@ -72,5 +73,20 @@ export const getRaceById = (raceId: string): Race | undefined =>
 
 export const getRacesForSeries = (seriesId: string): Race[] | undefined =>
   allRaces.filter((element) => element.seriesId === seriesId);
+
+export const getNextRace = (): Race | undefined => {
+  const upcomingRaces = allRaces.filter(
+    (race: Race) =>
+      !race.isFinished &&
+      getDateValue(race.startTime) > getDateValue(getToday())
+  );
+  const sortedRaces = upcomingRaces.sort((a: Race, b: Race): number =>
+    sortByDate(a.startTime, b.startTime)
+  );
+  if (!sortedRaces) {
+    return undefined;
+  }
+  return sortedRaces[0];
+};
 
 export default allRaces;

@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import AddVolunteer from '../components/races/AddVolunteer';
 import RaceDetail from '../components/races/RaceDetail';
+import RaceRegistration from '../components/races/RaceRegistration';
 import RaceResults from '../components/races/RaceResults';
 import RaceVolunteers from '../components/races/RaceVolunteers';
 import UpcomingRunners from '../components/races/UpcomingRunners';
@@ -19,7 +20,7 @@ const StyledLink = styled(Link)`
   margin-bottom: ${(props) => props.theme.spacing.small};
 `;
 
-const StyledUpcomingWrapper = styled("div")`
+const StyledFlexBox = styled("div")`
   & > * + * {
     margin-top: ${(props) => props.theme.spacing.medium};
   }
@@ -70,12 +71,15 @@ const RaceDetailPage: FunctionComponent = () => {
         </StyledLink>
       </nav>
 
-      <RaceDetail id={raceId} />
+      <StyledFlexBox>
+        <RaceDetail id={raceId} />
+        <RaceRegistration raceId={raceId} />
+      </StyledFlexBox>
       {race.results &&
         (race.isFinished ? (
           <RaceResults results={race.results} />
         ) : (
-          <StyledUpcomingWrapper>
+          <StyledFlexBox>
             <UpcomingRunners results={race.results} />
             <StyledVolunteersWrapper>
               {race.volunteers && (
@@ -86,7 +90,7 @@ const RaceDetailPage: FunctionComponent = () => {
                 possibleVolunteers={possibleVolunteers}
               />
             </StyledVolunteersWrapper>
-          </StyledUpcomingWrapper>
+          </StyledFlexBox>
         ))}
     </>
   );

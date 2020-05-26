@@ -21,6 +21,8 @@ export const getDateTimeString = (date: Date): string =>
 export const getToday = (): string =>
   dayjs().startOf("day").format(DATABASE_DATE_FORMAT);
 
+export const getDateValue = (date: string): number => dayjs(date).valueOf();
+
 export const getFutureDate = (
   value: number = 1,
   unit: OpUnitType = "month"
@@ -28,7 +30,7 @@ export const getFutureDate = (
   dayjs().startOf("day").add(value, unit).format(DATABASE_DATE_FORMAT);
 
 export const sortByDate = (a: string, b: string): number =>
-  dayjs(b).valueOf() - dayjs(a).valueOf();
+  dayjs(a).valueOf() - dayjs(b).valueOf();
 
 export const getFutureDateWithTime = (days: number, hours: number): string =>
   dayjs()

@@ -9,7 +9,7 @@ interface Props {
 
 const Results: FunctionComponent<Props> = ({ title, columns, children }) => (
   <section>
-    <h2>{title}</h2>
+    <h3>{title}</h3>
     <StyledTable>
       <thead>
         <tr>
