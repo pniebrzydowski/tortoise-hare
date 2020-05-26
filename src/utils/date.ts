@@ -23,14 +23,16 @@ export const getToday = (): string =>
 
 export const getDateValue = (date: string): number => dayjs(date).valueOf();
 
+export const isDateInFuture = (date: string): boolean => dayjs(date) > dayjs();
+
+export const sortByDate = (a: string, b: string): number =>
+  dayjs(a).valueOf() - dayjs(b).valueOf();
+
 export const getFutureDate = (
   value: number = 1,
   unit: OpUnitType = "month"
 ): string =>
   dayjs().startOf("day").add(value, unit).format(DATABASE_DATE_FORMAT);
-
-export const sortByDate = (a: string, b: string): number =>
-  dayjs(a).valueOf() - dayjs(b).valueOf();
 
 export const getFutureDateWithTime = (days: number, hours: number): string =>
   dayjs()

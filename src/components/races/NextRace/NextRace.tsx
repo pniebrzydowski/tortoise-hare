@@ -17,7 +17,7 @@ const StyledSection = styled("section")`
   }
 `;
 
-const RaceRegistration: FunctionComponent<Props> = ({ raceId, raceName }) => {
+const NextRace: FunctionComponent<Props> = ({ raceId, raceName }) => {
   const [isRegistered, setIsRegistered] = useState(false);
 
   const register = () => {
@@ -32,18 +32,13 @@ const RaceRegistration: FunctionComponent<Props> = ({ raceId, raceName }) => {
   return (
     <StyledSection>
       <header>
-        <h3>Registration</h3>
+        <h3>{raceName ? "Next Race" : "Registration"}</h3>
       </header>
       {isRegistered ? (
         <p>You are registered for {raceName ? raceLink : "this race"}!</p>
       ) : (
         <>
-          {raceName && (
-            <div>
-              <strong>Next Race: </strong>
-              {raceLink}
-            </div>
-          )}
+          {raceName && <div>{raceLink}</div>}
           <PrimaryButton onClick={register}>Register</PrimaryButton>
         </>
       )}
@@ -51,4 +46,4 @@ const RaceRegistration: FunctionComponent<Props> = ({ raceId, raceName }) => {
   );
 };
 
-export default RaceRegistration;
+export default NextRace;

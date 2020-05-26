@@ -4,13 +4,14 @@ import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import AddVolunteer from '../components/races/AddVolunteer';
+import NextRace from '../components/races/NextRace';
 import RaceDetail from '../components/races/RaceDetail';
-import RaceRegistration from '../components/races/RaceRegistration';
 import RaceResults from '../components/races/RaceResults';
 import RaceVolunteers from '../components/races/RaceVolunteers';
 import UpcomingRunners from '../components/races/UpcomingRunners';
 import { getRaceById, Race } from '../dummyData/races';
 import { allRunners } from '../dummyData/runners';
+import { isDateInFuture } from '../utils/date';
 
 const StyledLink = styled(Link)`
   padding-top: ${(props) => props.theme.spacing.small};
@@ -73,7 +74,9 @@ const RaceDetailPage: FunctionComponent = () => {
 
       <StyledFlexBox>
         <RaceDetail id={raceId} />
-        <RaceRegistration raceId={raceId} />
+        {!race.isFinished && isDateInFuture(race.startTime) && (
+          <NextRace raceId={raceId} />
+        )}
       </StyledFlexBox>
       {race.results &&
         (race.isFinished ? (
