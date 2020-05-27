@@ -16,7 +16,7 @@ const UpcomingRunners: FunctionComponent<Props> = ({ results }) => {
     if (!a.predictedTime || !b.predictedTime) {
       return 0;
     }
-    return b.predictedTime - a.predictedTime;
+    return a.predictedTime - b.predictedTime;
   });
 
   return (

@@ -3,13 +3,13 @@ import React, { FunctionComponent } from 'react';
 import { StyledTable } from '../ui/Table';
 
 interface Props {
-  title: string;
+  title?: string;
   columns: string[];
 }
 
 const Results: FunctionComponent<Props> = ({ title, columns, children }) => (
   <section>
-    <h3>{title}</h3>
+    {title && <h3>{title}</h3>}
     <StyledTable>
       <thead>
         <tr>

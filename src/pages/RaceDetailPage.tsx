@@ -1,19 +1,27 @@
 import React, { FunctionComponent } from 'react';
 
-import { Link, useParams } from 'react-router-dom';
+import {
+  Link,
+  Route,
+  Switch,
+  useParams,
+  useRouteMatch
+} from 'react-router-dom';
 import styled from 'styled-components';
 
 import AddVolunteer from '../components/races/AddVolunteer';
+import FinishRace from '../components/races/EditResults';
 import NextRace from '../components/races/NextRace';
 import RaceDetail from '../components/races/RaceDetail';
 import RaceResults from '../components/races/RaceResults';
 import RaceVolunteers from '../components/races/RaceVolunteers';
 import UpcomingRunners from '../components/races/UpcomingRunners';
+import { PrimaryButton } from '../components/ui/Button';
 import { getRaceById, Race } from '../dummyData/races';
 import { allRunners } from '../dummyData/runners';
 import { isDateInFuture } from '../utils/date';
 
-const StyledLink = styled(Link)`
+const StyledNavLink = styled(Link)`
   padding-top: ${(props) => props.theme.spacing.small};
   padding-bottom: ${(props) => props.theme.spacing.small};
   text-decoration: none;
@@ -39,6 +47,11 @@ const StyledFlexBox = styled("div")`
   }
 `;
 
+const StyledLink = styled(Link)`
+  display: block;
+  margin-top: ${(props) => props.theme.spacing.medium};
+`;
+
 const StyledVolunteersWrapper = styled("section")`
   flex: 1 2 auto;
   & > * + * {
@@ -48,6 +61,8 @@ const StyledVolunteersWrapper = styled("section")`
 
 const RaceDetailPage: FunctionComponent = () => {
   const { raceId } = useParams();
+  const { path } = useRouteMatch();
+
   if (!raceId) {
     return null;
   }
@@ -67,33 +82,47 @@ const RaceDetailPage: FunctionComponent = () => {
   return (
     <>
       <nav>
-        <StyledLink to={`/series/${race.seriesId}`}>
+        <StyledNavLink to={`/series/${race.seriesId}`}>
           &lt; Back to Series
-        </StyledLink>
+        </StyledNavLink>
       </nav>
 
       <StyledFlexBox>
         <RaceDetail id={raceId} />
-        {!race.isFinished && isDateInFuture(race.startTime) && (
-          <NextRace raceId={raceId} />
-        )}
+        <Route path={path} exact>
+          {!race.isFinished && isDateInFuture(race.startTime) && (
+            <NextRace raceId={raceId} />
+          )}
+        </Route>
       </StyledFlexBox>
       {race.results &&
         (race.isFinished ? (
           <RaceResults results={race.results} />
         ) : (
-          <StyledFlexBox>
-            <UpcomingRunners results={race.results} />
-            <StyledVolunteersWrapper>
-              {race.volunteers && (
-                <RaceVolunteers volunteers={race.volunteers} />
-              )}
-              <AddVolunteer
-                raceId={race.id}
-                possibleVolunteers={possibleVolunteers}
-              />
-            </StyledVolunteersWrapper>
-          </StyledFlexBox>
+          <Switch>
+            <Route path={`${path}/edit`}>
+              <FinishRace results={race.results} raceId={race.id} />
+            </Route>
+            <Route>
+              <StyledFlexBox>
+                <div>
+                  <UpcomingRunners results={race.results} />
+                  <StyledLink to={`${race.id}/edit`}>
+                    <PrimaryButton>Add results</PrimaryButton>
+                  </StyledLink>
+                </div>
+                <StyledVolunteersWrapper>
+                  {race.volunteers && (
+                    <RaceVolunteers volunteers={race.volunteers} />
+                  )}
+                  <AddVolunteer
+                    raceId={race.id}
+                    possibleVolunteers={possibleVolunteers}
+                  />
+                </StyledVolunteersWrapper>
+              </StyledFlexBox>
+            </Route>
+          </Switch>
         ))}
     </>
   );

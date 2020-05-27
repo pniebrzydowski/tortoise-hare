@@ -35,7 +35,7 @@ const Time: FunctionComponent<Props> = ({
         defaultValue={defaultValue}
         ref={register({
           required,
-          pattern: /^\d?\d?:?[0-5]?[1-9]:[0-5][0-9]$/,
+          pattern: /^\d?\d?:?[0-5]?[0-9]:[0-5][0-9]$/,
         })}
       />
     </FieldWrapper>

@@ -36,13 +36,13 @@ const App: FunctionComponent = () => {
             <Route path={routes.SERIES_LIST} exact>
               <SeriesList />
             </Route>
-            <Route path={routes.SERIES_DETAIL} exact>
+            <Route path={routes.SERIES_DETAIL}>
               <SeriesDetail />
             </Route>
-            <Route path={routes.RACE_DETAIL} exact>
+            <Route path={routes.RACE_DETAIL}>
               <RaceDetail />
             </Route>
-            <Route path={routes.RUNNER_DETAIL} exact>
+            <Route path={routes.RUNNER_DETAIL}>
               <RunnerDetail />
             </Route>
 
