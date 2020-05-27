@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "b689d47dc52ef1a61bbf563bd0944431",
+    "revision": "efbc26a75539ea71e2dd974772679c12",
     "url": "/tortoise-hare/index.html"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/tortoise-hare/static/js/2.d234c116.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "d4aa55b619e017d964ea",
-    "url": "/tortoise-hare/static/js/main.4904b9fa.chunk.js"
+    "revision": "69a27a80b82ab634d8e5",
+    "url": "/tortoise-hare/static/js/main.5986aa5d.chunk.js"
   },
   {
     "revision": "149fdc5b1145b5587243",
