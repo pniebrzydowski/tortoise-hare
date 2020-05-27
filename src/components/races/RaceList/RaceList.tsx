@@ -15,7 +15,9 @@ const RaceList: FunctionComponent<Props> = ({ races }) => {
         <ListingItem
           key={race.id}
           linkUrl={`/race/${race.id}`}
-          linkText={race.results && "Results"}
+          linkText={
+            race.results?.length && race.isFinished ? "Results" : undefined
+          }
           title={race.name}
           info={[
             formatDate(race.startTime, DEFAULT_DATETIME_FORMAT),
