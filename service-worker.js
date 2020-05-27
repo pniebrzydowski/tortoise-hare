@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/tortoise-hare/precache-manifest.4c18da9267311c66bcc210ac2b092dd3.js"
+  "/tortoise-hare/precache-manifest.1195f2b7a2e829b039a2a37cf956ed58.js"
 );
 
 self.addEventListener('message', (event) => {
