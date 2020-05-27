@@ -4,14 +4,22 @@ import { Link } from 'react-router-dom';
 
 import { RaceResult } from '../../../dummyData/results';
 import { getRunnerName } from '../../../dummyData/runners';
-import { formatTime } from '../../../utils/date';
+import {
+  DEFAULT_TIME_FORMAT,
+  formatDate,
+  formatTime
+} from '../../../utils/date';
 import Results from '../../Results';
 
 interface Props {
   results: RaceResult[];
+  raceStartTime: string;
 }
 
-const UpcomingRunners: FunctionComponent<Props> = ({ results }) => {
+const UpcomingRunners: FunctionComponent<Props> = ({
+  results,
+  raceStartTime,
+}) => {
   const sortedResults = results.sort((a: RaceResult, b: RaceResult) => {
     if (!a.predictedTime || !b.predictedTime) {
       return 0;
@@ -20,7 +28,7 @@ const UpcomingRunners: FunctionComponent<Props> = ({ results }) => {
   });
 
   return (
-    <Results title="Runners" columns={["Name", "Predicted Time"]}>
+    <Results title="Runners" columns={["Name", "Predicted Time", "Start Time"]}>
       {sortedResults.map((result) => (
         <tr key={result.id}>
           <td>
@@ -29,6 +37,9 @@ const UpcomingRunners: FunctionComponent<Props> = ({ results }) => {
             </Link>
           </td>
           <td>{result.predictedTime && formatTime(result.predictedTime)}</td>
+          <td>
+            {raceStartTime && formatDate(raceStartTime, DEFAULT_TIME_FORMAT)}
+          </td>
         </tr>
       ))}
     </Results>

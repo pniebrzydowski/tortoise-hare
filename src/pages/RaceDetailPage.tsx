@@ -106,7 +106,10 @@ const RaceDetailPage: FunctionComponent = () => {
             <Route>
               <StyledFlexBox>
                 <div>
-                  <UpcomingRunners results={race.results} />
+                  <UpcomingRunners
+                    results={race.results}
+                    raceStartTime={race.startTime}
+                  />
                   <StyledLink to={`${race.id}/edit`}>
                     <PrimaryButton>Add results</PrimaryButton>
                   </StyledLink>
