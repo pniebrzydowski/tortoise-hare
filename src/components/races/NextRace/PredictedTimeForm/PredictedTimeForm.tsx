@@ -3,18 +3,20 @@ import React, { FunctionComponent } from 'react';
 import { FormContext, useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
-import Text from '../../../form/fields/Text';
+import { timeStringToSeconds } from '../../../../utils/date';
+import Time from '../../../form/fields/Time';
 import { PrimaryButton } from '../../../ui/Button';
 
 interface FormData {
   runnerId: string;
   raceId: string;
-  predictedTime: number;
+  predictedTime: string;
 }
 
 interface Props {
   raceId: string;
   runnerId: string;
+  onSuccess?: (newPredictedTime: number) => void;
 }
 
 const StyledFlexBox = styled("div")`
@@ -28,12 +30,23 @@ const StyledPrimaryButton = styled(PrimaryButton)`
   padding: ${(props) => props.theme.spacing.medium};
 `;
 
-const onSubmit = (data: Record<"data", FormData>) => {
-  console.log(data);
-};
+const PredictedTimeForm: FunctionComponent<Props> = ({
+  raceId,
+  runnerId,
+  onSuccess,
+}) => {
+  const form = useForm<FormData>();
 
-const PredictedTimeForm: FunctionComponent<Props> = ({ raceId, runnerId }) => {
-  const form = useForm();
+  const onSubmit = (data: FormData) => {
+    const timeInSeconds = timeStringToSeconds(data.predictedTime);
+    const submitData = {
+      ...data,
+      predictedTime: timeInSeconds,
+    };
+    console.log(submitData);
+
+    onSuccess && onSuccess(timeInSeconds);
+  };
 
   return (
     <FormContext {...form}>
@@ -53,11 +66,13 @@ const PredictedTimeForm: FunctionComponent<Props> = ({ raceId, runnerId }) => {
           ref={form.register({ required: true })}
         />
         <StyledFlexBox>
-          <Text
+          <Time
             formName="predictedTime"
             fieldName="predictedTime"
             required
-            error={form.errors.predictedTime && "Please enter a time"}
+            error={
+              form.errors.predictedTime && "Please enter a time (hh:mm:ss)"
+            }
           />
           <StyledPrimaryButton type="submit">Submit</StyledPrimaryButton>
         </StyledFlexBox>

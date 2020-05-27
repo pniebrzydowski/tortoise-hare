@@ -3,10 +3,11 @@ import {
   getDateString,
   getFutureDate,
   isDateInFuture,
-  sortByDate
+  sortByDate,
+  timeStringToSeconds
 } from './date';
 
-describe("Date Utilities", () => {
+describe("Time Utilities", () => {
   it("Formats a time from seconds to string", () => {
     expect(formatTime(5)).toBe("00:05");
     expect(formatTime(15)).toBe("00:15");
@@ -18,6 +19,19 @@ describe("Date Utilities", () => {
     expect(formatTime(86405)).toBe("24:00:05");
   });
 
+  it("Converts a time string into seconds", () => {
+    expect(timeStringToSeconds("00:05")).toBe(5);
+    expect(timeStringToSeconds("00:15")).toBe(15);
+    expect(timeStringToSeconds("01:05")).toBe(65);
+    expect(timeStringToSeconds("10:05")).toBe(605);
+    expect(timeStringToSeconds("01:00:00")).toBe(3600);
+    expect(timeStringToSeconds("01:00:05")).toBe(3605);
+    expect(timeStringToSeconds("01:01:05")).toBe(3665);
+    expect(timeStringToSeconds("24:00:05")).toBe(86405);
+  });
+});
+
+describe("Date Utilities", () => {
   it("Checks if a date is in the future", () => {
     expect(isDateInFuture("2000-01-01")).toBeFalsy();
     expect(isDateInFuture(getDateString(new Date()))).toBeFalsy();

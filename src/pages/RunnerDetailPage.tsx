@@ -72,7 +72,11 @@ const RunnerDetailPage: FunctionComponent = () => {
       </StyledFlexBox>
       <StyledTableWrapper>
         {upcoming.length > 0 && <UpcomingRaces results={upcoming} />}
-        {finished.length > 0 && <RunnerResults results={finished} />}
+        {finished.length > 0 && (
+          <div style={{ flex: "1 2 auto" }}>
+            <RunnerResults results={finished} />
+          </div>
+        )}
       </StyledTableWrapper>
     </>
   );

@@ -4,7 +4,13 @@ import { Link } from 'react-router-dom';
 
 import { getRaceById } from '../../../dummyData/races';
 import { RaceResult } from '../../../dummyData/results';
-import { formatTime, sortByDate } from '../../../utils/date';
+import {
+  DEFAULT_TIME_FORMAT,
+  formatDate,
+  formattedDateWithTime,
+  formatTime,
+  sortByDate
+} from '../../../utils/date';
 import Results from '../../Results';
 
 interface Props {
@@ -29,19 +35,24 @@ const UpcomingRaces: FunctionComponent<Props> = ({ results }) => {
   return (
     <Results
       title="Upcoming Races"
-      columns={["Race", "Start Time", "Predicted Time"]}
+      columns={["Race", "Race Start", "Predicted Time", "Your Start"]}
     >
-      {sortedResults.map((result) => (
-        <tr key={result.id}>
-          <td>
-            <Link to={`/race/${result.raceId}`}>
-              {getRaceName(result.raceId)}
-            </Link>
-          </td>
-          <td>{getRaceStart(result.raceId)}</td>
-          <td>{result.predictedTime && formatTime(result.predictedTime)}</td>
-        </tr>
-      ))}
+      {sortedResults.map((result) => {
+        const raceStart = getRaceStart(result.raceId);
+
+        return (
+          <tr key={result.id}>
+            <td>
+              <Link to={`/race/${result.raceId}`}>
+                {getRaceName(result.raceId)}
+              </Link>
+            </td>
+            <td>{raceStart && formattedDateWithTime(raceStart)}</td>
+            <td>{result.predictedTime && formatTime(result.predictedTime)}</td>
+            <td>{raceStart && formatDate(raceStart, DEFAULT_TIME_FORMAT)}</td>
+          </tr>
+        );
+      })}
     </Results>
   );
 };

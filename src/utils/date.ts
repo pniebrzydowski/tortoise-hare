@@ -42,6 +42,11 @@ export const getFutureDateWithTime = (days: number, hours: number): string =>
     .add(hours, "hour")
     .format(DATABASE_DATETIME_FORMAT);
 
+export const formattedDateWithTime = (
+  date: string,
+  format: string = DEFAULT_DATETIME_FORMAT
+): string => dayjs(date).format(format);
+
 export const formatDate = (
   date: string,
   format: string = DEFAULT_DATE_FORMAT
@@ -59,4 +64,20 @@ export const formatTime = (timeInSeconds: number): string => {
   time.push(minutes < 10 ? `0${minutes}` : minutes);
   time.push(seconds < 10 ? `0${seconds}` : seconds);
   return time.join(":");
+};
+
+export const timeStringToSeconds = (value: string): number => {
+  const parts = value.split(":").reverse();
+  if (parts.length === 0) {
+    return 0;
+  }
+
+  let seconds = parseInt(parts[0], 10);
+  if (parts[1]) {
+    seconds += parseInt(parts[1], 10) * 60;
+  }
+  if (parts[2]) {
+    seconds += parseInt(parts[2], 10) * 60 * 60;
+  }
+  return seconds;
 };

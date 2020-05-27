@@ -12,9 +12,10 @@ interface Props {
   label?: string;
   error?: string;
   required?: boolean;
+  pattern?: RegExp;
 }
 
-const Text: FunctionComponent<Props> = ({
+const Time: FunctionComponent<Props> = ({
   formName,
   fieldName,
   label,
@@ -32,10 +33,13 @@ const Text: FunctionComponent<Props> = ({
         id={fieldId}
         name={fieldName}
         defaultValue={defaultValue}
-        ref={register({ required })}
+        ref={register({
+          required,
+          pattern: /^\d?\d?:?[0-5]?[1-9]:[0-5][0-9]$/,
+        })}
       />
     </FieldWrapper>
   );
 };
 
-export default Text;
+export default Time;

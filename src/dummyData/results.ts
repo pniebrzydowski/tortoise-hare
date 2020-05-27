@@ -40,7 +40,7 @@ export const race2results: RaceResult[] = [
     raceId: "2",
     runnerId: "1",
     predictedTime: 1080,
-    actualTime: 1105,
+    actualTime: 0,
     points: 0,
   },
   {
