@@ -12,7 +12,7 @@ import RaceDetail from './pages/RaceDetailPage';
 import RunnerDetail from './pages/RunnerDetailPage';
 import SeriesDetail from './pages/SeriesDetailPage';
 import SeriesList from './pages/SeriesListPage';
-import routes, { ROUTER_BASE } from './routing/routes';
+import routes from './routing/routes';
 
 const StyledMain = styled("main")`
   padding: ${(props) => props.theme.spacing.medium};
@@ -26,7 +26,7 @@ const App: FunctionComponent = () => {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
-      <Router basename={ROUTER_BASE}>
+      <Router basename={process.env.PUBLIC_URL}>
         <SiteHeader />
         <StyledMain>
           <Switch>
