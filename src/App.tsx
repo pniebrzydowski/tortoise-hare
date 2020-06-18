@@ -10,7 +10,6 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import PasswordResetPage from './pages/PasswordResetPage';
 import RaceDetailPage from './pages/RaceDetailPage';
-import RegisterPage from './pages/RegisterPage';
 import RunnerDetailPage from './pages/RunnerDetailPage';
 import SeriesDetailPage from './pages/SeriesDetailPage';
 import SeriesListPage from './pages/SeriesListPage';
@@ -50,9 +49,6 @@ const App: FunctionComponent = () => {
 
             <Route path={routes.LOGIN} exact>
               <LoginPage />
-            </Route>
-            <Route path={routes.REGISTER} exact>
-              <RegisterPage />
             </Route>
             <Route path={routes.FORGOT_PASSWORD} exact>
               <PasswordResetPage />
