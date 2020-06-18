@@ -1,17 +1,14 @@
 import React from 'react';
 
-import { screen, wait } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-
 import { DistanceUnit } from '../../../dummyData/races';
 import { getFutureDateWithTime } from '../../../utils/date';
-import { renderWithTheme } from '../../../utils/tests';
+import { render, screen, userEvent, wait } from '../../../utils/tests';
 import NewRace from './NewRace';
 
 const SERIES_ID = "1";
 
 test("opens and closes the new race form", async () => {
-  renderWithTheme(<NewRace seriesId={SERIES_ID} />);
+  render(<NewRace seriesId={SERIES_ID} />);
   const newButton = screen.getByRole("button", { name: "Add new race" });
   expect(newButton).toBeInTheDocument();
   await userEvent.click(newButton);
@@ -32,7 +29,7 @@ test("opens and closes the new race form", async () => {
 test("opens and submits the form with error", async () => {
   jest.spyOn(console, "log").mockImplementation();
 
-  renderWithTheme(<NewRace seriesId={SERIES_ID} />);
+  render(<NewRace seriesId={SERIES_ID} />);
   const newButton = screen.getByRole("button", { name: "Add new race" });
   await userEvent.click(newButton);
 
@@ -48,7 +45,7 @@ test("opens and submits the form with error", async () => {
 test("opens and submits the form successfully", async () => {
   jest.spyOn(console, "log").mockImplementation();
 
-  renderWithTheme(<NewRace seriesId={SERIES_ID} />);
+  render(<NewRace seriesId={SERIES_ID} />);
   const newButton = screen.getByRole("button", { name: "Add new race" });
   await userEvent.click(newButton);
 

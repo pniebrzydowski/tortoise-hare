@@ -1,6 +1,7 @@
-import React from "react";
-import { render } from "@testing-library/react";
-import App from "./App";
+import React from 'react';
+
+import App from './App';
+import { render } from './utils/tests';
 
 test("renders heading", () => {
   const { getByText } = render(<App />);
