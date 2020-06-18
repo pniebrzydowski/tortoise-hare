@@ -20,7 +20,7 @@ const StyledLabel = styled("label")`
     `${props.theme.spacing.xSmall} ${props.theme.spacing.medium}`};
 `;
 
-const StyledError = styled(StyledLabel)`
+export const StyledError = styled(StyledLabel)`
   color: ${(props) => props.theme.colors.error};
 `;
 

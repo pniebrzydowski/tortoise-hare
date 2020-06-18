@@ -1,10 +1,11 @@
-import React, { FunctionComponent, useContext } from 'react';
+import React, { FunctionComponent, useContext, useState } from 'react';
 
 import { FormContext, useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
 import { FirebaseContext } from '../firebase';
 import Text from '../form/fields/Text';
+import { StyledError } from '../form/FieldWrapper';
 import { PrimaryButton } from '../ui/Button';
 
 interface RegisterFormData {
@@ -18,9 +19,15 @@ const StyledFormContainer = styled("div")`
   margin-top: ${(props) => props.theme.spacing.medium};
 `;
 
+const StyledFormError = styled(StyledError)`
+  display: block;
+  padding: ${(props) => props.theme.spacing.small} 0;
+`;
+
 const Register: FunctionComponent = () => {
   const form = useForm<RegisterFormData>();
   const firebase = useContext(FirebaseContext);
+  const [submitError, setSubmitError] = useState("");
 
   if (!firebase) {
     return null;
@@ -30,7 +37,7 @@ const Register: FunctionComponent = () => {
     firebase.auth
       .createUserWithEmailAndPassword(email, password)
       .catch((err) => {
-        console.log(err);
+        setSubmitError(err.message);
       });
   };
 
@@ -64,6 +71,7 @@ const Register: FunctionComponent = () => {
               error={form.errors.password && "Please confirm your password"}
             />
           </StyledFormContainer>
+          {submitError && <StyledFormError>{submitError}</StyledFormError>}
           <PrimaryButton type="submit">Register</PrimaryButton>
         </form>
       </FormContext>
