@@ -55,15 +55,18 @@ describe("Register form", () => {
           )
       );
 
+    const doc = {
+      set: jest.fn(),
+    };
     const collection = {
-      add: jest.fn(),
+      doc: () => doc,
     };
     jest
       .spyOn(firebase.firestore, "collection")
       .mockImplementation(() => collection);
-    jest
-      .spyOn(collection, "add")
-      .mockImplementation(() => new Promise((resolve) => resolve()));
+
+    jest.spyOn(collection, "doc").mockImplementation(() => doc);
+    jest.spyOn(doc, "set").mockImplementation(() => jest.fn());
 
     const email = "test@test.com";
     const password = "password";
@@ -86,9 +89,9 @@ describe("Register form", () => {
       password
     );
     expect(firebase.firestore.collection).toHaveBeenCalledWith("runners");
-    expect(collection.add).toHaveBeenCalledWith({
+    expect(collection.doc).toHaveBeenCalledWith(USER_ID);
+    expect(doc.set).toHaveBeenCalledWith({
       email,
-      userId: USER_ID,
       name,
       isAdmin: false,
     });

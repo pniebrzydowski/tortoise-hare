@@ -62,9 +62,9 @@ const Register: FunctionComponent = () => {
 
         firebase.firestore
           .collection("runners")
-          .add({
+          .doc(userId)
+          .set({
             email,
-            userId,
             name,
             isAdmin: false,
           })
