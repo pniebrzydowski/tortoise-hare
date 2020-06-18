@@ -10,7 +10,7 @@ import Text from '../form/fields/Text';
 import { StyledError } from '../form/FieldWrapper';
 import { PrimaryButton } from '../ui/Button';
 
-interface LoginFormData {
+interface ResetPasswordFormData {
   email: string;
   password: string;
 }
@@ -25,62 +25,65 @@ const StyledFormError = styled(StyledError)`
   padding: ${(props) => props.theme.spacing.small} 0;
 `;
 
-const StyledForgotLink = styled(Link)`
-  display: block;
-  padding: ${(props) => props.theme.spacing.small} 0;
-`;
-
-const Login: FunctionComponent = () => {
+const ForgotPassword: FunctionComponent = () => {
   const firebase = useContext(FirebaseContext);
-  const form = useForm<LoginFormData>();
+  const form = useForm<ResetPasswordFormData>();
+  const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState("");
 
   if (!firebase) {
     return null;
   }
 
-  const onSubmit = ({ email, password }: LoginFormData) => {
-    firebase.auth.signInWithEmailAndPassword(email, password).catch((err) => {
-      setSubmitError(err.message);
-    });
+  const onSubmit = ({ email }: ResetPasswordFormData) => {
+    firebase.auth
+      .sendPasswordResetEmail(email)
+      .then(() => {
+        setSubmitted(true);
+      })
+      .catch((err) => {
+        setSubmitError(err.message);
+      });
   };
+
+  if (submitted) {
+    return (
+      <section>
+        <h2>Reset your password</h2>
+        <p>
+          Your request has been submitted. Please check your email for a link to
+          reset your password. Once you have completed the reset process, you
+          can <Link to={routes.LOGIN}>log in here</Link>
+        </p>
+      </section>
+    );
+  }
 
   return (
     <section>
-      <h2>Login</h2>
+      <h2>Reset your password</h2>
       <p>
-        Don't have an account? <Link to={routes.REGISTER}>Create one now</Link>
+        Enter your email here. An email will be sent containing a link to reset
+        your password.
       </p>
 
       <FormContext {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <StyledFormContainer>
             <Text
-              formName="login"
+              formName="forgotPassword"
               fieldName="email"
               label="Email Address"
               required
               error={form.errors.email && "Please enter your email"}
             />
-            <Text
-              formName="login"
-              fieldName="password"
-              label="Password"
-              required
-              error={form.errors.password && "Please enter your password"}
-            />
-            <p>
-              <StyledForgotLink to={routes.FORGOT_PASSWORD}>
-                Forgot your password?
-              </StyledForgotLink>
-            </p>
           </StyledFormContainer>
           {submitError && <StyledFormError>{submitError}</StyledFormError>}
-          <PrimaryButton type="submit">Log in</PrimaryButton>
+          <PrimaryButton type="submit">Submit</PrimaryButton>
         </form>
       </FormContext>
     </section>
   );
 };
 
-export default Login;
+export default ForgotPassword;

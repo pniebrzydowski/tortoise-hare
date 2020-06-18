@@ -1,8 +1,10 @@
 import React, { FunctionComponent, useContext, useState } from 'react';
 
 import { FormContext, useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+import routes from '../../routing/routes';
 import { FirebaseContext } from '../firebase';
 import Text from '../form/fields/Text';
 import { StyledError } from '../form/FieldWrapper';
@@ -44,7 +46,9 @@ const Register: FunctionComponent = () => {
   return (
     <section>
       <h2>Register</h2>
-      <p>Don't have an account? Create one now:</p>
+      <p>
+        Already have an account? <Link to={routes.LOGIN}>Log in here</Link>
+      </p>
 
       <FormContext {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>

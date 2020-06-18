@@ -57,7 +57,6 @@ const App: FunctionComponent = () => {
 
             <Route
               path={routes.LOGIN}
-              exact
               render={() =>
                 loggedInUser ? <Redirect to={routes.HOME} /> : <LoginPage />
               }
