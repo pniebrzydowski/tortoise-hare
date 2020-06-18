@@ -6,12 +6,14 @@ import styled, { ThemeProvider } from 'styled-components';
 import SiteHeader from './components/SiteHeader';
 import GlobalStyles from './design/globalStyle';
 import theme from './design/theme';
-import Home from './pages/HomePage';
-import Login from './pages/LoginPage';
-import RaceDetail from './pages/RaceDetailPage';
-import RunnerDetail from './pages/RunnerDetailPage';
-import SeriesDetail from './pages/SeriesDetailPage';
-import SeriesList from './pages/SeriesListPage';
+import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
+import PasswordResetPage from './pages/PasswordResetPage';
+import RaceDetailPage from './pages/RaceDetailPage';
+import RegisterPage from './pages/RegisterPage';
+import RunnerDetailPage from './pages/RunnerDetailPage';
+import SeriesDetailPage from './pages/SeriesDetailPage';
+import SeriesListPage from './pages/SeriesListPage';
 import routes from './routing/routes';
 
 const StyledMain = styled("main")`
@@ -31,23 +33,29 @@ const App: FunctionComponent = () => {
         <StyledMain>
           <Switch>
             <Route path={routes.HOME} exact>
-              <Home />
+              <HomePage />
             </Route>
             <Route path={routes.SERIES_LIST} exact>
-              <SeriesList />
+              <SeriesListPage />
             </Route>
             <Route path={routes.SERIES_DETAIL}>
-              <SeriesDetail />
+              <SeriesDetailPage />
             </Route>
             <Route path={routes.RACE_DETAIL}>
-              <RaceDetail />
+              <RaceDetailPage />
             </Route>
             <Route path={routes.RUNNER_DETAIL}>
-              <RunnerDetail />
+              <RunnerDetailPage />
             </Route>
 
             <Route path={routes.LOGIN} exact>
-              <Login />
+              <LoginPage />
+            </Route>
+            <Route path={routes.REGISTER} exact>
+              <RegisterPage />
+            </Route>
+            <Route path={routes.FORGOT_PASSWORD} exact>
+              <PasswordResetPage />
             </Route>
           </Switch>
         </StyledMain>
