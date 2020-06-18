@@ -4,6 +4,8 @@ import { getFutureDate, getToday } from '../../../utils/date';
 import { render, screen, userEvent, wait } from '../../../utils/tests';
 import NewSeries from './NewSeries';
 
+jest.mock("../../../firebase/hooks/useAdminCheck", () => jest.fn(() => true));
+
 test("opens and closes the new series form", async () => {
   render(<NewSeries />);
   const newButton = screen.getByRole("button", { name: "Add new series" });

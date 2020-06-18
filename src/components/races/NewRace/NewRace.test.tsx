@@ -7,62 +7,66 @@ import NewRace from './NewRace';
 
 const SERIES_ID = "1";
 
-test("opens and closes the new race form", async () => {
-  render(<NewRace seriesId={SERIES_ID} />);
-  const newButton = screen.getByRole("button", { name: "Add new race" });
-  expect(newButton).toBeInTheDocument();
-  await userEvent.click(newButton);
+jest.mock("../../../firebase/hooks/useAdminCheck", () => jest.fn(() => true));
 
-  const saveButton = screen.getByRole("button", { name: "Save" });
-  expect(saveButton).toBeInTheDocument();
-  const cancelButton = screen.getByRole("button", { name: "Cancel" });
-  expect(cancelButton).toBeInTheDocument();
+describe("New Race", () => {
+  it("opens and closes the new race form", async () => {
+    render(<NewRace seriesId={SERIES_ID} />);
+    const newButton = screen.getByRole("button", { name: "Add new race" });
+    expect(newButton).toBeInTheDocument();
+    await userEvent.click(newButton);
 
-  await userEvent.click(cancelButton);
-  expect(
-    screen.getByRole("button", { name: "Add new race" })
-  ).toBeInTheDocument();
-  expect(cancelButton).not.toBeInTheDocument();
-  expect(saveButton).not.toBeInTheDocument();
-});
+    const saveButton = screen.getByRole("button", { name: "Save" });
+    expect(saveButton).toBeInTheDocument();
+    const cancelButton = screen.getByRole("button", { name: "Cancel" });
+    expect(cancelButton).toBeInTheDocument();
 
-test("opens and submits the form with error", async () => {
-  jest.spyOn(console, "log").mockImplementation();
+    await userEvent.click(cancelButton);
+    expect(
+      screen.getByRole("button", { name: "Add new race" })
+    ).toBeInTheDocument();
+    expect(cancelButton).not.toBeInTheDocument();
+    expect(saveButton).not.toBeInTheDocument();
+  });
 
-  render(<NewRace seriesId={SERIES_ID} />);
-  const newButton = screen.getByRole("button", { name: "Add new race" });
-  await userEvent.click(newButton);
+  it("opens and submits the form with error", async () => {
+    jest.spyOn(console, "log").mockImplementation();
 
-  const saveButton = screen.getByRole("button", { name: "Save" });
-  await userEvent.click(saveButton);
+    render(<NewRace seriesId={SERIES_ID} />);
+    const newButton = screen.getByRole("button", { name: "Add new race" });
+    await userEvent.click(newButton);
 
-  await wait();
+    const saveButton = screen.getByRole("button", { name: "Save" });
+    await userEvent.click(saveButton);
 
-  expect(console.log).not.toHaveBeenCalled();
-  expect(screen.getByText("Please enter a name")).toBeInTheDocument();
-});
+    await wait();
 
-test("opens and submits the form successfully", async () => {
-  jest.spyOn(console, "log").mockImplementation();
+    expect(console.log).not.toHaveBeenCalled();
+    expect(screen.getByText("Please enter a name")).toBeInTheDocument();
+  });
 
-  render(<NewRace seriesId={SERIES_ID} />);
-  const newButton = screen.getByRole("button", { name: "Add new race" });
-  await userEvent.click(newButton);
+  it("opens and submits the form successfully", async () => {
+    jest.spyOn(console, "log").mockImplementation();
 
-  const nameField = screen.getByLabelText("Race Name");
-  await userEvent.type(nameField, "New Race");
+    render(<NewRace seriesId={SERIES_ID} />);
+    const newButton = screen.getByRole("button", { name: "Add new race" });
+    await userEvent.click(newButton);
 
-  const saveButton = screen.getByRole("button", { name: "Save" });
-  await userEvent.click(saveButton);
+    const nameField = screen.getByLabelText("Race Name");
+    await userEvent.type(nameField, "New Race");
 
-  await wait();
+    const saveButton = screen.getByRole("button", { name: "Save" });
+    await userEvent.click(saveButton);
 
-  expect(console.log).toHaveBeenCalledWith({
-    seriesId: SERIES_ID,
-    name: "New Race",
-    startTime: getFutureDateWithTime(7, 8),
-    distance: 5,
-    unit: DistanceUnit.km,
-    description: "",
+    await wait();
+
+    expect(console.log).toHaveBeenCalledWith({
+      seriesId: SERIES_ID,
+      name: "New Race",
+      startTime: getFutureDateWithTime(7, 8),
+      distance: 5,
+      unit: DistanceUnit.km,
+      description: "",
+    });
   });
 });
