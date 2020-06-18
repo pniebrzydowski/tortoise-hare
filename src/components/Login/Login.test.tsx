@@ -1,13 +1,19 @@
 import React from 'react';
 
-import { render, screen, userEvent, wait } from '../../utils/tests';
-import Firebase, { FirebaseContext } from '../firebase';
+import {
+  FirebaseMock,
+  render,
+  screen,
+  userEvent,
+  wait
+} from '../../utils/tests';
+import { FirebaseContext } from '../firebase';
 import Login from './Login';
 
 describe("Login form", () => {
   beforeEach(jest.resetAllMocks);
 
-  const firebase = new Firebase();
+  const firebase = new FirebaseMock();
 
   const renderWithFirebase = () => {
     render(
