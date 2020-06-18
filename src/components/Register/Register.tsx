@@ -54,13 +54,17 @@ const Register: FunctionComponent = () => {
 
     firebase.auth
       .createUserWithEmailAndPassword(email, password)
-      .then((res) => {
-        if (!firebase.auth.currentUser) {
+      .then((authUser: firebase.auth.UserCredential) => {
+        if (!authUser) {
           return;
         }
-        firebase.auth.currentUser
-          .updateProfile({
-            displayName: name,
+        const userId = authUser?.user?.uid;
+
+        firebase.firestore
+          .collection("runners")
+          .add({
+            userId,
+            name,
           })
           .then(() => {
             history.push(routes.HOME);

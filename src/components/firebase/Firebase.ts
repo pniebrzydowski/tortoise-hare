@@ -1,5 +1,6 @@
 import app from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/firestore';
 
 interface FirebaseConfig {
   apiKey?: string;
@@ -26,10 +27,12 @@ const config: FirebaseConfig = {
 class Firebase {
   app: firebase.app.App;
   auth: firebase.auth.Auth;
+  firestore: firebase.firestore.Firestore;
 
   constructor() {
     this.app = app.initializeApp(config);
     this.auth = app.auth(this.app);
+    this.firestore = app.firestore(this.app);
   }
 }
 

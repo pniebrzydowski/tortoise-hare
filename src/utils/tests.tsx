@@ -22,9 +22,11 @@ export { customRender as render, userEvent };
 export class BaseFirebaseMock {
   app: any;
   auth: any;
+  firestore: any;
 
   constructor() {
     this.app = {};
     this.auth = {};
+    this.firestore = {};
   }
 }
