@@ -9,7 +9,6 @@ import {
 } from 'react-router-dom';
 import styled from 'styled-components';
 
-import useAdminCheck from '../components/firebase/hooks/useAdminCheck';
 import AddVolunteer from '../components/races/AddVolunteer';
 import EditResults from '../components/races/EditResults';
 import NextRace from '../components/races/NextRace';
@@ -20,6 +19,7 @@ import UpcomingRunners from '../components/races/UpcomingRunners';
 import { PrimaryButton } from '../components/ui/Button';
 import { getRaceById, Race } from '../dummyData/races';
 import { allRunners } from '../dummyData/runners';
+import useAdminCheck from '../firebase/hooks/useAdminCheck';
 import { isDateInFuture } from '../utils/date';
 
 const StyledNavLink = styled(Link)`

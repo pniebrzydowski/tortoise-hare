@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { FirebaseContext } from '../../firebase';
 import {
   BaseFirebaseMock,
   render,
@@ -7,7 +8,6 @@ import {
   userEvent,
   wait
 } from '../../utils/tests';
-import { FirebaseContext } from '../firebase';
 import ForgotPassword from './ForgotPassword';
 
 class FirebaseMock extends BaseFirebaseMock {

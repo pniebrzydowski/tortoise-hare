@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useContext } from 'react';
 
-import { FirebaseContext } from '../firebase';
+import { FirebaseContext } from '../../firebase';
 import { PrimaryButton } from '../ui/Button';
 
 const Logout: FunctionComponent = () => {

@@ -4,8 +4,8 @@ import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { FirebaseContext } from '../../firebase';
 import routes from '../../routing/routes';
-import { FirebaseContext } from '../firebase';
 import Text from '../form/fields/Text';
 import { StyledError } from '../form/FieldWrapper';
 import { PrimaryButton } from '../ui/Button';

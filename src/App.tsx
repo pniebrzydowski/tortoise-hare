@@ -8,10 +8,10 @@ import {
 } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
 
-import useAuth from './components/firebase/hooks/useAuth';
 import SiteHeader from './components/SiteHeader';
 import GlobalStyles from './design/globalStyle';
 import theme from './design/theme';
+import useAuth from './firebase/hooks/useAuth';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import PasswordResetPage from './pages/PasswordResetPage';

@@ -3,7 +3,7 @@ import React, { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import useAuth from '../firebase/hooks/useAuth';
+import useAuth from '../../firebase/hooks/useAuth';
 import Logout from '../Logout';
 
 const StyledHeader = styled("header")`
