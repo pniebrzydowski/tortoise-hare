@@ -8,6 +8,7 @@ import Logout from '../Logout';
 
 const StyledHeader = styled("header")`
   background-color: ${(props) => props.theme.colors.dark};
+  color: ${(props) => props.theme.colors.xLight};
   padding: ${(props) => props.theme.spacing.medium};
   display: flex;
   align-items: center;
@@ -15,12 +16,7 @@ const StyledHeader = styled("header")`
 `;
 
 const StyledLink = styled(Link)`
-  color: ${(props) => props.theme.colors.xLight};
   text-decoration: none;
-`;
-
-const StyledLoginLink = styled(Link)`
-  color: ${(props) => props.theme.colors.xLight};
 `;
 
 const SiteHeader: FunctionComponent = () => {
@@ -32,9 +28,12 @@ const SiteHeader: FunctionComponent = () => {
         <h1>Tortoise and Hare</h1>
       </StyledLink>
       {loggedUser ? (
-        <Logout />
+        <div>
+          Logged in as: <strong>{loggedUser.email} </strong>
+          <Logout />
+        </div>
       ) : (
-        <StyledLoginLink to="/login">Login or Register</StyledLoginLink>
+        <Link to="/login">Login or Register</Link>
       )}
     </StyledHeader>
   );
