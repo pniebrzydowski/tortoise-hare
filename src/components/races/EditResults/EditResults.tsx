@@ -25,7 +25,7 @@ const StyledButtonContainer = styled("div")`
   }
 `;
 
-const FinishRace: FunctionComponent<Props> = ({ results, raceId }) => {
+const EditResults: FunctionComponent<Props> = ({ results, raceId }) => {
   const form = useForm();
   const history = useHistory();
 
@@ -93,4 +93,4 @@ const FinishRace: FunctionComponent<Props> = ({ results, raceId }) => {
   );
 };
 
-export default FinishRace;
+export default EditResults;

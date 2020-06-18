@@ -38,7 +38,6 @@ const getResultsForSeries = (id: string): RaceResult[] => {
   const races: Race[] = getRacesForSeries(id);
 
   races.forEach((race) => {
-    console.log(race.results && race.isFinished);
     if (race.results && race.isFinished) {
       results = results.concat(race.results);
     }

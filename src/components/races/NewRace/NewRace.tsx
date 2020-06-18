@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import { DistanceUnit, Race } from '../../../dummyData/races';
 import { getFutureDateWithTime } from '../../../utils/date';
+import useAdminCheck from '../../firebase/hooks/useAdminCheck';
 import Datepicker from '../../form/fields/Datepicker';
 import Number from '../../form/fields/Number';
 import Select from '../../form/fields/Select';
@@ -73,8 +74,13 @@ const StyledButtonContainer = styled("div")`
 `;
 
 const NewRace: FunctionComponent<Props> = ({ seriesId }) => {
+  const isAdmin = useAdminCheck();
   const [visible, setVisible] = useState(false);
   const form = useForm();
+
+  if (!isAdmin) {
+    return null;
+  }
 
   if (!visible) {
     return (

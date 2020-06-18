@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import { Series } from '../../../dummyData/series';
 import { getFutureDate, getToday } from '../../../utils/date';
+import useAdminCheck from '../../firebase/hooks/useAdminCheck';
 import Datepicker from '../../form/fields/Datepicker';
 import Text from '../../form/fields/Text';
 import Textarea from '../../form/fields/Textarea';
@@ -40,8 +41,13 @@ const StyledButtonContainer = styled("div")`
 `;
 
 const NewSeries: FunctionComponent = () => {
+  const isAdmin = useAdminCheck();
   const [visible, setVisible] = useState(false);
   const form = useForm();
+
+  if (!isAdmin) {
+    return null;
+  }
 
   if (!visible) {
     return (

@@ -9,8 +9,9 @@ import {
 } from 'react-router-dom';
 import styled from 'styled-components';
 
+import useAdminCheck from '../components/firebase/hooks/useAdminCheck';
 import AddVolunteer from '../components/races/AddVolunteer';
-import FinishRace from '../components/races/EditResults';
+import EditResults from '../components/races/EditResults';
 import NextRace from '../components/races/NextRace';
 import RaceDetail from '../components/races/RaceDetail';
 import RaceResults from '../components/races/RaceResults';
@@ -60,6 +61,7 @@ const StyledVolunteersWrapper = styled("section")`
 `;
 
 const RaceDetailPage: FunctionComponent = () => {
+  const isAdmin = useAdminCheck();
   const { raceId } = useParams();
   const { path } = useRouteMatch();
 
@@ -100,9 +102,11 @@ const RaceDetailPage: FunctionComponent = () => {
           <RaceResults results={race.results} />
         ) : (
           <Switch>
-            <Route path={`${path}/edit`}>
-              <FinishRace results={race.results} raceId={race.id} />
-            </Route>
+            {isAdmin && (
+              <Route path={`${path}/edit`}>
+                <EditResults results={race.results} raceId={race.id} />
+              </Route>
+            )}
             <Route>
               <StyledFlexBox>
                 <div>
@@ -110,9 +114,11 @@ const RaceDetailPage: FunctionComponent = () => {
                     results={race.results}
                     raceStartTime={race.startTime}
                   />
-                  <StyledLink to={`${race.id}/edit`}>
-                    <PrimaryButton>Add results</PrimaryButton>
-                  </StyledLink>
+                  {isAdmin && (
+                    <StyledLink to={`${race.id}/edit`}>
+                      <PrimaryButton>Add results</PrimaryButton>
+                    </StyledLink>
+                  )}
                 </div>
                 <StyledVolunteersWrapper>
                   {race.volunteers && (
