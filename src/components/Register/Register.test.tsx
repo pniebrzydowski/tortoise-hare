@@ -1,18 +1,21 @@
 import React from 'react';
 
-import { render, screen, userEvent, wait } from '../../utils/tests';
+import {
+  BaseFirebaseMock,
+  render,
+  screen,
+  userEvent,
+  wait
+} from '../../utils/tests';
 import { FirebaseContext } from '../firebase';
 import Register from './Register';
 
-class FirebaseMock {
-  auth: any;
-
+class FirebaseMock extends BaseFirebaseMock {
   constructor() {
-    this.auth = {
-      createUserWithEmailAndPassword: jest.fn(),
-      currentUser: {
-        updateProfile: jest.fn(),
-      },
+    super();
+    this.auth.createUserWithEmailAndPassword = jest.fn();
+    this.auth.currentUser = {
+      updateProfile: jest.fn(),
     };
   }
 }

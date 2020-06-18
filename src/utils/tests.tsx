@@ -18,3 +18,13 @@ export * from "@testing-library/react";
 
 // override render method
 export { customRender as render, userEvent };
+
+export class BaseFirebaseMock {
+  app: any;
+  auth: any;
+
+  constructor() {
+    this.app = {};
+    this.auth = {};
+  }
+}

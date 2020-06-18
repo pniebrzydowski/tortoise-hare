@@ -24,12 +24,12 @@ const config: FirebaseConfig = {
 };
 
 class Firebase {
+  app: firebase.app.App;
   auth: firebase.auth.Auth;
 
   constructor() {
-    app.initializeApp(config);
-
-    this.auth = app.auth();
+    this.app = app.initializeApp(config);
+    this.auth = app.auth(this.app);
   }
 }
 
