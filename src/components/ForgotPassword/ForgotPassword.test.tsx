@@ -2,24 +2,24 @@ import React from 'react';
 
 import { render, screen, userEvent, wait } from '../../utils/tests';
 import { FirebaseContext } from '../firebase';
-import Login from './Login';
+import ForgotPassword from './ForgotPassword';
 
 class FirebaseMock {
   auth: any;
 
   constructor() {
     this.auth = {
-      signInWithEmailAndPassword: jest.fn(),
+      sendPasswordResetEmail: jest.fn(),
     };
   }
 }
 
-const clickLogin = async () => {
-  userEvent.click(screen.getByRole("button", { name: "Log in" }));
+const clickSubmit = async () => {
+  userEvent.click(screen.getByRole("button", { name: "Submit" }));
   await wait();
 };
 
-describe("Login form", () => {
+describe("Forgot Password form", () => {
   beforeEach(jest.resetAllMocks);
 
   const firebase = new FirebaseMock();
@@ -27,34 +27,29 @@ describe("Login form", () => {
   const renderWithFirebase = () => {
     render(
       <FirebaseContext.Provider value={firebase}>
-        <Login />
+        <ForgotPassword />
       </FirebaseContext.Provider>
     );
   };
 
-  it("submits login form", async () => {
+  it("submits form", async () => {
     jest
-      .spyOn(firebase.auth, "signInWithEmailAndPassword")
+      .spyOn(firebase.auth, "sendPasswordResetEmail")
       .mockImplementation(() => new Promise((resolve) => resolve()));
     const email = "test@test.com";
-    const password = "password";
 
     renderWithFirebase();
 
     userEvent.type(screen.getByLabelText("Email Address"), email);
-    userEvent.type(screen.getByLabelText("Password"), password);
 
-    await clickLogin();
+    await clickSubmit();
 
-    expect(firebase.auth.signInWithEmailAndPassword).toHaveBeenCalledWith(
-      email,
-      password
-    );
+    expect(firebase.auth.sendPasswordResetEmail).toHaveBeenCalledWith(email);
   });
 
   it("displays submit error", async () => {
     const SUBMIT_ERROR = "Email format error";
-    jest.spyOn(firebase.auth, "signInWithEmailAndPassword").mockImplementation(
+    jest.spyOn(firebase.auth, "sendPasswordResetEmail").mockImplementation(
       () =>
         new Promise((resolve, reject) =>
           reject({
@@ -63,35 +58,27 @@ describe("Login form", () => {
         )
     );
     const email = "test";
-    const password = "password";
 
     renderWithFirebase();
 
     userEvent.type(screen.getByLabelText("Email Address"), email);
-    userEvent.type(screen.getByLabelText("Password"), password);
 
-    await clickLogin();
+    await clickSubmit();
 
-    expect(firebase.auth.signInWithEmailAndPassword).toHaveBeenCalledWith(
-      email,
-      password
-    );
+    expect(firebase.auth.sendPasswordResetEmail).toHaveBeenCalledWith(email);
 
     expect(screen.getByText(SUBMIT_ERROR)).toBeVisible();
   });
 
   it("displays field errors", async () => {
-    jest
-      .spyOn(firebase.auth, "signInWithEmailAndPassword")
-      .mockImplementation();
+    jest.spyOn(firebase.auth, "sendPasswordResetEmail").mockImplementation();
 
     renderWithFirebase();
 
-    await clickLogin();
+    await clickSubmit();
 
-    expect(firebase.auth.signInWithEmailAndPassword).not.toHaveBeenCalled();
+    expect(firebase.auth.sendPasswordResetEmail).not.toHaveBeenCalled();
 
     expect(screen.getByText("Please enter your email")).toBeVisible();
-    expect(screen.getByText("Please enter your password")).toBeVisible();
   });
 });
