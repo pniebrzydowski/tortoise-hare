@@ -1,21 +1,21 @@
 import React, { FunctionComponent } from 'react';
 
-import { getRunnerById } from '../../../dummyData/runners';
+import useDoc from '../../../firebase/hooks/useDoc';
 
 interface Props {
   id: string;
 }
 
 const RunnerDetail: FunctionComponent<Props> = ({ id }) => {
-  const runner = getRunnerById(id);
+  const runnerDoc = useDoc("runners", id);
 
-  if (!runner) {
+  if (!runnerDoc) {
     return null;
   }
 
   return (
     <header>
-      <h2>{runner.name}</h2>
+      <h2>{runnerDoc.name}</h2>
     </header>
   );
 };

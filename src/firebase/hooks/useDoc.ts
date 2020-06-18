@@ -1,36 +1,33 @@
 import { useContext, useEffect, useState } from 'react';
 
 import FirebaseContext from '../FirebaseContext';
-import useAuth from './useAuth';
 
-const useAdminCheck = () => {
+const useDoc = (collection: string, ref: string) => {
   const firebase = useContext(FirebaseContext);
-  const authUser = useAuth();
-  const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  const [doc, setDoc] = useState<firebase.firestore.DocumentData>();
 
   useEffect(() => {
-    if (!authUser || !firebase) {
-      setIsAdmin(false);
+    if (!firebase) {
       return;
     }
 
     firebase.firestore
-      .collection("runners")
-      .doc(authUser.uid)
+      .collection(collection)
+      .doc(ref)
       .get()
       .then((doc) => {
         if (doc.exists) {
-          setIsAdmin(doc.data()?.isAdmin || false);
+          setDoc(doc.data());
         }
       })
       .catch((err) => {
-        console.error("Error retrieving user", err);
+        console.error("Error retrieving data", err);
       });
 
     return () => {};
-  }, [firebase, authUser]);
+  }, []);
 
-  return isAdmin;
+  return doc;
 };
 
-export default useAdminCheck;
+export default useDoc;
