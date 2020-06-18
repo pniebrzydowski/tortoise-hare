@@ -18,17 +18,3 @@ export * from "@testing-library/react";
 
 // override render method
 export { customRender as render, userEvent };
-
-export class FirebaseMock {
-  auth: any;
-
-  constructor() {
-    this.auth = {
-      signInWithEmailAndPassword: jest.fn(),
-      createUserWithEmailAndPassword: jest.fn(),
-      currentUser: {
-        updateProfile: jest.fn(),
-      },
-    };
-  }
-}

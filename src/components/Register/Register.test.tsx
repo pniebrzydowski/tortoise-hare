@@ -1,14 +1,21 @@
 import React from 'react';
 
-import {
-  FirebaseMock,
-  render,
-  screen,
-  userEvent,
-  wait
-} from '../../utils/tests';
+import { render, screen, userEvent, wait } from '../../utils/tests';
 import { FirebaseContext } from '../firebase';
 import Register from './Register';
+
+class FirebaseMock {
+  auth: any;
+
+  constructor() {
+    this.auth = {
+      createUserWithEmailAndPassword: jest.fn(),
+      currentUser: {
+        updateProfile: jest.fn(),
+      },
+    };
+  }
+}
 
 describe("Register form", () => {
   beforeEach(jest.resetAllMocks);
