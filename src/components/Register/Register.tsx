@@ -51,6 +51,7 @@ const Register: FunctionComponent = () => {
       form.setError("passwordConfirm", "notMatch");
       return;
     }
+
     firebase.auth
       .createUserWithEmailAndPassword(email, password)
       .then((res) => {
@@ -107,8 +108,8 @@ const Register: FunctionComponent = () => {
               error={
                 form.errors.password &&
                 (form.errors.password.type === "minLength"
-                  ? "Passwords must be at least 8 characters"
-                  : "Please confirm your password")
+                  ? "Password must be at least 8 characters"
+                  : "Please enter a password")
               }
             />
             <Text

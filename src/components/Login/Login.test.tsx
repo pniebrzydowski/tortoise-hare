@@ -9,7 +9,7 @@ describe("Login form", () => {
 
   const firebase = new Firebase();
 
-  const renderLogin = () => {
+  const renderWithFirebase = () => {
     render(
       <FirebaseContext.Provider value={firebase}>
         <Login />
@@ -24,12 +24,12 @@ describe("Login form", () => {
     const email = "test@test.com";
     const password = "password";
 
-    renderLogin();
+    renderWithFirebase();
 
     userEvent.type(screen.getByLabelText("Email Address"), email);
     userEvent.type(screen.getByLabelText("Password"), password);
 
-    await userEvent.click(screen.getByRole("button", { name: "Log in" }));
+    userEvent.click(screen.getByRole("button", { name: "Log in" }));
     await wait();
 
     expect(firebase.auth.signInWithEmailAndPassword).toHaveBeenCalledWith(
@@ -51,12 +51,12 @@ describe("Login form", () => {
     const email = "test";
     const password = "password";
 
-    renderLogin();
+    renderWithFirebase();
 
     userEvent.type(screen.getByLabelText("Email Address"), email);
     userEvent.type(screen.getByLabelText("Password"), password);
 
-    await userEvent.click(screen.getByRole("button", { name: "Log in" }));
+    userEvent.click(screen.getByRole("button", { name: "Log in" }));
     await wait();
 
     expect(firebase.auth.signInWithEmailAndPassword).toHaveBeenCalledWith(
@@ -72,9 +72,9 @@ describe("Login form", () => {
       .spyOn(firebase.auth, "signInWithEmailAndPassword")
       .mockImplementation();
 
-    renderLogin();
+    renderWithFirebase();
 
-    await userEvent.click(screen.getByRole("button", { name: "Log in" }));
+    userEvent.click(screen.getByRole("button", { name: "Log in" }));
     await wait();
 
     expect(firebase.auth.signInWithEmailAndPassword).not.toHaveBeenCalled();
