@@ -63,8 +63,10 @@ const Register: FunctionComponent = () => {
         firebase.firestore
           .collection("runners")
           .add({
+            email,
             userId,
             name,
+            isAdmin: false,
           })
           .then(() => {
             history.push(routes.HOME);

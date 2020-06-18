@@ -14,9 +14,11 @@ class FirebaseMock extends BaseFirebaseMock {
   constructor() {
     super();
     this.auth.createUserWithEmailAndPassword = jest.fn();
-    this.firestore.collection = jest.fn().mockImplementation(() => {
-      add: jest.fn();
-    });
+    this.firestore.collection = () => {
+      return {
+        add: jest.fn(),
+      };
+    };
   }
 }
 
@@ -52,8 +54,15 @@ describe("Register form", () => {
             })
           )
       );
+
+    const collection = {
+      add: jest.fn(),
+    };
     jest
-      .spyOn(firebase.firestore.collection(), "add")
+      .spyOn(firebase.firestore, "collection")
+      .mockImplementation(() => collection);
+    jest
+      .spyOn(collection, "add")
       .mockImplementation(() => new Promise((resolve) => resolve()));
 
     const email = "test@test.com";
@@ -76,9 +85,12 @@ describe("Register form", () => {
       email,
       password
     );
-    expect(firebase.firestore.collection().add).toHaveBeenCalledWith({
+    expect(firebase.firestore.collection).toHaveBeenCalledWith("runners");
+    expect(collection.add).toHaveBeenCalledWith({
+      email,
       userId: USER_ID,
       name,
+      isAdmin: false,
     });
   });
 
