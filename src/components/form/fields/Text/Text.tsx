@@ -6,6 +6,7 @@ import { StyledInput } from '../../../ui/Input';
 import FieldWrapper from '../../FieldWrapper';
 
 interface Props {
+  type?: "text" | "email" | "phone" | "password";
   formName: string;
   fieldName: string;
   defaultValue?: string;
@@ -15,11 +16,12 @@ interface Props {
 }
 
 const Text: FunctionComponent<Props> = ({
+  type = "text",
   formName,
   fieldName,
+  defaultValue,
   label,
   error,
-  defaultValue,
   required,
 }) => {
   const { register } = useFormContext();
@@ -28,7 +30,7 @@ const Text: FunctionComponent<Props> = ({
   return (
     <FieldWrapper fieldId={fieldId} label={label} error={error}>
       <StyledInput
-        type="text"
+        type={type}
         id={fieldId}
         name={fieldName}
         defaultValue={defaultValue}

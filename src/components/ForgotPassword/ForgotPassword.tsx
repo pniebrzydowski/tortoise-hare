@@ -71,6 +71,7 @@ const ForgotPassword: FunctionComponent = () => {
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <StyledFormContainer>
             <Text
+              type="email"
               formName="forgotPassword"
               fieldName="email"
               label="Email Address"

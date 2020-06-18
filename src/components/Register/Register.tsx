@@ -37,7 +37,20 @@ const Register: FunctionComponent = () => {
     return null;
   }
 
-  const onSubmit = ({ email, password, name }: RegisterFormData) => {
+  const onSubmit = ({
+    email,
+    password,
+    passwordConfirm,
+    name,
+  }: RegisterFormData) => {
+    if (password.length < 8) {
+      form.setError("password", "minLength");
+      return;
+    }
+    if (password !== passwordConfirm) {
+      form.setError("passwordConfirm", "notMatch");
+      return;
+    }
     firebase.auth
       .createUserWithEmailAndPassword(email, password)
       .then((res) => {
@@ -78,6 +91,7 @@ const Register: FunctionComponent = () => {
               error={form.errors.email && "Please enter your name"}
             />
             <Text
+              type="email"
               formName="register"
               fieldName="email"
               label="Email Address"
@@ -85,18 +99,30 @@ const Register: FunctionComponent = () => {
               error={form.errors.email && "Please enter your email"}
             />
             <Text
+              type="password"
               formName="register"
               fieldName="password"
-              label="Password"
+              label="Password (at least 8 characters)"
               required
-              error={form.errors.password && "Please enter a password"}
+              error={
+                form.errors.password &&
+                (form.errors.password.type === "minLength"
+                  ? "Passwords must be at least 8 characters"
+                  : "Please confirm your password")
+              }
             />
             <Text
+              type="password"
               formName="register"
               fieldName="passwordConfirm"
               label="Confirm Password"
               required
-              error={form.errors.password && "Please confirm your password"}
+              error={
+                form.errors.passwordConfirm &&
+                (form.errors.passwordConfirm.type === "notMatch"
+                  ? "Passwords do not match"
+                  : "Please confirm your password")
+              }
             />
           </StyledFormContainer>
           {submitError && <StyledFormError>{submitError}</StyledFormError>}

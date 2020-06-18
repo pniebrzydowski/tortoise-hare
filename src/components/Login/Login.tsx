@@ -56,6 +56,7 @@ const Login: FunctionComponent = () => {
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <StyledFormContainer>
             <Text
+              type="email"
               formName="login"
               fieldName="email"
               label="Email Address"
@@ -63,6 +64,7 @@ const Login: FunctionComponent = () => {
               error={form.errors.email && "Please enter your email"}
             />
             <Text
+              type="password"
               formName="login"
               fieldName="password"
               label="Password"
