@@ -1,8 +1,14 @@
 import React, { FunctionComponent } from 'react';
 
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch
+} from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
 
+import useAuth from './components/firebase/hooks/useAuth';
 import SiteHeader from './components/SiteHeader';
 import GlobalStyles from './design/globalStyle';
 import theme from './design/theme';
@@ -24,6 +30,8 @@ const StyledMain = styled("main")`
 `;
 
 const App: FunctionComponent = () => {
+  const loggedInUser = useAuth();
+
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
@@ -47,9 +55,13 @@ const App: FunctionComponent = () => {
               <RunnerDetailPage />
             </Route>
 
-            <Route path={routes.LOGIN} exact>
-              <LoginPage />
-            </Route>
+            <Route
+              path={routes.LOGIN}
+              exact
+              render={() =>
+                loggedInUser ? <Redirect to={routes.HOME} /> : <LoginPage />
+              }
+            />
             <Route path={routes.FORGOT_PASSWORD} exact>
               <PasswordResetPage />
             </Route>

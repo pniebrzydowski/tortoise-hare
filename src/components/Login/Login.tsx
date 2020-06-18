@@ -4,7 +4,6 @@ import { FormContext, useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
 import { FirebaseContext } from '../firebase';
-import useAuth from '../firebase/hooks/useAuth';
 import Text from '../form/fields/Text';
 import { PrimaryButton } from '../ui/Button';
 
@@ -20,26 +19,16 @@ const StyledFormContainer = styled("div")`
 
 const Login: FunctionComponent = () => {
   const firebase = useContext(FirebaseContext);
-  const loggedUser = useAuth();
   const form = useForm<LoginFormData>();
 
   if (!firebase) {
     return null;
   }
 
-  if (loggedUser) {
-    return <>Already logged in as {loggedUser.email}</>;
-  }
-
   const onSubmit = ({ email, password }: LoginFormData) => {
-    firebase.auth
-      .signInWithEmailAndPassword(email, password)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    firebase.auth.signInWithEmailAndPassword(email, password).catch((err) => {
+      console.log(err);
+    });
   };
 
   return (
