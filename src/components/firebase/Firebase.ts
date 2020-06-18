@@ -1,6 +1,5 @@
-import { FunctionComponent, useEffect } from 'react';
-
 import app from 'firebase/app';
+import 'firebase/auth';
 
 interface FirebaseConfig {
   apiKey?: string;
@@ -25,8 +24,12 @@ const config: FirebaseConfig = {
 };
 
 class Firebase {
+  auth: firebase.auth.Auth;
+
   constructor() {
     app.initializeApp(config);
+
+    this.auth = app.auth();
   }
 }
 

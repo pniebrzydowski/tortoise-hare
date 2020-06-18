@@ -3,6 +3,9 @@ import React, { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+import useAuth from '../firebase/hooks/useAuth';
+import Logout from '../Logout';
+
 const StyledHeader = styled("header")`
   background-color: ${(props) => props.theme.colors.dark};
   padding: ${(props) => props.theme.spacing.medium};
@@ -21,12 +24,18 @@ const StyledLoginLink = styled(Link)`
 `;
 
 const SiteHeader: FunctionComponent = () => {
+  const loggedUser = useAuth();
+
   return (
     <StyledHeader>
       <StyledLink to="/">
         <h1>Tortoise and Hare</h1>
       </StyledLink>
-      <StyledLoginLink to="/login">Login or Register</StyledLoginLink>
+      {loggedUser ? (
+        <Logout />
+      ) : (
+        <StyledLoginLink to="/login">Login or Register</StyledLoginLink>
+      )}
     </StyledHeader>
   );
 };

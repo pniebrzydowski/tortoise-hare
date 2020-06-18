@@ -1,8 +1,9 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useContext } from 'react';
 
 import { FormContext, useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
+import { FirebaseContext } from '../firebase';
 import useAuth from '../firebase/hooks/useAuth';
 import Text from '../form/fields/Text';
 import { PrimaryButton } from '../ui/Button';
@@ -21,13 +22,25 @@ const StyledFormContainer = styled("div")`
 const Register: FunctionComponent = () => {
   const loggedUser = useAuth();
   const form = useForm<RegisterFormData>();
+  const firebase = useContext(FirebaseContext);
+
+  if (!firebase) {
+    return null;
+  }
 
   if (loggedUser) {
     return <>Already logged in as {loggedUser.email}</>;
   }
 
-  const onSubmit = (data: RegisterFormData) => {
-    console.log(data);
+  const onSubmit = ({ email, password }: RegisterFormData) => {
+    firebase.auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
