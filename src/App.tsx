@@ -57,10 +57,14 @@ const App: FunctionComponent = () => {
 
             <Route
               path={routes.LOGIN}
+              exact
               render={() =>
                 loggedInUser ? <Redirect to={routes.HOME} /> : <LoginPage />
               }
             />
+            <Route path={routes.LOGIN}>
+              <LoginPage />
+            </Route>
             <Route path={routes.FORGOT_PASSWORD} exact>
               <PasswordResetPage />
             </Route>

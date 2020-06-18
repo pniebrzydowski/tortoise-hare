@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useContext, useState } from 'react';
 
 import { FormContext, useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 import routes from '../../routing/routes';
@@ -11,6 +11,7 @@ import { StyledError } from '../form/FieldWrapper';
 import { PrimaryButton } from '../ui/Button';
 
 interface RegisterFormData {
+  name: string;
   email: string;
   password: string;
   passwordConfirm: string;
@@ -30,14 +31,30 @@ const Register: FunctionComponent = () => {
   const form = useForm<RegisterFormData>();
   const firebase = useContext(FirebaseContext);
   const [submitError, setSubmitError] = useState("");
+  const history = useHistory();
 
   if (!firebase) {
     return null;
   }
 
-  const onSubmit = ({ email, password }: RegisterFormData) => {
+  const onSubmit = ({ email, password, name }: RegisterFormData) => {
     firebase.auth
       .createUserWithEmailAndPassword(email, password)
+      .then((res) => {
+        if (!firebase.auth.currentUser) {
+          return;
+        }
+        firebase.auth.currentUser
+          .updateProfile({
+            displayName: name,
+          })
+          .then(() => {
+            history.push(routes.HOME);
+          })
+          .catch((err) => {
+            setSubmitError(err.message);
+          });
+      })
       .catch((err) => {
         setSubmitError(err.message);
       });
@@ -55,6 +72,13 @@ const Register: FunctionComponent = () => {
           <StyledFormContainer>
             <Text
               formName="register"
+              fieldName="name"
+              label="Name"
+              required
+              error={form.errors.email && "Please enter your name"}
+            />
+            <Text
+              formName="register"
               fieldName="email"
               label="Email Address"
               required
@@ -69,7 +93,7 @@ const Register: FunctionComponent = () => {
             />
             <Text
               formName="register"
-              fieldName="password-confirm"
+              fieldName="passwordConfirm"
               label="Confirm Password"
               required
               error={form.errors.password && "Please confirm your password"}
