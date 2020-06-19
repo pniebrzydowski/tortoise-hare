@@ -2,11 +2,25 @@ import { useContext, useEffect, useState } from 'react';
 
 import FirebaseContext from '../FirebaseContext';
 
-const useCollectionDocs = (
-  collectionName: string,
-  sortField?: string,
-  sortOrder: "asc" | "desc" = "asc"
-) => {
+interface CollectionQuery {
+  field: string;
+  operator: "==" | ">" | "<";
+  value: string;
+}
+
+interface Props {
+  collectionName: string;
+  query?: CollectionQuery;
+  sortField?: string;
+  sortOrder?: "asc" | "desc";
+}
+
+const useCollectionDocs = ({
+  collectionName,
+  query,
+  sortField,
+  sortOrder = "asc",
+}: Props): firebase.firestore.QueryDocumentSnapshot[] | undefined => {
   const firebase = useContext(FirebaseContext);
   const [collection, setCollection] = useState<
     firebase.firestore.QueryDocumentSnapshot[]
@@ -17,10 +31,17 @@ const useCollectionDocs = (
       return;
     }
 
-    if (sortField) {
+    if (query) {
       firebase.firestore
         .collection(collectionName)
-        .orderBy(sortField)
+        .where(query.field, query.operator, query.value)
+        .onSnapshot((snapshot) => {
+          setCollection(snapshot.docs);
+        });
+    } else if (sortField) {
+      firebase.firestore
+        .collection(collectionName)
+        .orderBy(sortField, sortOrder)
         .onSnapshot((snapshot) => {
           setCollection(snapshot.docs);
         });
@@ -31,7 +52,7 @@ const useCollectionDocs = (
     }
 
     return () => {};
-  }, [firebase, collectionName, sortField]);
+  }, [firebase, collectionName, query, sortField, sortOrder]);
 
   return collection;
 };

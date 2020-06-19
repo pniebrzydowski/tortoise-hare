@@ -1,11 +1,10 @@
 import React, { FunctionComponent } from 'react';
 
-import { Race } from '../../../dummyData/races';
 import { DEFAULT_DATETIME_FORMAT, formatDate } from '../../../utils/date';
 import ListingItem from '../../ui/ListingItem';
 
 interface Props {
-  races: Race[];
+  races: firebase.firestore.DocumentData[];
 }
 
 const RaceList: FunctionComponent<Props> = ({ races }) => {

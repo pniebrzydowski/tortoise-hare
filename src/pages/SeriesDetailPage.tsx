@@ -7,7 +7,7 @@ import NewRace from '../components/races/NewRace';
 import RaceList from '../components/races/RaceList';
 import SeriesDetail from '../components/series/SeriesDetail';
 import SeriesStandings from '../components/series/SeriesStandings';
-import { getRacesForSeries, Race } from '../dummyData/races';
+import useCollectionDocs from '../firebase/hooks/useCollectionDocs';
 import { isDateInFuture } from '../utils/date';
 
 const StyledLink = styled(Link)`
@@ -44,18 +44,23 @@ const StyledFlexContainer = styled("div")`
 
 const SeriesDetailPage: FunctionComponent = () => {
   const { seriesId } = useParams();
+  const seriesRaces = useCollectionDocs({
+    collectionName: "races",
+    query: {
+      field: "seriesId",
+      operator: "==",
+      value: seriesId,
+    },
+  });
 
-  if (!seriesId) {
-    return null;
-  }
-
-  const seriesRaces: Race[] = getRacesForSeries(seriesId);
-  const upcomingRaces: Race[] = seriesRaces.filter(
-    (race) => isDateInFuture(race.startTime) && !race.isFinished
-  );
-  const pastRaces: Race[] = seriesRaces.filter(
-    (race) => race.isFinished || !isDateInFuture(race.startTime)
-  );
+  const upcomingRaces = seriesRaces?.filter((raceDoc) => {
+    const race = raceDoc.data();
+    return isDateInFuture(race.startTime) && !race.isFinished;
+  });
+  const pastRaces = seriesRaces?.filter((raceDoc) => {
+    const race = raceDoc.data();
+    return race.isFinished || !isDateInFuture(race.startTime);
+  });
 
   return (
     <>
@@ -67,16 +72,19 @@ const SeriesDetailPage: FunctionComponent = () => {
 
       <StyledFlexBox>
         <StyledFlexContainer>
-          {upcomingRaces.length > 0 && (
-            <StyledFlexContainer>
-              <header>
-                <h3 style={{ display: "inline" }}>Upcoming Races</h3>
-                <NewRace seriesId={seriesId} />
-              </header>
+          <StyledFlexContainer>
+            <header>
+              <h3 style={{ display: "inline" }}>Upcoming Races</h3>
+              <NewRace seriesId={seriesId} />
+            </header>
+            {upcomingRaces && upcomingRaces.length > 0 ? (
               <RaceList races={upcomingRaces} />
-            </StyledFlexContainer>
-          )}
-          {pastRaces.length > 0 && (
+            ) : (
+              <p>There are no upcoming races in this series</p>
+            )}
+          </StyledFlexContainer>
+
+          {pastRaces && pastRaces.length > 0 && (
             <StyledFlexContainer>
               <header>
                 <h3>Past Races</h3>
