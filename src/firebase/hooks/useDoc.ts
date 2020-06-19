@@ -16,16 +16,14 @@ const useDoc = (collection: string, ref: string) => {
       .doc(ref)
       .get()
       .then((doc) => {
-        if (doc.exists) {
-          setDoc(doc.data());
-        }
+        setDoc(doc.data());
       })
       .catch((err) => {
         console.error("Error retrieving data", err);
       });
 
     return () => {};
-  }, []);
+  }, [firebase, collection, ref]);
 
   return doc;
 };
