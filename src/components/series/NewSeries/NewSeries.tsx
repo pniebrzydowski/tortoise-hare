@@ -1,9 +1,10 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useContext, useState } from 'react';
 
 import { FormContext, useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
 import { Series } from '../../../dummyData/series';
+import { FirebaseContext } from '../../../firebase';
 import useAdminCheck from '../../../firebase/hooks/useAdminCheck';
 import { getFutureDate, getToday } from '../../../utils/date';
 import Datepicker from '../../form/fields/Datepicker';
@@ -42,6 +43,7 @@ const StyledButtonContainer = styled("div")`
 
 const NewSeries: FunctionComponent = () => {
   const isAdmin = useAdminCheck();
+  const firebase = useContext(FirebaseContext);
   const [visible, setVisible] = useState(false);
   const form = useForm();
 
@@ -57,8 +59,27 @@ const NewSeries: FunctionComponent = () => {
     );
   }
 
-  const onSubmit = (data: FormData) => {
-    console.log(data);
+  const onSubmit = ({ name, startDate, endDate, description }: FormData) => {
+    if (!firebase) {
+      return;
+    }
+
+    const docRef = name?.replace(/ /g, "-").toLowerCase();
+    firebase.firestore
+      .collection("series")
+      .doc(docRef)
+      .set({
+        name,
+        startDate,
+        endDate,
+        description,
+      })
+      .then(() => {
+        console.log("Document successfully written!");
+      })
+      .catch((err) => {
+        console.error("Error creating series: ", err);
+      });
   };
 
   return (

@@ -2,9 +2,9 @@ import { useContext, useEffect, useState } from 'react';
 
 import FirebaseContext from '../FirebaseContext';
 
-const useDoc = (collection: string, ref: string) => {
+const useDocData = (collection: string, ref: string) => {
   const firebase = useContext(FirebaseContext);
-  const [doc, setDoc] = useState<firebase.firestore.DocumentData>();
+  const [docData, setDocData] = useState<firebase.firestore.DocumentData>();
 
   useEffect(() => {
     if (!firebase) {
@@ -14,18 +14,14 @@ const useDoc = (collection: string, ref: string) => {
     firebase.firestore
       .collection(collection)
       .doc(ref)
-      .get()
-      .then((doc) => {
-        setDoc(doc.data());
-      })
-      .catch((err) => {
-        console.error("Error retrieving data", err);
+      .onSnapshot((doc) => {
+        setDocData(doc.data());
       });
 
     return () => {};
   }, [firebase, collection, ref]);
 
-  return doc;
+  return docData;
 };
 
-export default useDoc;
+export default useDocData;

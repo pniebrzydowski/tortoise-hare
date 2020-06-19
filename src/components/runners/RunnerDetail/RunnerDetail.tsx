@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 
-import useDoc from '../../../firebase/hooks/useDoc';
+import useDoc from '../../../firebase/hooks/useDocData';
 
 interface Props {
   id: string;
