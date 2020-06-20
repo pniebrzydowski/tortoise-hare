@@ -17,9 +17,10 @@ import RaceResults from '../components/races/RaceResults';
 import RaceVolunteers from '../components/races/RaceVolunteers';
 import UpcomingRunners from '../components/races/UpcomingRunners';
 import { PrimaryButton } from '../components/ui/Button';
-import { getRaceById, Race } from '../dummyData/races';
-import { allRunners } from '../dummyData/runners';
+import { Race } from '../dummyData/races';
+import { allRunners, Runner } from '../dummyData/runners';
 import useAdminCheck from '../firebase/hooks/useAdminCheck';
+import useDocData from '../firebase/hooks/useDocData';
 import { isDateInFuture } from '../utils/date';
 
 const StyledNavLink = styled(Link)`
@@ -64,18 +65,14 @@ const RaceDetailPage: FunctionComponent = () => {
   const isAdmin = useAdminCheck();
   const { raceId } = useParams();
   const { path } = useRouteMatch();
+  const race = useDocData("races", raceId) as Race;
 
-  if (!raceId) {
-    return null;
-  }
-
-  const race: Race | undefined = getRaceById(raceId);
-  if (!race) {
+  if (!raceId || !race) {
     return null;
   }
 
   const possibleVolunteers = allRunners.filter((runner) => {
-    const volunteerIndex = race.volunteers?.findIndex((volunteer) => {
+    const volunteerIndex = race.volunteers?.findIndex((volunteer: Runner) => {
       return volunteer.id === runner.id;
     });
     return volunteerIndex === -1;
@@ -90,7 +87,7 @@ const RaceDetailPage: FunctionComponent = () => {
       </nav>
 
       <StyledFlexBox>
-        <RaceDetail id={raceId} />
+        <RaceDetail race={race} />
         <Route path={path} exact>
           {!race.isFinished && isDateInFuture(race.startTime) && (
             <NextRace raceId={raceId} />

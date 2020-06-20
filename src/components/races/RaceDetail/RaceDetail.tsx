@@ -2,11 +2,11 @@ import React, { FunctionComponent } from 'react';
 
 import styled from 'styled-components';
 
-import { getRaceById, Race } from '../../../dummyData/races';
+import { Race } from '../../../dummyData/races';
 import { DEFAULT_DATETIME_FORMAT, formatDate } from '../../../utils/date';
 
 interface Props {
-  id: string;
+  race: Race;
 }
 
 const StyledSection = styled("section")`
@@ -24,13 +24,7 @@ const StyledDescription = styled("p")`
   color: ${(props) => props.theme.colors.secondary};
 `;
 
-const RaceDetail: FunctionComponent<Props> = ({ id }) => {
-  const race: Race | undefined = getRaceById(id);
-
-  if (!race) {
-    return null;
-  }
-
+const RaceDetail: FunctionComponent<Props> = ({ race }) => {
   return (
     <StyledSection>
       <header>
