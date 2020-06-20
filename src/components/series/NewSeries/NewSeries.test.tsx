@@ -12,24 +12,13 @@ import {
 } from '../../../utils/tests';
 import NewSeries from './NewSeries';
 
-class FirebaseMock extends BaseFirebaseMock {
-  constructor() {
-    super();
-    this.firestore.collection = () => {
-      return {
-        add: jest.fn(),
-      };
-    };
-  }
-}
-
 describe("New Series", () => {
   beforeEach(() => {
     jest.resetAllMocks();
     jest.spyOn(useAdminCheck, "default").mockReturnValue(true);
   });
 
-  const firebase = new FirebaseMock();
+  const firebase = new BaseFirebaseMock();
 
   const renderWithFirebase = () => {
     render(
@@ -75,14 +64,14 @@ describe("New Series", () => {
   });
 
   it("opens and submits the form successfully", async () => {
-    const set = () => new Promise((resolve) => resolve());
+    const set = () => Promise.resolve();
     const doc = { set };
     const collection = { doc: () => doc };
     jest
       .spyOn(firebase.firestore, "collection")
       .mockImplementation(() => collection);
     jest.spyOn(collection, "doc").mockImplementation(() => doc);
-    jest.spyOn(doc, "set");
+    jest.spyOn(doc, "set").mockImplementation(() => new Promise(() => {}));
 
     renderWithFirebase();
     const newButton = screen.getByRole("button", { name: "Add new series" });

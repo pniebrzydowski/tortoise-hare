@@ -1,17 +1,38 @@
 import React from 'react';
 
 import { DistanceUnit } from '../../../dummyData/races';
+import { FirebaseContext } from '../../../firebase';
+import * as useAdminCheck from '../../../firebase/hooks/useAdminCheck';
 import { getFutureDateWithTime } from '../../../utils/date';
-import { render, screen, userEvent, wait } from '../../../utils/tests';
+import {
+  BaseFirebaseMock,
+  render,
+  screen,
+  userEvent,
+  wait
+} from '../../../utils/tests';
 import NewRace from './NewRace';
 
 const SERIES_ID = "1";
 
-jest.mock("../../../firebase/hooks/useAdminCheck", () => jest.fn(() => true));
-
 describe("New Race", () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+    jest.spyOn(useAdminCheck, "default").mockReturnValue(true);
+  });
+
+  const firebase = new BaseFirebaseMock();
+
+  const renderWithFirebase = () => {
+    render(
+      <FirebaseContext.Provider value={firebase}>
+        <NewRace seriesId={SERIES_ID} />
+      </FirebaseContext.Provider>
+    );
+  };
+
   it("opens and closes the new race form", async () => {
-    render(<NewRace seriesId={SERIES_ID} />);
+    renderWithFirebase();
     const newButton = screen.getByRole("button", { name: "Add new race" });
     expect(newButton).toBeInTheDocument();
     await userEvent.click(newButton);
@@ -30,9 +51,9 @@ describe("New Race", () => {
   });
 
   it("opens and submits the form with error", async () => {
-    jest.spyOn(console, "log").mockImplementation();
+    jest.spyOn(firebase.firestore, "collection");
 
-    render(<NewRace seriesId={SERIES_ID} />);
+    renderWithFirebase();
     const newButton = screen.getByRole("button", { name: "Add new race" });
     await userEvent.click(newButton);
 
@@ -41,14 +62,21 @@ describe("New Race", () => {
 
     await wait();
 
-    expect(console.log).not.toHaveBeenCalled();
+    expect(firebase.firestore.collection).not.toHaveBeenCalled();
     expect(screen.getByText("Please enter a name")).toBeInTheDocument();
   });
 
   it("opens and submits the form successfully", async () => {
-    jest.spyOn(console, "log").mockImplementation();
+    const set = () => Promise.resolve();
+    const doc = { set };
+    const collection = { doc: () => doc };
+    jest
+      .spyOn(firebase.firestore, "collection")
+      .mockImplementation(() => collection);
+    jest.spyOn(collection, "doc").mockImplementation(() => doc);
+    jest.spyOn(doc, "set").mockImplementation(() => new Promise(() => {}));
 
-    render(<NewRace seriesId={SERIES_ID} />);
+    renderWithFirebase();
     const newButton = screen.getByRole("button", { name: "Add new race" });
     await userEvent.click(newButton);
 
@@ -60,7 +88,7 @@ describe("New Race", () => {
 
     await wait();
 
-    expect(console.log).toHaveBeenCalledWith({
+    expect(doc.set).toHaveBeenCalledWith({
       seriesId: SERIES_ID,
       name: "New Race",
       startTime: getFutureDateWithTime(7, 8),

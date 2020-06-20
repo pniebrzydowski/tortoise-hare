@@ -27,6 +27,12 @@ export class BaseFirebaseMock {
   constructor() {
     this.app = {};
     this.auth = {};
-    this.firestore = {};
+    this.firestore = {
+      collection: () => {
+        return {
+          add: jest.fn(),
+        };
+      },
+    };
   }
 }

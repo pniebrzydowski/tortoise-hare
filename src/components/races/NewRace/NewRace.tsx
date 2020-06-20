@@ -1,9 +1,10 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useContext, useState } from 'react';
 
 import { FormContext, useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
 import { DistanceUnit, Race } from '../../../dummyData/races';
+import { FirebaseContext } from '../../../firebase';
 import useAdminCheck from '../../../firebase/hooks/useAdminCheck';
 import { getFutureDateWithTime } from '../../../utils/date';
 import Datepicker from '../../form/fields/Datepicker';
@@ -77,6 +78,7 @@ const NewRace: FunctionComponent<Props> = ({ seriesId }) => {
   const isAdmin = useAdminCheck();
   const [visible, setVisible] = useState(false);
   const form = useForm();
+  const firebase = useContext(FirebaseContext);
 
   if (!isAdmin) {
     return null;
@@ -93,8 +95,35 @@ const NewRace: FunctionComponent<Props> = ({ seriesId }) => {
     );
   }
 
-  const onSubmit = (data: FormData) => {
-    console.log(data);
+  const onSubmit = ({
+    seriesId,
+    name,
+    startTime,
+    description,
+    distance,
+    unit,
+  }: FormData) => {
+    if (!firebase) {
+      return;
+    }
+
+    firebase.firestore
+      .collection("races")
+      .doc()
+      .set({
+        seriesId,
+        name,
+        startTime,
+        description,
+        distance,
+        unit,
+      })
+      .then(() => {
+        console.log("Document successfully written!");
+      })
+      .catch((err) => {
+        console.error("Error creating series: ", err);
+      });
   };
 
   return (
