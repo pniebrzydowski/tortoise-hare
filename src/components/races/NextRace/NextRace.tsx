@@ -1,8 +1,9 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useContext, useState } from 'react';
 
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { FirebaseContext } from '../../../firebase';
 import routes from '../../../routing/routes';
 import { PrimaryButton } from '../../ui/Button';
 import { getRunnerResultForRace } from '../utils';
@@ -21,15 +22,38 @@ const StyledSection = styled("section")`
 `;
 
 const NextRace: FunctionComponent<Props> = ({ raceId, raceName, runnerId }) => {
+  const firebase = useContext(FirebaseContext);
   const registered = runnerId
     ? getRunnerResultForRace(runnerId, raceId)
     : false;
   const [isRegistered, setIsRegistered] = useState(registered);
 
   const register = () => {
-    console.log(`Registered for race ${raceId}`);
-    setIsRegistered(true);
+    if (!firebase) {
+      return;
+    }
+
+    firebase.firestore
+      .collection("raceRegistrations")
+      .doc()
+      .set({
+        raceId,
+        runnerId,
+        predictedTime: 0,
+        actualTime: 0,
+        points: 0,
+      })
+      .then(() => {
+        setIsRegistered(true);
+      })
+      .catch((err) => {
+        console.error("Error creating series: ", err);
+      });
   };
+
+  if (!raceName && !runnerId) {
+    return null;
+  }
 
   const raceLink = raceName ? (
     <Link to={routes.RACE_DETAIL.replace(":raceId", raceId)}>{raceName}</Link>
@@ -38,7 +62,7 @@ const NextRace: FunctionComponent<Props> = ({ raceId, raceName, runnerId }) => {
   return (
     <StyledSection>
       <header>
-        <h3>{raceName ? "Next Race" : "Registration"}</h3>
+        <h3>{raceName ? "Next Race" : "Register for this race"}</h3>
       </header>
       {isRegistered ? (
         <>
@@ -48,7 +72,9 @@ const NextRace: FunctionComponent<Props> = ({ raceId, raceName, runnerId }) => {
       ) : (
         <>
           {raceName && <div>{raceLink}</div>}
-          <PrimaryButton onClick={register}>Register</PrimaryButton>
+          {runnerId && (
+            <PrimaryButton onClick={register}>Register</PrimaryButton>
+          )}
         </>
       )}
     </StyledSection>

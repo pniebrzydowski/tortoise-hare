@@ -20,6 +20,7 @@ import { PrimaryButton } from '../components/ui/Button';
 import { Race } from '../dummyData/races';
 import { allRunners, Runner } from '../dummyData/runners';
 import useAdminCheck from '../firebase/hooks/useAdminCheck';
+import useAuth from '../firebase/hooks/useAuth';
 import useDocData from '../firebase/hooks/useDocData';
 import { isDateInFuture } from '../utils/date';
 
@@ -62,6 +63,7 @@ const StyledVolunteersWrapper = styled("section")`
 `;
 
 const RaceDetailPage: FunctionComponent = () => {
+  const loggedInUser = useAuth();
   const isAdmin = useAdminCheck();
   const { raceId } = useParams();
   const { path } = useRouteMatch();
@@ -90,7 +92,7 @@ const RaceDetailPage: FunctionComponent = () => {
         <RaceDetail race={race} />
         <Route path={path} exact>
           {!race.isFinished && isDateInFuture(race.startTime) && (
-            <NextRace raceId={raceId} />
+            <NextRace raceId={raceId} runnerId={loggedInUser?.uid} />
           )}
         </Route>
       </StyledFlexBox>
