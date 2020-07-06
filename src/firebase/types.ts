@@ -1,8 +1,8 @@
-import firebase from "firebase";
+import { WhereFilterOp } from "@firebase/firestore-types";
 
 export interface FirebaseQuery {
   field: string;
-  operator: firebase.firestore.WhereFilterOp;
+  operator: WhereFilterOp;
   value?: string;
 }
 

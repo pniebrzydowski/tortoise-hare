@@ -3,11 +3,17 @@ import { useContext, useEffect, useState, useRef } from "react";
 import FirebaseContext from "../FirebaseContext";
 import { FirebaseQuery, FirebaseData } from "../types";
 
+import {
+  OrderByDirection,
+  Query,
+  DocumentData,
+} from "@firebase/firestore-types";
+
 interface Props {
   collection: string;
   query?: FirebaseQuery;
   sortField?: string;
-  sortOrder?: firebase.firestore.OrderByDirection;
+  sortOrder?: OrderByDirection;
 }
 
 const useCollectionDocsData = <T>({
@@ -20,9 +26,9 @@ const useCollectionDocsData = <T>({
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<T[]>([]);
 
-  const queryRef = useRef<
-    firebase.firestore.Query<firebase.firestore.DocumentData> | undefined
-  >(firebase?.firestore.collection(collection));
+  const queryRef = useRef<Query<DocumentData> | undefined>(
+    firebase?.firestore.collection(collection)
+  );
 
   useEffect(() => {
     if (!query || !queryRef.current) {

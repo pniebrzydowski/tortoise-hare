@@ -3,6 +3,8 @@ import { useContext, useEffect, useState, useRef } from "react";
 import FirebaseContext from "../FirebaseContext";
 import { FirebaseData } from "../types";
 
+import { CollectionReference, DocumentData } from "@firebase/firestore-types";
+
 interface DocDataProps {
   collection: string;
   id: string;
@@ -15,10 +17,9 @@ const useDocData = <T>({
   const firebase = useContext(FirebaseContext);
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<T>();
-  const queryRef = useRef<
-    | firebase.firestore.CollectionReference<firebase.firestore.DocumentData>
-    | undefined
-  >(firebase?.firestore.collection(collection));
+  const queryRef = useRef<CollectionReference<DocumentData> | undefined>(
+    firebase?.firestore.collection(collection)
+  );
 
   useEffect(() => {
     if (!queryRef.current) {
