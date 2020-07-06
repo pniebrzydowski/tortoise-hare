@@ -1,14 +1,14 @@
-import React, { FunctionComponent, useContext } from 'react';
+import React, { FunctionComponent, useContext } from "react";
 
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 
-import { FirebaseContext } from '../../../firebase';
-import useDocData from '../../../firebase/hooks/useDocData';
-import { FirebaseQueryOperators } from '../../../firebase/types';
-import routes from '../../../routing/routes';
-import { PrimaryButton } from '../../ui/Button';
-import StartTime from './StartTime';
+import { FirebaseContext } from "../../../firebase";
+import { FirebaseQueryOperators } from "../../../firebase/types";
+import routes from "../../../routing/routes";
+import { PrimaryButton } from "../../ui/Button";
+import StartTime from "./StartTime";
+import useDocDataWithQuery from "../../../firebase/hooks/useDocDataWithQuery";
 
 interface Props {
   raceId: string;
@@ -24,7 +24,7 @@ const StyledSection = styled("section")`
 
 const NextRace: FunctionComponent<Props> = ({ raceId, raceName, runnerId }) => {
   const firebase = useContext(FirebaseContext);
-  const registrationData = useDocData({
+  const registrationData = useDocDataWithQuery({
     collection: "raceRegistrations",
     queries: [
       {
