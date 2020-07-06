@@ -46,7 +46,7 @@ const StyledFlexContainer = styled("div")`
 
 const SeriesDetailPage: FunctionComponent = () => {
   const { seriesId } = useParams();
-  const seriesRaces = useCollectionDocsData<Race>({
+  const { data: seriesRaces, loading } = useCollectionDocsData<Race>({
     collectionName: "races",
     query: {
       field: "seriesId",
@@ -74,28 +74,30 @@ const SeriesDetailPage: FunctionComponent = () => {
       <SeriesDetail id={seriesId} />
 
       <StyledFlexBox>
-        <StyledFlexContainer>
+        {loading ? null : (
           <StyledFlexContainer>
-            <header>
-              <h3 style={{ display: "inline" }}>Upcoming Races</h3>
-              <NewRace seriesId={seriesId} />
-            </header>
-            {upcomingRaces.length > 0 ? (
-              <RaceList races={upcomingRaces} />
-            ) : (
-              <p>There are no upcoming races in this series</p>
-            )}
-          </StyledFlexContainer>
-
-          {pastRaces.length > 0 && (
             <StyledFlexContainer>
               <header>
-                <h3>Past Races</h3>
+                <h3 style={{ display: "inline" }}>Upcoming Races</h3>
+                <NewRace seriesId={seriesId} />
               </header>
-              <RaceList races={pastRaces} />
+              {upcomingRaces.length > 0 ? (
+                <RaceList races={upcomingRaces} />
+              ) : (
+                <p>There are no upcoming races in this series</p>
+              )}
             </StyledFlexContainer>
-          )}
-        </StyledFlexContainer>
+
+            {pastRaces.length > 0 && (
+              <StyledFlexContainer>
+                <header>
+                  <h3>Past Races</h3>
+                </header>
+                <RaceList races={pastRaces} />
+              </StyledFlexContainer>
+            )}
+          </StyledFlexContainer>
+        )}
         <SeriesStandings seriesId={seriesId} />
       </StyledFlexBox>
     </>

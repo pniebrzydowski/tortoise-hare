@@ -9,3 +9,8 @@ export interface FirebaseQuery {
   operator: FirebaseQueryOperators;
   value?: string;
 }
+
+export interface FirebaseData<T> {
+  data: T;
+  loading: boolean;
+}

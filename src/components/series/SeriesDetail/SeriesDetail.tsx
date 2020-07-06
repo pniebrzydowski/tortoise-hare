@@ -26,12 +26,12 @@ const StyledDescription = styled("p")`
 `;
 
 const SeriesDetail: FunctionComponent<Props> = ({ id }) => {
-  const series = useDocData<Series>({
+  const { data: series, loading } = useDocData<Series>({
     collection: "series",
     id,
   });
 
-  if (!series) {
+  if (!series || loading) {
     return null;
   }
 

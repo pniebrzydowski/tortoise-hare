@@ -6,12 +6,12 @@ import { formatDate, isDateInFuture } from "../../../utils/date";
 import ListingItem from "../../ui/ListingItem";
 
 const SeriesList: FunctionComponent = () => {
-  const allSeries = useCollectionDocsData<Series>({
+  const { data: allSeries, loading } = useCollectionDocsData<Series>({
     collectionName: "series",
     sortField: "startDate",
   });
 
-  if (!allSeries) {
+  if (!allSeries || loading) {
     return null;
   }
 

@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState, useRef } from "react";
 
 import FirebaseContext from "../FirebaseContext";
-import { FirebaseQuery } from "../types";
+import { FirebaseQuery, FirebaseData } from "../types";
 
 interface Props {
   collectionName: string;
@@ -15,8 +15,9 @@ const useCollectionDocsData = <T>({
   query,
   sortField,
   sortOrder = "asc",
-}: Props): T[] => {
+}: Props): FirebaseData<T[]> => {
   const firebase = useContext(FirebaseContext);
+  const [loading, setLoading] = useState(true);
   const [collection, setCollection] = useState<T[]>([]);
 
   const queryRef = useRef<
@@ -48,21 +49,31 @@ const useCollectionDocsData = <T>({
       return;
     }
 
-    const unsubscribe = queryRef.current.onSnapshot((snapshot) => {
-      const docs = snapshot?.docs ?? [];
-      const data = docs.map((doc) => ({
-        id: doc.id,
-        ...(doc.data() as T),
-      }));
-      setCollection(data);
-    });
+    const unsubscribe = queryRef.current.onSnapshot(
+      (snapshot) => {
+        setLoading(false);
+        const docs = snapshot?.docs ?? [];
+        const data = docs.map((doc) => ({
+          id: doc.id,
+          ...(doc.data() as T),
+        }));
+        setCollection(data);
+      },
+      (error) => {
+        setLoading(false);
+        console.error(error);
+      }
+    );
 
     return () => {
       unsubscribe();
     };
   }, [queryRef]);
 
-  return collection;
+  return {
+    data: collection,
+    loading,
+  };
 };
 
 export default useCollectionDocsData;

@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState, useRef } from "react";
 
 import FirebaseContext from "../FirebaseContext";
-import { FirebaseQuery } from "../types";
+import { FirebaseQuery, FirebaseData } from "../types";
 
 interface DocDataProps {
   collection: string;
@@ -11,9 +11,10 @@ interface DocDataProps {
 const useDocDataWithQuery = <T>({
   collection,
   queries,
-}: DocDataProps): T | undefined => {
+}: DocDataProps): FirebaseData<T | undefined> => {
   const firebase = useContext(FirebaseContext);
-  const [docData, setDocData] = useState<T>();
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState<T>();
   const queryRef = useRef<
     firebase.firestore.Query<firebase.firestore.DocumentData> | undefined
   >(firebase?.firestore.collection(collection));
@@ -36,20 +37,30 @@ const useDocDataWithQuery = <T>({
       return;
     }
 
-    const unsubscribe = queryRef.current.onSnapshot((snapshot) => {
-      const doc = snapshot.docs[0];
-      if (!doc) {
-        return;
+    const unsubscribe = queryRef.current.onSnapshot(
+      (snapshot) => {
+        setLoading(false);
+        const doc = snapshot.docs[0];
+        if (!doc) {
+          return;
+        }
+        setData(doc.data() as T);
+      },
+      (error) => {
+        setLoading(false);
+        console.error(error);
       }
-      setDocData(doc.data() as T);
-    });
+    );
 
     return () => {
       unsubscribe();
     };
   }, [queryRef]);
 
-  return docData;
+  return {
+    data,
+    loading,
+  };
 };
 
 export default useDocDataWithQuery;

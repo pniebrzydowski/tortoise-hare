@@ -67,12 +67,12 @@ const RaceDetailPage: FunctionComponent = () => {
   const isAdmin = useAdminCheck();
   const { raceId } = useParams();
   const { path } = useRouteMatch();
-  const race = useDocData<Race>({
+  const { data: race, loading } = useDocData<Race>({
     collection: "races",
     id: raceId,
   });
 
-  if (!raceId || !race) {
+  if (!raceId || !race || loading) {
     return null;
   }
 
