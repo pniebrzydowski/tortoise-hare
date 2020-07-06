@@ -2,12 +2,12 @@ import React, { FunctionComponent } from "react";
 
 import { Series } from "../../../dummyData/series";
 import useCollectionDocsData from "../../../firebase/hooks/useCollectionDocsData";
-import { formatDate, isDateInFuture } from "../../../utils/date";
-import ListingItem from "../../ui/ListingItem";
+import { isDateInFuture } from "../../../utils/date";
+import SeriesSection from "./SeriesSection";
 
 const SeriesList: FunctionComponent = () => {
   const { data: allSeries, loading } = useCollectionDocsData<Series>({
-    collectionName: "series",
+    collection: "series",
     sortField: "startDate",
   });
 
@@ -31,73 +31,19 @@ const SeriesList: FunctionComponent = () => {
 
   return (
     <>
-      <section>
-        <header>
-          <h2>Current Series</h2>
-          {currentSeries.length > 0 && (
-            <ul>
-              {currentSeries &&
-                currentSeries.map((series) => (
-                  <ListingItem
-                    key={series.id}
-                    linkUrl={`/series/${series.id}`}
-                    title={series.name}
-                    info={[
-                      `${formatDate(series.startDate)} - ${formatDate(
-                        series.endDate
-                      )}`,
-                    ]}
-                  />
-                ))}
-            </ul>
-          )}
-          {currentSeries.length === 0 && <p>No current series</p>}
-        </header>
-      </section>
-
-      {upcomingSeries.length > 0 && (
+      {currentSeries.length === 0 ? (
         <section>
           <header>
-            <h2>Upcoming Series</h2>
+            <h2>Current Series</h2>
+            <p>No current series</p>
           </header>
-          <ul>
-            {upcomingSeries.map((series) => (
-              <ListingItem
-                key={series.id}
-                linkUrl={`/series/${series.id}`}
-                title={series.name}
-                info={[
-                  `${formatDate(series.startDate)} - ${formatDate(
-                    series.endDate
-                  )}`,
-                ]}
-              />
-            ))}
-          </ul>
         </section>
+      ) : (
+        <SeriesSection series={currentSeries} title="Current Series" />
       )}
 
-      {pastSeries.length > 0 && (
-        <section>
-          <header>
-            <h2>Past Series</h2>
-          </header>
-          <ul>
-            {pastSeries.map((series) => (
-              <ListingItem
-                key={series.id}
-                linkUrl={`/series/${series.id}`}
-                title={series.name}
-                info={[
-                  `${formatDate(series.startDate)} - ${formatDate(
-                    series.endDate
-                  )}`,
-                ]}
-              />
-            ))}
-          </ul>
-        </section>
-      )}
+      <SeriesSection series={upcomingSeries} title="Upcoming Series" />
+      <SeriesSection series={pastSeries} title="Past Series" />
     </>
   );
 };

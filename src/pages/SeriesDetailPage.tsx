@@ -47,7 +47,7 @@ const StyledFlexContainer = styled("div")`
 const SeriesDetailPage: FunctionComponent = () => {
   const { seriesId } = useParams();
   const { data: seriesRaces, loading } = useCollectionDocsData<Race>({
-    collectionName: "races",
+    collection: "races",
     query: {
       field: "seriesId",
       operator: FirebaseQueryOperators.EQUAL,

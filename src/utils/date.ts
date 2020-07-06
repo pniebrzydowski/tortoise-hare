@@ -1,4 +1,4 @@
-import dayjs, { OpUnitType } from 'dayjs';
+import dayjs, { OpUnitType } from "dayjs";
 
 const DATABASE_DATE_FORMAT = "YYYY-MM-DD";
 const DATABASE_TIME_FORMAT = "HH:mm:ss";
@@ -28,6 +28,12 @@ export const isDateInFuture = (date: string): boolean => dayjs(date) > dayjs();
 
 export const sortByDate = (a: string, b: string): number =>
   dayjs(a).valueOf() - dayjs(b).valueOf();
+
+export const getPastDate = (
+  value: number = 1,
+  unit: OpUnitType = "month"
+): string =>
+  dayjs().startOf("day").subtract(value, unit).format(DATABASE_DATE_FORMAT);
 
 export const getFutureDate = (
   value: number = 1,

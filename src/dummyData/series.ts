@@ -1,6 +1,7 @@
-import allRaces, { Race } from './races';
-import { RaceResult } from './results';
-import { getRunnerName } from './runners';
+import allRaces, { Race } from "./races";
+import { RaceResult } from "./results";
+import { getRunnerName } from "./runners";
+import { getPastDate, getFutureDate } from "../utils/date";
 
 export interface Series {
   id: string;
@@ -10,25 +11,28 @@ export interface Series {
   description?: string;
 }
 
-const allSeries: Series[] = [
-  {
-    id: "1",
-    name: "Winter 2020",
-    startDate: "2020-11-01",
-    endDate: "2021-02-28",
-    description:
-      "Welcome back after Coronavirus! We are excited to be back and out there again.",
-  },
-  {
-    id: "2",
-    name: "Spring 2021",
-    startDate: "2021-03-01",
-    endDate: "2021-05-31",
-  },
-];
+export const currentSeries = {
+  id: "1",
+  name: "Winter 2020",
+  startDate: getPastDate(),
+  endDate: getFutureDate(),
+  description:
+    "Welcome back after Coronavirus! We are excited to be back and out there again.",
+};
 
-export const getSeriesById = (id: string): Series | undefined =>
-  allSeries.find((element) => element.id === id);
+export const futureSeries = {
+  id: "2",
+  name: "Spring 2021",
+  startDate: getFutureDate(1, "month"),
+  endDate: getFutureDate(3, "month"),
+};
+
+export const pastSeries = {
+  id: "3",
+  name: "Fall 2019",
+  startDate: getPastDate(5, "month"),
+  endDate: getPastDate(3, "month"),
+};
 
 const getRacesForSeries = (id: string): Race[] =>
   allRaces.filter((race) => race.seriesId === id);
@@ -82,5 +86,3 @@ export const getStandingsForSeries = (id: string): Standing[] => {
   standingsArray.sort((a: Standing, b: Standing) => b.points - a.points);
   return standingsArray;
 };
-
-export default allSeries;

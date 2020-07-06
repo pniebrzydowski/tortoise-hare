@@ -4,25 +4,25 @@ import FirebaseContext from "../FirebaseContext";
 import { FirebaseQuery, FirebaseData } from "../types";
 
 interface Props {
-  collectionName: string;
+  collection: string;
   query?: FirebaseQuery;
   sortField?: string;
   sortOrder?: "asc" | "desc";
 }
 
 const useCollectionDocsData = <T>({
-  collectionName,
+  collection,
   query,
   sortField,
   sortOrder = "asc",
 }: Props): FirebaseData<T[]> => {
   const firebase = useContext(FirebaseContext);
   const [loading, setLoading] = useState(true);
-  const [collection, setCollection] = useState<T[]>([]);
+  const [data, setData] = useState<T[]>([]);
 
   const queryRef = useRef<
     firebase.firestore.Query<firebase.firestore.DocumentData> | undefined
-  >(firebase?.firestore.collection(collectionName));
+  >(firebase?.firestore.collection(collection));
 
   useEffect(() => {
     if (!query || !queryRef.current) {
@@ -57,7 +57,7 @@ const useCollectionDocsData = <T>({
           id: doc.id,
           ...(doc.data() as T),
         }));
-        setCollection(data);
+        setData(data);
       },
       (error) => {
         setLoading(false);
@@ -71,7 +71,7 @@ const useCollectionDocsData = <T>({
   }, [queryRef]);
 
   return {
-    data: collection,
+    data,
     loading,
   };
 };
