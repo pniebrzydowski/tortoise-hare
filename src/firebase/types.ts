@@ -1,12 +1,8 @@
-export enum FirebaseQueryOperators {
-  EQUAL = "==",
-  LESS_THAN = "<",
-  GREATER_THAN = ">",
-}
+import firebase from "firebase";
 
 export interface FirebaseQuery {
   field: string;
-  operator: FirebaseQueryOperators;
+  operator: firebase.firestore.WhereFilterOp;
   value?: string;
 }
 

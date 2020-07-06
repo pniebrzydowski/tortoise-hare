@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import { FirebaseContext } from "../../../firebase";
-import { FirebaseQueryOperators } from "../../../firebase/types";
 import routes from "../../../routing/routes";
 import { PrimaryButton } from "../../ui/Button";
 import StartTime from "./StartTime";
@@ -30,12 +29,12 @@ const NextRace: FunctionComponent<Props> = ({ raceId, raceName, runnerId }) => {
     queries: [
       {
         field: "runnerId",
-        operator: FirebaseQueryOperators.EQUAL,
+        operator: "==",
         value: runnerId,
       },
       {
         field: "raceId",
-        operator: FirebaseQueryOperators.EQUAL,
+        operator: "==",
         value: raceId,
       },
     ],

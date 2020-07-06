@@ -8,7 +8,6 @@ import RaceList from "../components/races/RaceList";
 import SeriesDetail from "../components/series/SeriesDetail";
 import SeriesStandings from "../components/series/SeriesStandings";
 import useCollectionDocsData from "../firebase/hooks/useCollectionDocsData";
-import { FirebaseQueryOperators } from "../firebase/types";
 import { isDateInFuture } from "../utils/date";
 import { Race } from "../dummyData/races";
 
@@ -50,7 +49,7 @@ const SeriesDetailPage: FunctionComponent = () => {
     collection: "races",
     query: {
       field: "seriesId",
-      operator: FirebaseQueryOperators.EQUAL,
+      operator: "==",
       value: seriesId,
     },
   });
