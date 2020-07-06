@@ -1,12 +1,13 @@
-import React, { FunctionComponent, useContext, useState } from 'react';
+import React, { FunctionComponent, useContext } from 'react';
 
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { FirebaseContext } from '../../../firebase';
+import useDocData from '../../../firebase/hooks/useDocData';
+import { FirebaseQueryOperators } from '../../../firebase/types';
 import routes from '../../../routing/routes';
 import { PrimaryButton } from '../../ui/Button';
-import { getRunnerResultForRace } from '../utils';
 import StartTime from './StartTime';
 
 interface Props {
@@ -23,10 +24,21 @@ const StyledSection = styled("section")`
 
 const NextRace: FunctionComponent<Props> = ({ raceId, raceName, runnerId }) => {
   const firebase = useContext(FirebaseContext);
-  const registered = runnerId
-    ? getRunnerResultForRace(runnerId, raceId)
-    : false;
-  const [isRegistered, setIsRegistered] = useState(registered);
+  const registrationData = useDocData({
+    collection: "raceRegistrations",
+    queries: [
+      {
+        field: "runnerId",
+        operator: FirebaseQueryOperators.EQUAL,
+        value: runnerId,
+      },
+      {
+        field: "raceId",
+        operator: FirebaseQueryOperators.EQUAL,
+        value: raceId,
+      },
+    ],
+  });
 
   const register = () => {
     if (!firebase) {
@@ -44,7 +56,7 @@ const NextRace: FunctionComponent<Props> = ({ raceId, raceName, runnerId }) => {
         points: 0,
       })
       .then(() => {
-        setIsRegistered(true);
+        console.log("User registered");
       })
       .catch((err) => {
         console.error("Error creating series: ", err);
@@ -64,7 +76,7 @@ const NextRace: FunctionComponent<Props> = ({ raceId, raceName, runnerId }) => {
       <header>
         <h3>{raceName ? "Next Race" : "Register for this race"}</h3>
       </header>
-      {isRegistered ? (
+      {!!registrationData ? (
         <>
           <p>You are registered for {raceName ? raceLink : "this race"}!</p>
           {runnerId && <StartTime raceId={raceId} runnerId={runnerId} />}

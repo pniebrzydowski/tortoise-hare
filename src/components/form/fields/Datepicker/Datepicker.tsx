@@ -1,19 +1,19 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent } from "react";
 
-import DatePicker from 'react-datepicker';
-import { Controller } from 'react-hook-form';
+import DatePicker from "react-datepicker";
+import { Controller } from "react-hook-form";
 
 import {
   DEFAULT_DATEPICKER_FORMAT,
   DEFAULT_DATETIMEPICKER_FORMAT,
   getDateObject,
   getDateString,
-  getDateTimeString
-} from '../../../../utils/date';
-import { StyledInput } from '../../../ui/Input';
-import FieldWrapper from '../../FieldWrapper';
+  getDateTimeString,
+} from "../../../../utils/date";
+import { StyledInput } from "../../../ui/Input";
+import FieldWrapper from "../../FieldWrapper";
 
-import 'react-datepicker/dist/react-datepicker.css';
+import "react-datepicker/dist/react-datepicker.css";
 
 interface Props {
   formName: string;

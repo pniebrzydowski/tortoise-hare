@@ -1,14 +1,15 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent } from "react";
 
-import { Link, useParams } from 'react-router-dom';
-import styled from 'styled-components';
+import { Link, useParams } from "react-router-dom";
+import styled from "styled-components";
 
-import NewRace from '../components/races/NewRace';
-import RaceList from '../components/races/RaceList';
-import SeriesDetail from '../components/series/SeriesDetail';
-import SeriesStandings from '../components/series/SeriesStandings';
-import useCollectionDocs from '../firebase/hooks/useCollectionDocs';
-import { isDateInFuture } from '../utils/date';
+import NewRace from "../components/races/NewRace";
+import RaceList from "../components/races/RaceList";
+import SeriesDetail from "../components/series/SeriesDetail";
+import SeriesStandings from "../components/series/SeriesStandings";
+import useCollectionDocs from "../firebase/hooks/useCollectionDocs";
+import { FirebaseQueryOperators } from "../firebase/types";
+import { isDateInFuture } from "../utils/date";
 
 const StyledLink = styled(Link)`
   padding-top: ${(props) => props.theme.spacing.small};
@@ -48,7 +49,7 @@ const SeriesDetailPage: FunctionComponent = () => {
     collectionName: "races",
     query: {
       field: "seriesId",
-      operator: "==",
+      operator: FirebaseQueryOperators.EQUAL,
       value: seriesId,
     },
   });

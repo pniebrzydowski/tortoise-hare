@@ -1,7 +1,7 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from "react";
 
-import FirebaseContext from '../FirebaseContext';
-import useAuth from './useAuth';
+import FirebaseContext from "../FirebaseContext";
+import useAuth from "./useAuth";
 
 const useAdminCheck = () => {
   const firebase = useContext(FirebaseContext);

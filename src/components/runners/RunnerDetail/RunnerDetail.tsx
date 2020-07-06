@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from 'react';
 
+import { Runner } from '../../../dummyData/runners';
 import useDoc from '../../../firebase/hooks/useDocData';
 
 interface Props {
@@ -7,7 +8,7 @@ interface Props {
 }
 
 const RunnerDetail: FunctionComponent<Props> = ({ id }) => {
-  const runnerDoc = useDoc("runners", id);
+  const runnerDoc = useDoc({ collection: "runners", id }) as Runner;
 
   if (!runnerDoc) {
     return null;

@@ -1,16 +1,11 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, useRef } from "react";
 
-import FirebaseContext from '../FirebaseContext';
-
-interface CollectionQuery {
-  field: string;
-  operator: "==" | ">" | "<";
-  value: string;
-}
+import FirebaseContext from "../FirebaseContext";
+import { FirebaseQuery } from "../types";
 
 interface Props {
   collectionName: string;
-  query?: CollectionQuery;
+  query?: FirebaseQuery;
   sortField?: string;
   sortOrder?: "asc" | "desc";
 }
@@ -26,33 +21,43 @@ const useCollectionDocs = ({
     firebase.firestore.QueryDocumentSnapshot[]
   >();
 
+  const queryRef = useRef<
+    firebase.firestore.Query<firebase.firestore.DocumentData> | undefined
+  >(firebase?.firestore.collection(collectionName));
+
   useEffect(() => {
-    if (!firebase) {
+    if (!query || !queryRef.current) {
       return;
     }
 
-    if (query) {
-      firebase.firestore
-        .collection(collectionName)
-        .where(query.field, query.operator, query.value)
-        .onSnapshot((snapshot) => {
-          setCollection(snapshot.docs);
-        });
-    } else if (sortField) {
-      firebase.firestore
-        .collection(collectionName)
-        .orderBy(sortField, sortOrder)
-        .onSnapshot((snapshot) => {
-          setCollection(snapshot.docs);
-        });
-    } else {
-      firebase.firestore.collection(collectionName).onSnapshot((snapshot) => {
-        setCollection(snapshot.docs);
-      });
+    queryRef.current = queryRef.current.where(
+      query.field,
+      query.operator,
+      query.value
+    );
+  }, [query]);
+
+  useEffect(() => {
+    if (!queryRef.current || !sortField) {
+      return;
     }
 
-    return () => {};
-  }, [firebase, collectionName, query, sortField, sortOrder]);
+    queryRef.current = queryRef.current.orderBy(sortField, sortOrder);
+  }, [sortField, sortOrder]);
+
+  useEffect(() => {
+    if (!queryRef.current) {
+      return;
+    }
+
+    const unsubscribe = queryRef.current.onSnapshot((snapshot) => {
+      setCollection(snapshot.docs);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [queryRef]);
 
   return collection;
 };

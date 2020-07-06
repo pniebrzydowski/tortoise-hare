@@ -1,20 +1,20 @@
-import React, { FunctionComponent, useContext, useState } from 'react';
+import React, { FunctionComponent, useContext, useState } from "react";
 
-import { FormContext, useForm } from 'react-hook-form';
-import styled from 'styled-components';
+import { FormContext, useForm } from "react-hook-form";
+import styled from "styled-components";
 
-import { DistanceUnit, Race } from '../../../dummyData/races';
-import { FirebaseContext } from '../../../firebase';
-import useAdminCheck from '../../../firebase/hooks/useAdminCheck';
-import { getFutureDateWithTime } from '../../../utils/date';
-import Datepicker from '../../form/fields/Datepicker';
-import Number from '../../form/fields/Number';
-import Select from '../../form/fields/Select';
-import Text from '../../form/fields/Text';
-import Textarea from '../../form/fields/Textarea';
-import { OutlineButton, PrimaryButton } from '../../ui/Button';
+import { DistanceUnit, Race } from "../../../dummyData/races";
+import { FirebaseContext } from "../../../firebase";
+import useAdminCheck from "../../../firebase/hooks/useAdminCheck";
+import { getFutureDateWithTime } from "../../../utils/date";
+import Datepicker from "../../form/fields/Datepicker";
+import Number from "../../form/fields/Number";
+import Select from "../../form/fields/Select";
+import Text from "../../form/fields/Text";
+import Textarea from "../../form/fields/Textarea";
+import { OutlineButton, PrimaryButton } from "../../ui/Button";
 
-import 'react-datepicker/dist/react-datepicker.css';
+import "react-datepicker/dist/react-datepicker.css";
 
 type FormData = Partial<Omit<Race, "id">>;
 
