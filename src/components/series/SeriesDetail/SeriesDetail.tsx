@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import useDocData from "../../../firebase/hooks/useDocData";
 import { formatDate } from "../../../utils/date";
+import { Series } from "../../../dummyData/series";
 
 interface Props {
   id: string;
@@ -25,7 +26,7 @@ const StyledDescription = styled("p")`
 `;
 
 const SeriesDetail: FunctionComponent<Props> = ({ id }) => {
-  const series = useDocData({
+  const series = useDocData<Series>({
     collection: "series",
     id,
   });

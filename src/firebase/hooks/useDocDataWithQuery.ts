@@ -8,12 +8,12 @@ interface DocDataProps {
   queries: FirebaseQuery[];
 }
 
-const useDocDataWithQuery = ({
+const useDocDataWithQuery = <T>({
   collection,
   queries,
-}: DocDataProps): firebase.firestore.DocumentData | undefined => {
+}: DocDataProps): T | undefined => {
   const firebase = useContext(FirebaseContext);
-  const [docData, setDocData] = useState<firebase.firestore.DocumentData>();
+  const [docData, setDocData] = useState<T>();
   const queryRef = useRef<
     firebase.firestore.Query<firebase.firestore.DocumentData> | undefined
   >(firebase?.firestore.collection(collection));
@@ -41,7 +41,7 @@ const useDocDataWithQuery = ({
       if (!doc) {
         return;
       }
-      setDocData(doc.data());
+      setDocData(doc.data() as T);
     });
 
     return () => {

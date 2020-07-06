@@ -7,9 +7,10 @@ import NewRace from "../components/races/NewRace";
 import RaceList from "../components/races/RaceList";
 import SeriesDetail from "../components/series/SeriesDetail";
 import SeriesStandings from "../components/series/SeriesStandings";
-import useCollectionDocs from "../firebase/hooks/useCollectionDocs";
+import useCollectionDocsData from "../firebase/hooks/useCollectionDocsData";
 import { FirebaseQueryOperators } from "../firebase/types";
 import { isDateInFuture } from "../utils/date";
+import { Race } from "../dummyData/races";
 
 const StyledLink = styled(Link)`
   padding-top: ${(props) => props.theme.spacing.small};
@@ -45,7 +46,7 @@ const StyledFlexContainer = styled("div")`
 
 const SeriesDetailPage: FunctionComponent = () => {
   const { seriesId } = useParams();
-  const seriesRaces = useCollectionDocs({
+  const seriesRaces = useCollectionDocsData<Race>({
     collectionName: "races",
     query: {
       field: "seriesId",
@@ -54,13 +55,14 @@ const SeriesDetailPage: FunctionComponent = () => {
     },
   });
 
-  const upcomingRaces = seriesRaces?.filter((raceDoc) => {
-    const race = raceDoc.data();
-    return isDateInFuture(race.startTime) && !race.isFinished;
-  });
-  const pastRaces = seriesRaces?.filter((raceDoc) => {
-    const race = raceDoc.data();
-    return race.isFinished || !isDateInFuture(race.startTime);
+  const upcomingRaces: Race[] = [];
+  const pastRaces: Race[] = [];
+  seriesRaces.forEach((race) => {
+    if (isDateInFuture(race.startTime) && !race.isFinished) {
+      upcomingRaces.push(race);
+    } else {
+      pastRaces.push(race);
+    }
   });
 
   return (
@@ -78,14 +80,14 @@ const SeriesDetailPage: FunctionComponent = () => {
               <h3 style={{ display: "inline" }}>Upcoming Races</h3>
               <NewRace seriesId={seriesId} />
             </header>
-            {upcomingRaces && upcomingRaces.length > 0 ? (
+            {upcomingRaces.length > 0 ? (
               <RaceList races={upcomingRaces} />
             ) : (
               <p>There are no upcoming races in this series</p>
             )}
           </StyledFlexContainer>
 
-          {pastRaces && pastRaces.length > 0 && (
+          {pastRaces.length > 0 && (
             <StyledFlexContainer>
               <header>
                 <h3>Past Races</h3>

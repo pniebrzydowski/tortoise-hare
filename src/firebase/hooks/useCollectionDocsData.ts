@@ -10,16 +10,14 @@ interface Props {
   sortOrder?: "asc" | "desc";
 }
 
-const useCollectionDocs = ({
+const useCollectionDocsData = <T>({
   collectionName,
   query,
   sortField,
   sortOrder = "asc",
-}: Props): firebase.firestore.QueryDocumentSnapshot[] | undefined => {
+}: Props): T[] => {
   const firebase = useContext(FirebaseContext);
-  const [collection, setCollection] = useState<
-    firebase.firestore.QueryDocumentSnapshot[]
-  >();
+  const [collection, setCollection] = useState<T[]>([]);
 
   const queryRef = useRef<
     firebase.firestore.Query<firebase.firestore.DocumentData> | undefined
@@ -51,7 +49,12 @@ const useCollectionDocs = ({
     }
 
     const unsubscribe = queryRef.current.onSnapshot((snapshot) => {
-      setCollection(snapshot.docs);
+      const docs = snapshot?.docs ?? [];
+      const data = docs.map((doc) => ({
+        id: doc.id,
+        ...(doc.data() as T),
+      }));
+      setCollection(data);
     });
 
     return () => {
@@ -62,4 +65,4 @@ const useCollectionDocs = ({
   return collection;
 };
 
-export default useCollectionDocs;
+export default useCollectionDocsData;

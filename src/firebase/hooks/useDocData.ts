@@ -7,12 +7,9 @@ interface DocDataProps {
   id: string;
 }
 
-const useDocData = ({
-  collection,
-  id,
-}: DocDataProps): firebase.firestore.DocumentData | undefined => {
+const useDocData = <T>({ collection, id }: DocDataProps): T | undefined => {
   const firebase = useContext(FirebaseContext);
-  const [docData, setDocData] = useState<firebase.firestore.DocumentData>();
+  const [docData, setDocData] = useState<T>();
   const queryRef = useRef<
     | firebase.firestore.CollectionReference<firebase.firestore.DocumentData>
     | undefined
@@ -24,7 +21,7 @@ const useDocData = ({
     }
 
     const unsubscribe = queryRef.current.doc(id).onSnapshot((doc) => {
-      setDocData(doc.data());
+      setDocData(doc.data() as T);
     });
 
     return () => {

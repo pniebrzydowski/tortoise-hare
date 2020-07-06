@@ -1,28 +1,28 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent } from "react";
 
 import {
   Link,
   Route,
   Switch,
   useParams,
-  useRouteMatch
-} from 'react-router-dom';
-import styled from 'styled-components';
+  useRouteMatch,
+} from "react-router-dom";
+import styled from "styled-components";
 
-import AddVolunteer from '../components/races/AddVolunteer';
-import EditResults from '../components/races/EditResults';
-import NextRace from '../components/races/NextRace';
-import RaceDetail from '../components/races/RaceDetail';
-import RaceResults from '../components/races/RaceResults';
-import RaceVolunteers from '../components/races/RaceVolunteers';
-import UpcomingRunners from '../components/races/UpcomingRunners';
-import { PrimaryButton } from '../components/ui/Button';
-import { Race } from '../dummyData/races';
-import { allRunners, Runner } from '../dummyData/runners';
-import useAdminCheck from '../firebase/hooks/useAdminCheck';
-import useAuth from '../firebase/hooks/useAuth';
-import useDocData from '../firebase/hooks/useDocData';
-import { isDateInFuture } from '../utils/date';
+import AddVolunteer from "../components/races/AddVolunteer";
+import EditResults from "../components/races/EditResults";
+import NextRace from "../components/races/NextRace";
+import RaceDetail from "../components/races/RaceDetail";
+import RaceResults from "../components/races/RaceResults";
+import RaceVolunteers from "../components/races/RaceVolunteers";
+import UpcomingRunners from "../components/races/UpcomingRunners";
+import { PrimaryButton } from "../components/ui/Button";
+import { Race } from "../dummyData/races";
+import { allRunners, Runner } from "../dummyData/runners";
+import useAdminCheck from "../firebase/hooks/useAdminCheck";
+import useAuth from "../firebase/hooks/useAuth";
+import useDocData from "../firebase/hooks/useDocData";
+import { isDateInFuture } from "../utils/date";
 
 const StyledNavLink = styled(Link)`
   padding-top: ${(props) => props.theme.spacing.small};
@@ -67,10 +67,10 @@ const RaceDetailPage: FunctionComponent = () => {
   const isAdmin = useAdminCheck();
   const { raceId } = useParams();
   const { path } = useRouteMatch();
-  const race = useDocData({
+  const race = useDocData<Race>({
     collection: "races",
     id: raceId,
-  }) as Race;
+  });
 
   if (!raceId || !race) {
     return null;

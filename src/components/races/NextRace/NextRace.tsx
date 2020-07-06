@@ -9,6 +9,7 @@ import routes from "../../../routing/routes";
 import { PrimaryButton } from "../../ui/Button";
 import StartTime from "./StartTime";
 import useDocDataWithQuery from "../../../firebase/hooks/useDocDataWithQuery";
+import { RaceResult } from "../../../dummyData/results";
 
 interface Props {
   raceId: string;
@@ -24,7 +25,7 @@ const StyledSection = styled("section")`
 
 const NextRace: FunctionComponent<Props> = ({ raceId, raceName, runnerId }) => {
   const firebase = useContext(FirebaseContext);
-  const registrationData = useDocDataWithQuery({
+  const registrationData = useDocDataWithQuery<RaceResult>({
     collection: "raceRegistrations",
     queries: [
       {
