@@ -7,7 +7,7 @@ interface Props {
   collection: string;
   query?: FirebaseQuery;
   sortField?: string;
-  sortOrder?: "asc" | "desc";
+  sortOrder?: firebase.firestore.OrderByDirection;
 }
 
 const useCollectionDocsData = <T>({
